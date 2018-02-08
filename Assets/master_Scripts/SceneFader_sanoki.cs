@@ -64,10 +64,10 @@ public class SceneFader_sanoki : MonoBehaviour
     /// <summary>
     /// フェード用コルーチン
     /// </summary>
-    /// <param name="second">何秒かけてフェードさせるのか</param>
+    /// <param name="seconds">何秒かけてフェードさせるのか</param>
     /// <param name="sceneChange">シーン遷移させるのかどうか(true:させる　false:させない)</param>
     /// <returns></returns>
-    public IEnumerator SceneFade(float second,bool sceneChange)
+    public IEnumerator SceneFade(float seconds,bool sceneChange)
     {
         float t = 0.0f;
         switch (fade)
@@ -76,7 +76,7 @@ public class SceneFader_sanoki : MonoBehaviour
                 Debug.Log("フェードイン");
                 while (t < 1.0f)
                 {
-                    t += Time.deltaTime / second;
+                    t += Time.deltaTime / seconds;
                     fadeColor.a = Mathf.Lerp(0.0f, 1.0f, t);
                     yield return null;
                 }
@@ -90,7 +90,7 @@ public class SceneFader_sanoki : MonoBehaviour
             case 0:
                 while (t < 1.0f)
                 {
-                    t += Time.deltaTime / second;
+                    t += Time.deltaTime / seconds;
                     fadeColor.a = Mathf.Lerp(1.0f, 0.0f, t);
                     yield return null;
                 }
