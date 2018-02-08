@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour {
+public class Move_chikazawa: MonoBehaviour {
 
     public float speed; //歩くスピード
     private Rigidbody2D rigidbody2D;
     public GameObject mainCamera;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         rigidbody2D = GetComponent<Rigidbody2D>();
 
 

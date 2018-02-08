@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TrainMove : MonoBehaviour {
+public class TrainMove_sanoki : MonoBehaviour {
 
     public GameObject UNKOman;
     float UNKOman_Speed = 4;

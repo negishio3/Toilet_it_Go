@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Danger : MonoBehaviour
+public class Danger_mase : MonoBehaviour
 {
     public GameObject Player;
 	// Use this for initialization

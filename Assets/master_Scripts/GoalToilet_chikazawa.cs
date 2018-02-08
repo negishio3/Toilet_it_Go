@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GoalToilet : MonoBehaviour
+public class GoalToilet_chikazawa : MonoBehaviour
 {
 
     // Use this for initialization
@@ -21,7 +21,7 @@ public class GoalToilet : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Game_chikazawa");
         }
     }
 }

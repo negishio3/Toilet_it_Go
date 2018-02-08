@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SceneFader : MonoBehaviour
+public class SceneFader_sanoki : MonoBehaviour
 {
     //////////////////////////////////////////////////////////
     // このscriptはシーン上のCanvasにアタッチしてください。/// 
@@ -69,8 +69,6 @@ public class SceneFader : MonoBehaviour
     /// <returns></returns>
     public IEnumerator SceneFade(float second,bool sceneChange)
     {
-        
-
         float t = 0.0f;
         switch (fade)
         {
