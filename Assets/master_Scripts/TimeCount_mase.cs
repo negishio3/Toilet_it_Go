@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TimeCount_mase : MonoBehaviour
 {
-    public float time;
+    public float time;//この中に数字入れるー
 
     // Use this for initialization
     void Start ()
@@ -17,7 +17,7 @@ public class TimeCount_mase : MonoBehaviour
     void Update()
     {
         time -= Time.deltaTime;
-        if (time < 0) time = 0;
+        if (time < 0) time = 0;//0より下にならない
         {
             GetComponent<Text>().text = ((int)time).ToString();
         }
