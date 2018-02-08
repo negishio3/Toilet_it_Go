@@ -6,7 +6,6 @@ public class Move_chikazawa: MonoBehaviour {
 
     public float speed; //歩くスピード
     private Rigidbody2D rigidbody2D;
-    public GameObject mainCamera;
 
     // Use this for initialization
     void Start()
