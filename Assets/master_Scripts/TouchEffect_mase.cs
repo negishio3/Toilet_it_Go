@@ -5,9 +5,9 @@ using UnityEngine;
 public class TouchEffect_mase : MonoBehaviour
 {
     [SerializeField]
-    ParticleSystem toucheffect;
+    ParticleSystem toucheffect;//ここに再生させるエフェクトを入れる
     [SerializeField]
-    Camera _camera;
+    Camera _camera;//再生させるカメラを入れる
 
     // Use this for initialization
     void Start ()
@@ -20,6 +20,7 @@ public class TouchEffect_mase : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            // マウスのワールド座標までパーティクルを移動し、パーティクルエフェクトを1つ生成する
             var pos = _camera.ScreenToWorldPoint(Input.mousePosition + _camera.transform.forward * 10);
             toucheffect.transform.position = pos;
             toucheffect.Emit(1);
