@@ -6,14 +6,11 @@ public class Danger_mase : MonoBehaviour
 {
 
     public GameObject Player;
-    public ParticleSystem effect;
+
 
     // Use this for initialization
     void Start ()
     {
-        effect = this.GetComponent<ParticleSystem>();
-
-        effect.Stop();
 	}
 	
 	// Update is called once per frame
@@ -25,7 +22,7 @@ public class Danger_mase : MonoBehaviour
 
     public void OnClick()
     {
-        effect.Play();
+        //そのうち使うかもしれないから消さないで
         Debug.Log("ごくつぶし");
     }
 }
