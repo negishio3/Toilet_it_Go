@@ -6,9 +6,14 @@ public class Goalprogram_sanoki : MonoBehaviour {
 
     SceneFader_sanoki sf;
 
-    void OnCollisionEnter2D(Collision2D col)
+    void Start()
     {
-        if (col.gameObject.tag == "Goal")
+        sf = FindObjectOfType<SceneFader_sanoki>();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Goal")
         {
             Debug.Log("当たった");
             sf.StageSelect("sanoki_Title");

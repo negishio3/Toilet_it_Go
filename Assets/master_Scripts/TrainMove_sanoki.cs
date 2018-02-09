@@ -13,15 +13,24 @@ public class TrainMove_sanoki : MonoBehaviour {
     GameObject[] image = new GameObject[2];//生成したステージを管理する
     bool moveFlg;//背景を止めるか否か
     public int stageCount = 0;//生成された背景のカウンター
-    public int maxScrollNum;//生成する背景の最大値
+    //public int maxScrollNum;//生成する背景の最大値
     public float maxScrollTime;//生成し続ける時間
 
     public float timer;
     bool isCountDown;
 
+    System.Random r = new System.Random(/*(int)Time.deltaTime*/);
+
+    enum TrainState
+    {
+        FirstInstans,
+        Loop,
+        Goal
+    }
+
 	void Start () {
         isCountDown = false;
-        TrainImageInstans(0);//初期背景の生成
+        TrainImageInstans(TrainState.FirstInstans);//初期背景の生成
     }
 	
 	void Update () {
@@ -31,24 +40,26 @@ public class TrainMove_sanoki : MonoBehaviour {
         }
         if (image[0].transform.position.x <= -60)
         {
-            if (stageCount >= maxScrollNum)
+            //if (stageCount >= maxScrollNum)
+            if (timer >= maxScrollTime)
             {
-                TrainImageInstans(2);
+                TrainImageInstans(TrainState.Goal);
             }
             else
             {
-                TrainImageInstans(1);
+                TrainImageInstans(TrainState.Loop);
             }
         }
         if (image[1].transform.position.x <= -60)
         {
-            if (stageCount >= maxScrollNum)
+            //if (stageCount >= maxScrollNum)
+            if (timer >= maxScrollTime)
             {
-                TrainImageInstans(2);
+                TrainImageInstans(TrainState.Goal);
             }
             else
             {
-                TrainImageInstans(1);
+                TrainImageInstans(TrainState.Loop);
             }
         }
         if (Input.GetMouseButtonDown(0))
@@ -60,11 +71,11 @@ public class TrainMove_sanoki : MonoBehaviour {
             scrollSpeed = 10;
         }
         //if (stageCount>maxScrollNum)
-        if(timer > maxScrollTime)
-        {
-            scrollSpeed = 3;
-            //moveFlg = false;
-        }
+        //if(timer >= maxScrollTime)
+        //{
+        //    scrollSpeed = 3;
+        //    //moveFlg = false;
+        //}
         StartCoroutine(TrainMoving());
         UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
 	}
@@ -79,30 +90,31 @@ public class TrainMove_sanoki : MonoBehaviour {
     }
 
     /// <summary>
-    /// ステージの生成
+    /// ステージの生成方法の選択
     /// </summary>
     /// <param name="ImageNum">番号によって生成方法を変える(整数)</param>
-    void TrainImageInstans(int ImageNum)
+    void TrainImageInstans(TrainState State)
     {
-        switch (ImageNum)
+        int ImageSelector = r.Next(0, (int)TrainState.Goal - 1);
+        switch (State)
         {
-            case 0: //初期生成
+            case TrainState.FirstInstans: //初期生成
                 image[0] = Instantiate(
-                    BackImagePrefab[0],
+                    BackImagePrefab[ImageSelector],
                     Vector2.zero,
                     Quaternion.identity);
                 stageCount++;
                 image[1] = Instantiate(
-                        BackImagePrefab[1],
+                        BackImagePrefab[ImageSelector],
                         InstansPos,
                         Quaternion.identity);
                 break;
-            case 1: //ループ生成
+            case TrainState.Loop: //ループ生成
                 if (image[0].transform.position.x <= -60)
                 {
                     Destroy(image[0]);
                     image[0] = Instantiate(
-                        BackImagePrefab[0],
+                        BackImagePrefab[ImageSelector],
                         InstansPos,
                         Quaternion.identity);
                 }
@@ -110,13 +122,13 @@ public class TrainMove_sanoki : MonoBehaviour {
                 {
                     Destroy(image[1]);
                     image[1] = Instantiate(
-                        BackImagePrefab[1],
+                        BackImagePrefab[ImageSelector],
                         InstansPos,
                         Quaternion.identity);
                 }
                 break;
-            case 2: //ゴール生成
-                if (BackImagePrefab.Length <= ImageNum)
+            case TrainState.Goal: //ゴール生成
+                if (BackImagePrefab.Length <= (int)TrainState.Goal)
                 {
                     Debug.LogError("ゴールプレハブが登録されてないよ");
                     break;

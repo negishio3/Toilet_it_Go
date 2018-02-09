@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneFader_sanoki : MonoBehaviour
 {
-    //////////////////////////////////////////////////////////
-    // このscriptはシーン上のCanvasにアタッチしてください。/// 
-    //////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
+    /// このscriptはシーン上のCanvasにアタッチしてください。/// 
+    ///////////////////////////////////////////////////////////
 
     float red, green, blue; //RGBを操作するための変数
     public static string next_Scene;
@@ -44,13 +44,14 @@ public class SceneFader_sanoki : MonoBehaviour
     /// <summary>
     /// フェードだけする
     /// </summary>
-    public void OnFade(float time)
+    /// <param name="fadeSpeed">フェード速度</param>
+    public void OnFade(float fadeSpeed)
     {
         if (!isFade)
         {
             isFade = true;
             fade = 1;
-            StartCoroutine(SceneFade(time, false));
+            StartCoroutine(SceneFade(fadeSpeed, false));
         }
     }
 
@@ -73,7 +74,7 @@ public class SceneFader_sanoki : MonoBehaviour
         switch (fade)
         {
             case 1:
-                Debug.Log("フェードイン");
+                //Debug.Log("フェードイン");
                 while (t < 1.0f)
                 {
                     t += Time.deltaTime / seconds;
