@@ -25,9 +25,9 @@ public class Move_chikazawa: MonoBehaviour {
         {
             //入力方向へ移動
             rigidbody2D.velocity = new Vector2(x * speed, rigidbody2D.velocity.y);
-            //localScale.xを-1にすると画像が反転する、これで歩く方向に体が向く
-            Vector2 tempScl = transform.localScale;
-            transform.localScale = tempScl;
+            ////localScale.xを-1にすると画像が反転する、これで歩く方向に体が向く
+            //Vector2 tempScl = transform.localScale;
+            //transform.localScale = tempScl;
         }
         else
         {
