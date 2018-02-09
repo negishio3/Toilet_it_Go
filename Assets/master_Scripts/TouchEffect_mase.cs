@@ -18,9 +18,15 @@ public class TouchEffect_mase : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+<<<<<<< HEAD
         if (Input.GetMouseButtonDown(0) || Input.touchCount>0)//マウスクリック・タップで反応
         {
             // マウス・タップのワールド座標までパーティクルを移動し、パーティクルエフェクトを1つ生成する
+=======
+        if (Input.GetMouseButtonDown(0) || Input.touchCount>0)
+        {
+            // マウスのワールド座標までパーティクルを移動し、パーティクルエフェクトを1つ生成する
+>>>>>>> origin/nishiwaki0209
             var pos = _camera.ScreenToWorldPoint(Input.mousePosition + _camera.transform.forward * 10);
             toucheffect.transform.position = pos;
             toucheffect.Emit(1);
