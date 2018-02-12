@@ -5,7 +5,7 @@ using UnityEngine;
 public class Move_chikazawa: MonoBehaviour {
 
     public float speed; //歩くスピード
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
 
     // Use this for initialization
     void Start()
