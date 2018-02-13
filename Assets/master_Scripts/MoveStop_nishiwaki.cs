@@ -2,21 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveStop_nishiwaki : MonoBehaviour {
-
+public class MoveStop_nishiwaki : MonoBehaviour
+{
     public GameObject Train;
-    int move = -3;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    private int move = 3;
 
+    public Button_nishiwaki button;
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (button.moveNow_b == true)
+        {
+            move = 3;
+        }
+        else if(button.moveNow_b == false)
+        {
+            move = 0;
+        }
         //電車の移動
         Train.transform.position += new Vector3(move, 0, 0) * Time.deltaTime;
 
+        /*
         //タッチ操作
         if (Input.touchCount > 0)
         {
@@ -38,5 +51,11 @@ public class MoveStop_nishiwaki : MonoBehaviour {
                 Debug.Log("タッチ終了");
             }
         }
+        */
+    }
+    public int Move_p
+    {
+        get { return this.move; }
+        set { this.move = value; }
     }
 }
