@@ -7,19 +7,22 @@ public class TrainMove_sanoki : MonoBehaviour {
 
     public GameObject UNKOman;//キャラクター
     float UNKOman_Speed = 4;  //キャラクターの移動速度
+
+    public float scrollSpeed = 0;//スクロールの速度
+    bool moveFlg;//背景を止めるか否か
+
     public GameObject[] BackImagePrefab;//ステージのプレハブ
     Vector3 InstansPos = new Vector2(60,0);//生成位置
-    public float scrollSpeed = 1;//スクロールの速度
     GameObject[] image = new GameObject[2];//生成したステージを管理する
-    bool moveFlg;//背景を止めるか否か
     public int stageCount = 0;//生成された背景のカウンター
+
+    int ImageSelector;
+
     //public int maxScrollNum;//生成する背景の最大値
     public float maxScrollTime;//生成し続ける時間
 
     public float timer;
     bool isCountDown;
-
-    System.Random r = new System.Random(/*(int)Time.deltaTime*/);
 
     enum TrainState
     {
@@ -30,20 +33,21 @@ public class TrainMove_sanoki : MonoBehaviour {
 
 	void Start () {
         isCountDown = false;
+        moveFlg = true;
         TrainImageInstans(TrainState.FirstInstans);//初期背景の生成
     }
 	
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameStart();
-        }
+        System.Random r = new System.Random();
+        ImageSelector = r.Next((int)TrainState.Goal);
         if (image[0].transform.position.x <= -60)
         {
             //if (stageCount >= maxScrollNum)
             if (timer >= maxScrollTime)
             {
                 TrainImageInstans(TrainState.Goal);
+                if (image[0].transform.position.x <= 0)
+                    moveFlg = false;
             }
             else
             {
@@ -56,6 +60,8 @@ public class TrainMove_sanoki : MonoBehaviour {
             if (timer >= maxScrollTime)
             {
                 TrainImageInstans(TrainState.Goal);
+                if (image[1].transform.position.x <= 0)
+                    moveFlg = false;
             }
             else
             {
@@ -64,11 +70,13 @@ public class TrainMove_sanoki : MonoBehaviour {
         }
         if (Input.GetMouseButtonDown(0))
         {
-            scrollSpeed = 3;
+            scrollSpeed = 6;
+            StartCoroutine(Timer(maxScrollTime));
+
         }
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            scrollSpeed = 10;
+            scrollSpeed = 0;
         }
         //if (stageCount>maxScrollNum)
         //if(timer >= maxScrollTime)
@@ -95,7 +103,7 @@ public class TrainMove_sanoki : MonoBehaviour {
     /// <param name="ImageNum">番号によって生成方法を変える(整数)</param>
     void TrainImageInstans(TrainState State)
     {
-        int ImageSelector = r.Next(0, (int)TrainState.Goal - 1);
+        
         switch (State)
         {
             case TrainState.FirstInstans: //初期生成
@@ -137,7 +145,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                 {
                     Destroy(image[0]);
                     image[0] = Instantiate(
-                      BackImagePrefab[2],
+                      BackImagePrefab[(int)TrainState.Goal],
                       InstansPos,
                       Quaternion.identity);
                 }
@@ -145,7 +153,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                 {
                     Destroy(image[1]);
                     image[1] = Instantiate(
-                      BackImagePrefab[2],
+                      BackImagePrefab[(int)TrainState.Goal],
                       InstansPos,
                       Quaternion.identity);
                 }
