@@ -13,12 +13,12 @@ public class TrainMove_sanoki : MonoBehaviour {
 
     public GameObject[] BackImagePrefab;//ステージのプレハブ
     Vector3 InstansPos = new Vector2(60,0);//生成位置
-    GameObject[] image = new GameObject[2];//生成したステージを管理する
+    public  GameObject[] image = new GameObject[2];//生成したステージを管理する
     public int stageCount = 0;//生成された背景のカウンター
 
     int ImageSelector;
 
-    //public int maxScrollNum;//生成する背景の最大値
+    public int maxScrollNum;//生成する背景の最大値
     public float maxScrollTime;//生成し続ける時間
 
     public float timer;
@@ -38,52 +38,31 @@ public class TrainMove_sanoki : MonoBehaviour {
     }
 	
 	void Update () {
-        System.Random r = new System.Random();
-        ImageSelector = r.Next((int)TrainState.Goal);
-        if (image[0].transform.position.x <= -60)
+
+        if (image[0].transform.position.x <= -60 || image[1].transform.position.x <= -60)
         {
-            //if (stageCount >= maxScrollNum)
-            if (timer >= maxScrollTime)
+            if (stageCount == maxScrollNum)
+            //if (timer >= maxScrollTime)
             {
                 TrainImageInstans(TrainState.Goal);
-                if (image[0].transform.position.x <= 0)
-                    moveFlg = false;
+                
             }
             else
             {
                 TrainImageInstans(TrainState.Loop);
             }
         }
-        if (image[1].transform.position.x <= -60)
-        {
-            //if (stageCount >= maxScrollNum)
-            if (timer >= maxScrollTime)
-            {
-                TrainImageInstans(TrainState.Goal);
-                if (image[1].transform.position.x <= 0)
-                    moveFlg = false;
-            }
-            else
-            {
-                TrainImageInstans(TrainState.Loop);
-            }
-        }
-        if (Input.GetMouseButtonDown(0))
+        //if (timer >= maxScrollTime && image[1].transform.position.x <= 0)
+        //            moveFlg = false;
+        if (Input.GetMouseButton(0))
         {
             scrollSpeed = 6;
             StartCoroutine(Timer(maxScrollTime));
-
         }
-        if (Input.GetMouseButtonUp(0))
+        else
         {
             scrollSpeed = 0;
         }
-        //if (stageCount>maxScrollNum)
-        //if(timer >= maxScrollTime)
-        //{
-        //    scrollSpeed = 3;
-        //    //moveFlg = false;
-        //}
         StartCoroutine(TrainMoving());
         UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
 	}
@@ -103,7 +82,8 @@ public class TrainMove_sanoki : MonoBehaviour {
     /// <param name="ImageNum">番号によって生成方法を変える(整数)</param>
     void TrainImageInstans(TrainState State)
     {
-        
+        System.Random r = new System.Random();
+        ImageSelector = r.Next(BackImagePrefab.Length-1);
         switch (State)
         {
             case TrainState.FirstInstans: //初期生成
@@ -112,6 +92,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                     Vector2.zero,
                     Quaternion.identity);
                 stageCount++;
+                ImageSelector = r.Next(BackImagePrefab.Length - 1);
                 image[1] = Instantiate(
                         BackImagePrefab[ImageSelector],
                         InstansPos,
@@ -145,7 +126,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                 {
                     Destroy(image[0]);
                     image[0] = Instantiate(
-                      BackImagePrefab[(int)TrainState.Goal],
+                      BackImagePrefab[BackImagePrefab.Length-1],
                       InstansPos,
                       Quaternion.identity);
                 }
@@ -153,7 +134,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                 {
                     Destroy(image[1]);
                     image[1] = Instantiate(
-                      BackImagePrefab[(int)TrainState.Goal],
+                      BackImagePrefab[BackImagePrefab.Length-1],
                       InstansPos,
                       Quaternion.identity);
                 }
