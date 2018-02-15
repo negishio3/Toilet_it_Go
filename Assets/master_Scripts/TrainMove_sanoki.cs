@@ -8,7 +8,7 @@ public class TrainMove_sanoki : MonoBehaviour {
     public GameObject UNKOman;//キャラクター
     float UNKOman_Speed = 4;  //キャラクターの移動速度
 
-    public float scrollSpeed = 0;//スクロールの速度
+    public float scrollSpeed;//スクロールの速度
     bool moveFlg;//背景を止めるか否か
 
     public GameObject[] BackImagePrefab;//ステージのプレハブ
@@ -33,12 +33,14 @@ public class TrainMove_sanoki : MonoBehaviour {
 
 	void Start () {
         isCountDown = false;
-        moveFlg = true;
+        moveFlg = false;
         TrainImageInstans(TrainState.FirstInstans);//初期背景の生成
     }
 	
 	void Update () {
 
+        if (Input.GetKeyDown(KeyCode.Space))
+            GameStart();
         if (image[0].transform.position.x <= -60 || image[1].transform.position.x <= -60)
         {
             if (stageCount == maxScrollNum)
@@ -56,12 +58,15 @@ public class TrainMove_sanoki : MonoBehaviour {
         //            moveFlg = false;
         if (Input.GetMouseButton(0))
         {
-            scrollSpeed = 6;
-            StartCoroutine(Timer(maxScrollTime));
+            //scrollSpeed = 0;
+            moveFlg = false;
         }
         else
         {
-            scrollSpeed = 0;
+            //moveFlg = true;
+            MoveChange();
+            scrollSpeed = 6;
+            StartCoroutine(Timer(maxScrollTime));
         }
         StartCoroutine(TrainMoving());
         UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
@@ -174,5 +179,9 @@ public class TrainMove_sanoki : MonoBehaviour {
             yield return null;
         }
         isCountDown = false;
+    }
+    public void MoveChange()
+    {
+        moveFlg = true;
     }
 }

@@ -15,7 +15,13 @@ public class TimeCount_murata : SceneFader_sanoki
     Sprite[] numberSprites = new Sprite[10];
 
     //時間をカウント
-    public float timeCount { get; private set; }
+    public float timeCount; //{ get; private set; }
+
+    public float timeCount_gs
+    {
+        get { return this.timeCount; }
+        private set { this.timeCount = value; }
+    }
 
     //カウント値（60秒）
     public int tim_count = 60;
