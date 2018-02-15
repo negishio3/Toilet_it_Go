@@ -24,14 +24,14 @@ public class TimeCount_murata : SceneFader_sanoki
     }
 
     //カウント値（60秒）
-    public int tim_count = 60;
+    public int tim_count = 00;
 
     //ゲームオーバー
-    public GameObject GameOber;
+   // public GameObject GameOber;
 
     void Start()
     {
-        GameOber.SetActive(false);
+      //  GameOber.SetActive(false);
         //カウントダウン値
         SetTime(tim_count);
     }
@@ -59,15 +59,15 @@ public class TimeCount_murata : SceneFader_sanoki
     //コルーチン分秒
     IEnumerator TimerStart()
     {
-        while (timeCount >= 0)
+        while (0 <=timeCount)
         {
             int sec = Mathf.FloorToInt(timeCount % 60);
             SetNumbers(sec, 2, 3);
-            int minu = Mathf.FloorToInt((timeCount - sec) / 60);
+            int minu = Mathf.FloorToInt((timeCount + sec) / 60);
             SetNumbers(minu, 0, 1);
             yield return new WaitForSeconds(1.0f);
-            timeCount -= 1.0f;
+            timeCount += 1.0f;
         }
-        GameOber.SetActive(true);
+       // GameOber.SetActive(true);
     }
 }
