@@ -17,11 +17,11 @@ public class TimeCount_murata : SceneFader_sanoki
     //時間をカウント
     public float timeCount; //{ get; private set; }
 
-    public float timeCount_gs
-    {
-        get { return this.timeCount; }
-        private set { this.timeCount = value; }
-    }
+    //public float timeCount_gs
+    //{
+    //    get { return this.timeCount; }
+    //    private set { this.timeCount = value; }
+    //}
 
     //カウント値（60秒）
     public int tim_count = 00;
@@ -63,7 +63,8 @@ public class TimeCount_murata : SceneFader_sanoki
         {
             int sec = Mathf.FloorToInt(timeCount % 60);
             SetNumbers(sec, 2, 3);
-            int minu = Mathf.FloorToInt((timeCount + sec) / 60);
+            //int minu = Mathf.FloorToInt((timeCount + sec) / 60);
+            int minu = Mathf.FloorToInt(timeCount / 60);
             SetNumbers(minu, 0, 1);
             yield return new WaitForSeconds(1.0f);
             timeCount += 1.0f;
