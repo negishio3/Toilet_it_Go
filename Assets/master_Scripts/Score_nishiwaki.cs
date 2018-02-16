@@ -24,31 +24,41 @@ public class Score_nishiwaki : MonoBehaviour {
     //public int one_i;
     //public int two_i;
     //public int three_i;
-    public int[] score_i;
+    //public int[] score_i;
 
     // スコアの評価を入れる
     //public string one_str;  // 1位用
     //public string two_str;  // 2位用
     //public string three_str;  // 3位用
 
-    public float newScoretime_f;
+    // スコアの画像
+    [SerializeField]
+    Sprite[] hyoukaSprites = new Sprite[4];
+
+    float newScoretime_f = 0.0f;
     string newScore_str;
 
-    TimeCount_murata timeCount;
+    // TimeCount_murataスクリプトからgetする
+    public TimeCount_murata timeCount;
+
+    // スプライトを張りたいオブジェクト
+    public GameObject testImage;
 
     // Use this for initialization
     void Start () {
-
-
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        newScoretime_f = timeCount.timeCount_gs;
+        newScoretime_f = timeCount.timeCount;
 
         // スコアの算出
-        Hyouka((int)timeCount.timeCount);
+        //Hyouka(timeCount.timeCount_gs);
+        Hyouka(newScoretime_f);
+
+        // 評価のイメージを表示
+        HyoukaImage(newScore_str);
 
         // スコアの並び替え
         //scoresort();
@@ -59,27 +69,56 @@ public class Score_nishiwaki : MonoBehaviour {
         //Score3.text = "3位　：　" + three_i;
     }
 
-    public void Hyouka(int score)
+    // タイムに応じてスコアをだす
+    public void Hyouka(float score)
     {
         if (score < 0)
         {
             Debug.Log("これはエラーよ！！おかしいわ！！");
         }
-        else if (score < 20)
-        {
-            Debug.Log("C");
-        }
         else if (score < 30)
         {
-            Debug.Log("B");
+            Debug.Log("S");
+            newScore_str = "S";
         }
         else if (score < 40)
         {
             Debug.Log("A");
+            newScore_str = "A";
+        }
+        else if (score < 50)
+        {
+            Debug.Log("B");
+            newScore_str = "B";
         }
         else
         {
-            Debug.Log("S");
+            Debug.Log("C");
+            newScore_str = "C";
+        }
+    }
+
+    // スコアに応じた評価の画像を出す
+    public void HyoukaImage(string Image)
+    {
+        switch (Image)
+        {
+            case "S":
+                Debug.Log("Sです");
+                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[0];
+                break;
+            case "A":
+                Debug.Log("Aです");
+                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[1];
+                break;
+            case "B":
+                Debug.Log("Bです");
+                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[2];
+                break;
+            case "C":
+                Debug.Log("Cです");
+                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[3];
+                break;
         }
     }
 
