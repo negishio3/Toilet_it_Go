@@ -47,12 +47,10 @@ public class TimeCount_murata : SceneFader_sanoki
         {
             int sec = Mathf.FloorToInt(timeCount % 60);
             SetNumbers(sec, 2, 3);
-<<<<<<< HEAD
+
             //int minu = Mathf.FloorToInt((timeCount + sec) / 60);
-            int minu = Mathf.FloorToInt(timeCount / 60);
-=======
+           // int minu = Mathf.FloorToInt(timeCount / 60);
             int minu = Mathf.FloorToInt((timeCount) / 60);
->>>>>>> origin/sanoki_0216
             SetNumbers(minu, 0, 1);
             yield return new WaitForSeconds(1.0f);
             timeCount += 1.0f;
