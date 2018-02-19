@@ -32,8 +32,8 @@ public class Score_nishiwaki : MonoBehaviour {
     //public string three_str;  // 3位用
 
     // スコアの画像
-    [SerializeField]
-    Sprite[] hyoukaSprites = new Sprite[4];
+    //[SerializeField]
+    //Sprite[] hyoukaSprites = new Sprite[4];
 
     float newScoretime_f = 0.0f;
     string newScore_str;
@@ -42,11 +42,14 @@ public class Score_nishiwaki : MonoBehaviour {
     public TimeCount_murata timeCount;
 
     // スプライトを張りたいオブジェクト
-    public GameObject testImage;
+    //public GameObject testImage;
+
+    // 最終的なランクをRankSceneに渡す
+    public static string rank;
 
     // Use this for initialization
     void Start () {
-
+        rank = "C";
 	}
 	
 	// Update is called once per frame
@@ -54,11 +57,10 @@ public class Score_nishiwaki : MonoBehaviour {
         newScoretime_f = timeCount.timeCount;
 
         // スコアの算出
-        //Hyouka(timeCount.timeCount_gs);
         Hyouka(newScoretime_f);
 
         // 評価のイメージを表示
-        HyoukaImage(newScore_str);
+        //HyoukaImage(newScore_str);
 
         // スコアの並び替え
         //scoresort();
@@ -80,24 +82,29 @@ public class Score_nishiwaki : MonoBehaviour {
         {
             Debug.Log("S");
             newScore_str = "S";
+            rank = "S";
         }
         else if (score < 40)
         {
             Debug.Log("A");
             newScore_str = "A";
+            rank = "A";
         }
         else if (score < 50)
         {
             Debug.Log("B");
             newScore_str = "B";
+            rank = "B";
         }
         else
         {
             Debug.Log("C");
             newScore_str = "C";
+            rank = "C";
         }
     }
 
+    /*
     // スコアに応じた評価の画像を出す
     public void HyoukaImage(string Image)
     {
@@ -105,22 +112,27 @@ public class Score_nishiwaki : MonoBehaviour {
         {
             case "S":
                 Debug.Log("Sです");
-                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[0];
+                //this.testImage.GetComponent<Image>().sprite = hyoukaSprites[0];
+                rank = "S";
                 break;
             case "A":
                 Debug.Log("Aです");
-                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[1];
+                //this.testImage.GetComponent<Image>().sprite = hyoukaSprites[1];
+                rank = "A";
                 break;
             case "B":
                 Debug.Log("Bです");
-                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[2];
+                //this.testImage.GetComponent<Image>().sprite = hyoukaSprites[2];
+                rank = "B";
                 break;
             case "C":
                 Debug.Log("Cです");
-                this.testImage.GetComponent<Image>().sprite = hyoukaSprites[3];
+                //this.testImage.GetComponent<Image>().sprite = hyoukaSprites[3];
+                rank = "C";
                 break;
         }
     }
+    */
 
     //public void scoresort()
     //{
