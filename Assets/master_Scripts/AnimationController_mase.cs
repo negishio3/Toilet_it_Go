@@ -22,12 +22,12 @@ public class AnimationController_mase : MonoBehaviour {
 
     public void wait_action()
     {
-            animator.SetTrigger("wait");
+            animator.SetTrigger("wait");//歩く
     }
 
     public void punch_action()
     {
-        animator.SetTrigger("unchｐ");
+        animator.SetTrigger("unchｐ");//ぱんち
     }
 
 }
