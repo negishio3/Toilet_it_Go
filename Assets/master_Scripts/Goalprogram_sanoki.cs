@@ -5,6 +5,7 @@ using UnityEngine;
 public class Goalprogram_sanoki : MonoBehaviour {
 
     SceneFader_sanoki sf;
+    public TrainMove_sanoki TrainMove;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class Goalprogram_sanoki : MonoBehaviour {
         if (other.tag == "Goal")
         {
             Debug.Log("当たった");
+            TrainMove.buttonFlg = false;
             sf.StageSelect("sanoki_Title");
         }
     }
