@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class TutorialSlide_Murata : MonoBehaviour {
 
-    public Image firstTutorialImage;//一枚目のスライド最初に表示される
-    public Image secondTutorialImage;//切り替え用のスライド(スライドするときだけ表示される)
+    public Image firsImage;//一枚目のスライド最初に表示される
+    public Image secondImage;//切り替え用のスライド(スライドするときだけ表示される)
 
     public Vector2 slideImageSize;//スライドのサイズ
     public bool slideSizeIsScreenSize;//スライドを画面サイズに合わせるのかどうか(trueなら画面サイズに合わせる。)
@@ -24,14 +24,14 @@ public class TutorialSlide_Murata : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        firstTutorialImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
-        secondTutorialImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
+        firsImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
+        secondImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
         if (slideSizeIsScreenSize) { slideImageSize = new Vector2(Screen.width, Screen.height); }//画面サイズに合わせる
         if (slidePositionIsCenter) { slidePosition = Vector2.zero; }//移動位置を画面中央に設定
-        firstTutorialImage.rectTransform.localPosition = slidePosition;//設定された位置に移動する
-        secondTutorialImage.rectTransform.localPosition = slidePosition;//設定された位置に移動する
-        firstTutorialImage.rectTransform.sizeDelta = slideImageSize;//設定されたスライドのサイズに調節する
-        secondTutorialImage.rectTransform.sizeDelta = slideImageSize;//二枚目も同様にスライドのサイズを調整する
+        firsImage.rectTransform.localPosition = slidePosition;//設定された位置に移動する
+        secondImage.rectTransform.localPosition = slidePosition;//設定された位置に移動する
+        firsImage.rectTransform.sizeDelta = slideImageSize;//設定されたスライドのサイズに調節する
+        secondImage.rectTransform.sizeDelta = slideImageSize;//二枚目も同様にスライドのサイズを調整する
         isSlide = false;//スライドしていない状態にセットする
     }
 
@@ -72,7 +72,7 @@ public class TutorialSlide_Murata : MonoBehaviour {
             //用意した画像より大きくなったら最初の画像に設定する
             if (secondSpriteNum == slideImageSprite.Length) { secondSpriteNum = 0; }
             //画像を変更する
-            secondTutorialImage.sprite = slideImageSprite[secondSpriteNum];
+            secondImage.sprite = slideImageSprite[secondSpriteNum];
         }
         else
         {
@@ -81,12 +81,12 @@ public class TutorialSlide_Murata : MonoBehaviour {
             //0より小さくなったら最後の画像を設定する
             if (secondSpriteNum < 0) { secondSpriteNum = slideImageSprite.Length - 1; }
             //画像を変更する
-            secondTutorialImage.sprite = slideImageSprite[secondSpriteNum];
+            secondImage.sprite = slideImageSprite[secondSpriteNum];
         }
         //スライドのサイズと位置を調整
-        firstTutorialImage.rectTransform.sizeDelta = slideImageSize;
-        firstTutorialImage.rectTransform.localPosition = new Vector2(0, 0);
-        secondTutorialImage.rectTransform.sizeDelta = slideImageSize;
+        firsImage.rectTransform.sizeDelta = slideImageSize;
+        firsImage.rectTransform.localPosition = new Vector2(0, 0);
+        secondImage.rectTransform.sizeDelta = slideImageSize;
 
         while (t < 1)
         {
@@ -96,13 +96,13 @@ public class TutorialSlide_Murata : MonoBehaviour {
             if (isSecondSlide)
             {
                 //Lerpでスライドする
-                firstTutorialImage.rectTransform.localPosition = Vector2.Lerp(startSlidePosition, leftSlidePosition, t);
-                secondTutorialImage.rectTransform.localPosition = Vector2.Lerp(rightSlidePosition, startSlidePosition, t);
+                firsImage.rectTransform.localPosition = Vector2.Lerp(startSlidePosition, leftSlidePosition, t);
+                secondImage.rectTransform.localPosition = Vector2.Lerp(rightSlidePosition, startSlidePosition, t);
             }
             else
             {
-                firstTutorialImage.rectTransform.localPosition = Vector2.Lerp(startSlidePosition, rightSlidePosition, t);
-                secondTutorialImage.rectTransform.localPosition = Vector2.Lerp(leftSlidePosition, startSlidePosition, t);
+                firsImage.rectTransform.localPosition = Vector2.Lerp(startSlidePosition, rightSlidePosition, t);
+                secondImage.rectTransform.localPosition = Vector2.Lerp(leftSlidePosition, startSlidePosition, t);
             }
 
             yield return null;
@@ -113,18 +113,18 @@ public class TutorialSlide_Murata : MonoBehaviour {
         {
             spriteNum++;
             if (spriteNum == slideImageSprite.Length) spriteNum = 0;
-            firstTutorialImage.sprite = slideImageSprite[spriteNum];
+            firsImage.sprite = slideImageSprite[spriteNum];
         }
         else
         {
             spriteNum--;
             if (spriteNum < 0) spriteNum = slideImageSprite.Length - 1;
-            firstTutorialImage.sprite = slideImageSprite[spriteNum];
+            firsImage.sprite = slideImageSprite[spriteNum];
         }
 
         //最終位置を調整する
-        firstTutorialImage.rectTransform.localPosition = startSlidePosition;
-        secondTutorialImage.rectTransform.localPosition = rightSlidePosition;
+        firsImage.rectTransform.localPosition = startSlidePosition;
+        secondImage.rectTransform.localPosition = rightSlidePosition;
 
         //スライド終了に設定する
         isSlide = false;
