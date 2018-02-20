@@ -19,11 +19,11 @@ public class AnimationController_mase : MonoBehaviour
 
     void Update()
     {
-        if (stop == true)
-        {
-            animator.SetTrigger("wait");
-            Debug.Log("俺が時を止めた");
-        }
+        //if (stop == true)
+        //{
+        //    animator.SetTrigger("wait");
+        //    Debug.Log("俺が時を止めた");
+        //}
 
 
     }
@@ -32,15 +32,15 @@ public class AnimationController_mase : MonoBehaviour
     {
         //stop = true;
         //Walk = false;
-        GetComponent<Animator>().SetBool("walk", false);
-        animator.SetTrigger("wait");
+        GetComponent<Animator>().SetBool("walk", false);//ボタン押したらWalkのアニメーションfalse
+        animator.SetTrigger("wait");//waitのアニメーション再生
     }
 
     public void OnUp()
     {
         //stop = false;
         //Walk = true;
-        GetComponent<Animator>().SetBool("walk", true);
+        GetComponent<Animator>().SetBool("walk", true);//ボタン離したらWalkのアニメーションtrue
     }
 
     //    public void wait()
