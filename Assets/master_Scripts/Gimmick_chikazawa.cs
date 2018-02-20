@@ -19,6 +19,7 @@ public class Gimmick_chikazawa : MonoBehaviour {
     {
         if(TM.UNKOman==true || col.gameObject.name == "GimmickDestroyer")
         {
+            Debug.Log("sinda");
             Destroy(gameObject);
         }
     }
