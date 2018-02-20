@@ -5,29 +5,51 @@ using UnityEngine;
 public class AnimationController_mase : MonoBehaviour {
 
     Animator animator;
-    bool push = false;
+    bool stop = false;
+    bool Walk = false;
 
     // Use this for initialization
     void Start () {
 
         animator = GetComponent<Animator>();
-
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
 	}
 
-    public void wait_action()
+
+    void Update()
     {
-            animator.SetTrigger("wait");//歩く
+        if (stop == true)
+        {
+            animator.SetTrigger("wait");
+            Debug.Log("俺が時を止めた");
+        }
+
+
     }
 
-    public void punch_action()
+    public void OnDown()
     {
-        animator.SetTrigger("unchｐ");//ぱんち
+        //stop = true;
+        //Walk = false;
+        GetComponent<Animator>().SetBool("walk", false);
+        animator.SetTrigger("wait");
+    }
+
+    public void OnUp()
+    {
+        //stop = false;
+        //Walk = true;
+        GetComponent<Animator>().SetBool("walk", true);
+    }
+
+    //    public void wait()
+    //{
+    //    animator.SetTrigger("wait");//待つ
+    //}
+
+    public void punch_Event()
+    {
+        Debug.Log("おらおらおら");
+        animator.SetTrigger("unchp");//ぱんち
     }
 
 }
