@@ -10,7 +10,7 @@ public class TrainMove_sanoki : MonoBehaviour {
     float UNKOman_Speed = 4;  //キャラクターの移動速度
     
     //スクロールの速度
-    public float scrollSpeed;//ステージ
+    float scrollSpeed = 0.5f;//ステージ
     float BackImage_scrollSpeed = 4;//背景
     float Pole_scrollSpeed = 16;//電柱
 
@@ -45,10 +45,15 @@ public class TrainMove_sanoki : MonoBehaviour {
 
     public float timer;
     bool isCountDown;
-    public bool buttonFlg = true;
+    public bool buttonFlg;
     public bool isGame;
 
-    
+    Vector2 StartPos_first;
+    Vector2 ScrollPos_first;
+
+    Vector2 StartPos_second;
+    Vector2 ScrollPos_second;
+
     /// <summary>
     /// ステージプレファブ用
     /// </summary>
@@ -87,6 +92,7 @@ public class TrainMove_sanoki : MonoBehaviour {
         BackImageInstans(BackImageState.FirstInstans);
         PoleInstans(BackImageState.FirstInstans);
 
+        buttonFlg = false;
     }
 	
 	void Update () {
@@ -116,24 +122,24 @@ public class TrainMove_sanoki : MonoBehaviour {
         {
             PoleInstans(BackImageState.Loop);
         }
-        if (stageCount >= maxScrollNum && (TrainImage[1].transform.position.x <= 0 || TrainImage[0].transform.position.x <= 0))
-        {
-            Debug.Log("よべた");
-            moveFlg = false;
-        }
-        if (isGame && Input.GetMouseButton(0))
-        {
-            moveFlg = false;
-            scrollSpeed = 0;
-            //moveFlg = false;
-        }
-        else if( isGame && Input.GetMouseButtonUp(0))
-        {
-            moveFlg = true;
-            scrollSpeed = 6;
-            StartCoroutine(Timer(maxScrollTime));
-        }
-        StartCoroutine(TrainMoving());
+        //if (stageCount >= maxScrollNum && (TrainImage[1].transform.position.x <= 0 || TrainImage[0].transform.position.x <= 0))
+        //{
+        //    Debug.Log("よべた");
+        //    moveFlg = false;
+        //}
+        //if (isGame && Input.GetMouseButton(0))
+        //{
+        //    moveFlg = false;
+        //    scrollSpeed = 0;
+        //    //moveFlg = false;
+        //}
+        //else if( isGame && Input.GetMouseButtonUp(0))
+        //{
+        //    moveFlg = true;
+        //    scrollSpeed = 6;
+        //    StartCoroutine(Timer(maxScrollTime));
+        //}
+        StartCoroutine(BackImageMoving());
         UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
 	}
 
@@ -158,6 +164,7 @@ public class TrainMove_sanoki : MonoBehaviour {
     {
         System.Random r = new System.Random();//乱数ジェネレータ
         ImageSelector = r.Next(TrainPrefab.Length-1);//最後のプレハブがゴールプレハブに当たるので最大値-１する
+
         switch (State)
         {
             case TrainState.FirstInstans: //初期生成
@@ -171,6 +178,14 @@ public class TrainMove_sanoki : MonoBehaviour {
                         TrainPrefab[ImageSelector],
                         TrainInstansPos,
                         Quaternion.identity);
+                StartPos_first = TrainImage[0].transform.position;//スクロールの開始位置を設定
+                StartPos_second = TrainImage[1].transform.position;
+                ScrollPos_first = new Vector2(                    //スクロール先の位置を設定
+                                    TrainImage[0].transform.position.x - scrollSpeed,
+                                    TrainImage[0].transform.position.y);
+                ScrollPos_second = new Vector2(
+                                    TrainImage[1].transform.position.x - scrollSpeed,
+                                    TrainImage[1].transform.position.y);
                 break;
             case TrainState.Loop: //ループ生成
                 if (TrainImage[0].transform.position.x <= -TrainSizeX)//画面外に出たら削除して生成し直す処理
@@ -301,19 +316,43 @@ public class TrainMove_sanoki : MonoBehaviour {
     /// 背景を動かす
     /// </summary>
     /// <returns></returns>
-    public IEnumerator TrainMoving()
+    public IEnumerator BackImageMoving()
     {
-        if (moveFlg || buttonFlg) //moveFlgかbuttonFlgがfalseなら中断
-        {
-            TrainImage[0].transform.position -= new Vector3(Time.deltaTime * scrollSpeed, TrainImage[0].transform.position.y, 0);//ひたすら左に進む
-            TrainImage[1].transform.position -= new Vector3(Time.deltaTime * scrollSpeed, TrainImage[1].transform.position.y, 0);
-        }
         BackImage[0].transform.position -= new Vector3(Time.deltaTime * BackImage_scrollSpeed, BackImage[0].transform.position.y, 0);
         BackImage[1].transform.position -= new Vector3(Time.deltaTime * BackImage_scrollSpeed, BackImage[1].transform.position.y, 0);
 
         Pole[0].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[0].transform.position.y, 0);
         Pole[1].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[1].transform.position.y, 0);
         yield return null;
+    }
+
+    public void TrainMoving()
+    {
+        if (!buttonFlg)
+        { 
+            ScrollPos_first = new Vector2(ScrollPos_first.x - scrollSpeed, TrainImage[0].transform.position.y);//スクロール先の位置を更新
+            ScrollPos_second = new Vector2(ScrollPos_second.x - scrollSpeed, TrainImage[1].transform.position.y);
+            StartCoroutine(TrainScroll(0.05f));
+            buttonFlg = true;
+        }
+    }
+
+    public IEnumerator TrainScroll(float seconds)
+    { 
+
+        float time = 0;
+        while (time <= 1.0f)
+        {
+            time += Time.deltaTime / seconds;
+            TrainImage[0].transform.position = Vector2.Lerp(StartPos_first, ScrollPos_first, time);
+            TrainImage[1].transform.position = Vector2.Lerp(StartPos_second, ScrollPos_second, time);
+            yield return null;
+        }
+        StartPos_first = TrainImage[0].transform.position;
+        ScrollPos_first = new Vector2(TrainImage[0].transform.position.x - scrollSpeed, TrainImage[0].transform.position.y);
+        StartPos_second = TrainImage[1].transform.position;
+        ScrollPos_second = new Vector2(TrainImage[1].transform.position.x - scrollSpeed, TrainImage[1].transform.position.y);
+        buttonFlg = false;
     }
 
     /// <summary>
@@ -338,7 +377,13 @@ public class TrainMove_sanoki : MonoBehaviour {
     }
     public void moveving()
     {
-        scrollSpeed = 6;
+        moveFlg = true;
+        //scrollSpeed = 6;
+    }
+
+    public void Stop()
+    {
+        moveFlg = false;
     }
 
     /// <summary>
