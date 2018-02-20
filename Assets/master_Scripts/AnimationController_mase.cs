@@ -14,6 +14,7 @@ public class AnimationController_mase : MonoBehaviour
     {
 
         animator = GetComponent<Animator>();
+<<<<<<< HEAD
     }
 
 
@@ -43,6 +44,37 @@ public class AnimationController_mase : MonoBehaviour
         GetComponent<Animator>().SetBool("walk", true);//ボタン離したらWalkのアニメーションtrue
     }
 
+=======
+	}
+
+
+    void Update()
+    {
+        if (stop == true)
+        {
+            animator.SetTrigger("wait");
+            Debug.Log("俺が時を止めた");
+        }
+
+
+    }
+
+    public void OnDown()
+    {
+        //stop = true;
+        //Walk = false;
+        GetComponent<Animator>().SetBool("walk", false);
+        animator.SetTrigger("wait");
+    }
+
+    public void OnUp()
+    {
+        //stop = false;
+        //Walk = true;
+        GetComponent<Animator>().SetBool("walk", true);
+    }
+
+>>>>>>> origin/nishiwaki0220
     //    public void wait()
     //{
     //    animator.SetTrigger("wait");//待つ
