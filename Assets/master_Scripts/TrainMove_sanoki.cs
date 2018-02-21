@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TrainMove_sanoki : MonoBehaviour {
+    GoalPos_sanoki GoalPos;
 
     public TimeCount_murata TimeCount_m;//村田パイセンのスクリプトを取得
     public GameObject UNKOman;//キャラクター
@@ -92,6 +93,8 @@ public class TrainMove_sanoki : MonoBehaviour {
         BackImageInstans(BackImageState.FirstInstans);
         PoleInstans(BackImageState.FirstInstans);
 
+        StartCoroutine(BackImageMoving());
+
         buttonFlg = false;
     }
 	
@@ -113,6 +116,10 @@ public class TrainMove_sanoki : MonoBehaviour {
             {
                 TrainImageInstans(TrainState.Loop);
             }
+        }
+        if (GoalPos_sanoki.GoalPosition() <= 0)
+        {
+            
         }
         if(BackImage[0].transform.position.x <= -BackImageSizeX || BackImage[1].transform.position.x <= -BackImageSizeX)
         {
@@ -139,8 +146,8 @@ public class TrainMove_sanoki : MonoBehaviour {
         //    scrollSpeed = 6;
         //    StartCoroutine(Timer(maxScrollTime));
         //}
-        StartCoroutine(BackImageMoving());
-        UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
+        //StartCoroutine(BackImageMoving());
+        //UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
 	}
 
     /// <summary>
@@ -216,6 +223,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                       TrainInstansPos,
                       Quaternion.identity);
                     TrainImage[0].transform.position = new Vector2(TrainImage[1].transform.position.x + TrainSizeX, 0);
+                    
                 }
                 if (TrainImage[1].transform.position.x <= -TrainSizeX)
                 {
@@ -225,6 +233,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                       TrainInstansPos,
                       Quaternion.identity);
                     TrainImage[1].transform.position = new Vector2(TrainImage[0].transform.position.x + TrainSizeX, 0);
+                    GoalPos = FindObjectOfType<GoalPos_sanoki>();
                 }
                 break;
         }
@@ -318,28 +327,31 @@ public class TrainMove_sanoki : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator BackImageMoving()
     {
-        BackImage[0].transform.position -= new Vector3(Time.deltaTime * BackImage_scrollSpeed, BackImage[0].transform.position.y, 0);
-        BackImage[1].transform.position -= new Vector3(Time.deltaTime * BackImage_scrollSpeed, BackImage[1].transform.position.y, 0);
+        while (true)
+        {
+            BackImage[0].transform.position -= new Vector3(Time.deltaTime * BackImage_scrollSpeed, BackImage[0].transform.position.y, 0);
+            BackImage[1].transform.position -= new Vector3(Time.deltaTime * BackImage_scrollSpeed, BackImage[1].transform.position.y, 0);
 
-        Pole[0].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[0].transform.position.y, 0);
-        Pole[1].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[1].transform.position.y, 0);
-        yield return null;
+            Pole[0].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[0].transform.position.y, 0);
+            Pole[1].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[1].transform.position.y, 0);
+            yield return null;
+        }
     }
 
     public void TrainMoving()
     {
         if (!buttonFlg)
-        { 
-            ScrollPos_first = new Vector2(ScrollPos_first.x - scrollSpeed, TrainImage[0].transform.position.y);//スクロール先の位置を更新
-            ScrollPos_second = new Vector2(ScrollPos_second.x - scrollSpeed, TrainImage[1].transform.position.y);
-            StartCoroutine(TrainScroll(0.05f));
-            buttonFlg = true;
+        {
+            StartCoroutine(TrainScroll());
+            //buttonFlg = true;
         }
     }
 
-    public IEnumerator TrainScroll(float seconds)
-    { 
-
+    public IEnumerator TrainScroll()
+    {
+        float seconds = 0.05f;
+        ScrollPos_first = new Vector2(ScrollPos_first.x - scrollSpeed, TrainImage[0].transform.position.y);//スクロール先の位置を更新
+        ScrollPos_second = new Vector2(ScrollPos_second.x - scrollSpeed, TrainImage[1].transform.position.y);
         float time = 0;
         while (time <= 1.0f)
         {

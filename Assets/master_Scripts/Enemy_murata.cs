@@ -55,7 +55,7 @@ public class Enemy_murata : MonoBehaviour
             //左に行って削除老害
             if (Enemys[0].transform.position.x <= -10)
             {
-                Debug.Log("削除");
+                //Debug.Log("削除");
                 Destroy(Enemys[0]);
             }
         }
@@ -68,7 +68,7 @@ public class Enemy_murata : MonoBehaviour
             //左に行って削除不良
             if (Enemys[1].transform.position.x <= -10)
             {
-                Debug.Log("削除");
+                //Debug.Log("削除");
                 Destroy(Enemys[1]);
             }
         }
