@@ -15,8 +15,6 @@ public class Enemy_murata : MonoBehaviour
     public float Oldage_tim_end=1f;//生成時間老害
     public float Bad_tim_end = 1f;//生成時間不良
 
-    bool Out_of_Screen = false;
-
     void Start()
     {
        

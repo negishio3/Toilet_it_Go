@@ -35,7 +35,7 @@ public class AnimationController_mase : MonoBehaviour
         //Walk = false;
         GetComponent<Animator>().SetBool("walk", false);//ボタン押したらWalkのアニメーションfalse
         animator.SetTrigger("wait");//waitのアニメーション再生
-        Debug.Log("俺が時を止めた");
+       // Debug.Log("俺が時を止めた");
     }
 
     public void OnUp()
@@ -47,7 +47,7 @@ public class AnimationController_mase : MonoBehaviour
 
     public void punch_Event()
     {
-        Debug.Log("おらおらおら");
+       // Debug.Log("おらおらおら");
         animator.SetTrigger("unchp");//ぱんち
     }
 }
