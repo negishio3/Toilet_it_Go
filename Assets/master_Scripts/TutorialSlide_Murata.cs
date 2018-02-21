@@ -29,6 +29,8 @@ public class TutorialSlide_Murata : MonoBehaviour
     private Vector3 touchEndPos; // タッチ終了座標
     // フリック↑
 
+    bool tap = true;
+
 
     // Use this for initialization
     void Start()
@@ -47,7 +49,10 @@ public class TutorialSlide_Murata : MonoBehaviour
 
     void Update()
     {
-        Flick();
+        if (tap == true)
+        {
+            Flick();
+        }
     }
     /// <summary>
     /// コルーチン呼び出し簡易メソッド
@@ -139,7 +144,7 @@ public class TutorialSlide_Murata : MonoBehaviour
         //スライド終了に設定する
         isSlide = false;
 
-        Debug.Log(isSecondSlide);
+        tap = true;
     }
 
     // フリック ↓
@@ -211,4 +216,9 @@ public class TutorialSlide_Murata : MonoBehaviour
     }
 
     // フリック ↑
+
+    public void buttonorTap()
+    {
+        tap = false;
+    }
 }
