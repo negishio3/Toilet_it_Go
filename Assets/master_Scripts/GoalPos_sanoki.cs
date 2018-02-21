@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GoalPos_sanoki : MonoBehaviour {
 
-	public static float GoalPosition()
+    public static float GoalPosition()
     {
-        return transform.position.x;
+        return 0;
+        //return transform.position.x;
     }
 }
