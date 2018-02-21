@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TrainMove_sanoki : MonoBehaviour {
-    GoalPos_sanoki GoalPos;
+    //GoalPos_sanoki GoalPos;
 
     public TimeCount_murata TimeCount_m;//村田パイセンのスクリプトを取得
     public GameObject UNKOman;//キャラクター
@@ -55,6 +55,8 @@ public class TrainMove_sanoki : MonoBehaviour {
     Vector2 StartPos_second;
     Vector2 ScrollPos_second;
 
+    Ray ray;
+
     /// <summary>
     /// ステージプレファブ用
     /// </summary>
@@ -74,6 +76,11 @@ public class TrainMove_sanoki : MonoBehaviour {
         Loop//ループ生成
     }
 
+    enum SetPosNum
+    {
+        First,
+        Second
+    }
     void Start() {
         //サイズの取得---------------------------------------------------------------------------------------
         renderer = TrainPrefab[0].GetComponent<SpriteRenderer>();//BackImagePrefab[0]のSpriteRendererを取得
@@ -96,13 +103,13 @@ public class TrainMove_sanoki : MonoBehaviour {
         StartCoroutine(BackImageMoving());
 
         buttonFlg = false;
+        ray = new Ray(transform.position, transform.forward);
     }
 	
 	void Update () {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TimeCount_m.SetTime();
             GameStart();
         }
             
@@ -116,10 +123,6 @@ public class TrainMove_sanoki : MonoBehaviour {
             {
                 TrainImageInstans(TrainState.Loop);
             }
-        }
-        if (GoalPos_sanoki.GoalPosition() <= 0)
-        {
-            
         }
         if(BackImage[0].transform.position.x <= -BackImageSizeX || BackImage[1].transform.position.x <= -BackImageSizeX)
         {
@@ -148,7 +151,15 @@ public class TrainMove_sanoki : MonoBehaviour {
         //}
         //StartCoroutine(BackImageMoving());
         //UNKOman.transform.position += new Vector3(Time.deltaTime * Input.GetAxisRaw("Horizontal") * UNKOman_Speed,0);
-	}
+        RaycastHit hit;
+        if (Physics.Raycast(ray,10.0f))
+        {
+            //if (ray.collider.tag == "enemy")
+            //{
+            //    print("前方に見える");
+            //}
+        }
+    }
 
     /// <summary>
     /// ゲームを開始する簡易メソッド
@@ -157,10 +168,7 @@ public class TrainMove_sanoki : MonoBehaviour {
     {
         moveFlg = true;
         isGame = true;
-        scrollSpeed = 6;
-        BackImage_scrollSpeed = 2;
-        Pole_scrollSpeed = 11;
-        StartCoroutine(Timer(maxScrollTime));
+        TimeCount_m.SetTime();
     }
 
     /// <summary>
@@ -185,14 +193,8 @@ public class TrainMove_sanoki : MonoBehaviour {
                         TrainPrefab[ImageSelector],
                         TrainInstansPos,
                         Quaternion.identity);
-                StartPos_first = TrainImage[0].transform.position;//スクロールの開始位置を設定
-                StartPos_second = TrainImage[1].transform.position;
-                ScrollPos_first = new Vector2(                    //スクロール先の位置を設定
-                                    TrainImage[0].transform.position.x - scrollSpeed,
-                                    TrainImage[0].transform.position.y);
-                ScrollPos_second = new Vector2(
-                                    TrainImage[1].transform.position.x - scrollSpeed,
-                                    TrainImage[1].transform.position.y);
+                SetScrollPos(SetPosNum.First, TrainImage[0].transform.position);//スクロール先の座標を設定
+                SetScrollPos(SetPosNum.Second, TrainImage[1].transform.position);
                 break;
             case TrainState.Loop: //ループ生成
                 if (TrainImage[0].transform.position.x <= -TrainSizeX)//画面外に出たら削除して生成し直す処理
@@ -223,7 +225,6 @@ public class TrainMove_sanoki : MonoBehaviour {
                       TrainInstansPos,
                       Quaternion.identity);
                     TrainImage[0].transform.position = new Vector2(TrainImage[1].transform.position.x + TrainSizeX, 0);
-                    
                 }
                 if (TrainImage[1].transform.position.x <= -TrainSizeX)
                 {
@@ -233,7 +234,7 @@ public class TrainMove_sanoki : MonoBehaviour {
                       TrainInstansPos,
                       Quaternion.identity);
                     TrainImage[1].transform.position = new Vector2(TrainImage[0].transform.position.x + TrainSizeX, 0);
-                    GoalPos = FindObjectOfType<GoalPos_sanoki>();
+                    //GoalPos = FindObjectOfType<GoalPos_sanoki>();
                 }
                 break;
         }
@@ -338,6 +339,10 @@ public class TrainMove_sanoki : MonoBehaviour {
         }
     }
 
+
+    /// <summary>
+    /// これが呼ばれることによって動く
+    /// </summary>
     public void TrainMoving()
     {
         if (!buttonFlg)
@@ -350,43 +355,36 @@ public class TrainMove_sanoki : MonoBehaviour {
     public IEnumerator TrainScroll()
     {
         float seconds = 0.05f;
-        ScrollPos_first = new Vector2(ScrollPos_first.x - scrollSpeed, TrainImage[0].transform.position.y);//スクロール先の位置を更新
-        ScrollPos_second = new Vector2(ScrollPos_second.x - scrollSpeed, TrainImage[1].transform.position.y);
         float time = 0;
-        while (time <= 1.0f)
-        {
-            time += Time.deltaTime / seconds;
-            TrainImage[0].transform.position = Vector2.Lerp(StartPos_first, ScrollPos_first, time);
-            TrainImage[1].transform.position = Vector2.Lerp(StartPos_second, ScrollPos_second, time);
-            yield return null;
-        }
-        StartPos_first = TrainImage[0].transform.position;
-        ScrollPos_first = new Vector2(TrainImage[0].transform.position.x - scrollSpeed, TrainImage[0].transform.position.y);
-        StartPos_second = TrainImage[1].transform.position;
-        ScrollPos_second = new Vector2(TrainImage[1].transform.position.x - scrollSpeed, TrainImage[1].transform.position.y);
-        buttonFlg = false;
+        //if (!GoalPos.CenterFlg)
+        //{
+            ScrollPos_first = new Vector2(ScrollPos_first.x - scrollSpeed, TrainImage[0].transform.position.y);//スクロール先の位置を更新
+            ScrollPos_second = new Vector2(ScrollPos_second.x - scrollSpeed, TrainImage[1].transform.position.y);
+
+            while (time <= 1.0f)
+            {
+                time += Time.deltaTime / seconds;
+                TrainImage[0].transform.position = Vector2.Lerp(StartPos_first, ScrollPos_first, time);
+                TrainImage[1].transform.position = Vector2.Lerp(StartPos_second, ScrollPos_second, time);
+                
+                yield return null;
+            }
+            SetScrollPos(SetPosNum.First, TrainImage[0].transform.position);
+            SetScrollPos(SetPosNum.Second, TrainImage[1].transform.position);
+        //}
+        //else
+        //{
+        //    while (time <= 1.0f)
+        //    {
+        //        UNKOman.transform.position = Vector2.Lerp(StartPos_first,ScrollPos_first,time);
+        //        time += Time.deltaTime / seconds;
+        //        yield return null;
+        //    }
+        //    SetScrollPos( SetPosNum.First,UNKOman.transform.position);
+        //}
+           //buttonFlg = false;
     }
 
-    /// <summary>
-    /// 時間経過をカウントする(デバッグ用)
-    /// </summary>
-    /// <param name="seconds">指定した秒数カウントする</param>
-    /// <returns></returns>
-    public IEnumerator Timer(float seconds)
-    {
-        if (isCountDown) yield break;
-        isCountDown = true;
-        timer = 0;//経過時間をリセット
-        float time = 0;
-
-        while (time < seconds)
-        {
-            time += Time.deltaTime;
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        isCountDown = false;
-    }
     public void moveving()
     {
         moveFlg = true;
@@ -404,5 +402,28 @@ public class TrainMove_sanoki : MonoBehaviour {
    public void ButtonFlgChange()
     {
         buttonFlg = !buttonFlg;
+    }
+    /// <summary>
+    /// スクロールする座標を設定する
+    /// </summary>
+    /// <param name="Num">座標を設定したい方の番号</param>
+    /// <param name="StartPos">設定する座標(移動先は自動設定)</param>
+    void SetScrollPos(SetPosNum Num,Vector2 StartPos)
+    {
+        switch (Num)
+        {
+            case SetPosNum.First:
+                StartPos_first = StartPos;
+                //if (!GoalPos.CenterFlg)
+                    ScrollPos_first = new Vector2(StartPos.x - scrollSpeed, StartPos.y);
+                //else
+                //    ScrollPos_first = new Vector2(StartPos.x + scrollSpeed, StartPos.y);
+                break;
+            case SetPosNum.Second:
+                StartPos_second = StartPos;
+                ScrollPos_second = new Vector2(StartPos.x - scrollSpeed, StartPos.y);
+                break;
+        }
+        
     }
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GoalPos_sanoki : MonoBehaviour {
-
-    public static float GoalPosition()
+    bool centerFlg;
+    void Update()
     {
-        return 0;
-        //return transform.position.x;
+        if (transform.position.x <= 0) centerFlg = true;
+    }
+    public bool CenterFlg
+    {
+        get { return this.centerFlg; }
     }
 }
