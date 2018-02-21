@@ -40,6 +40,8 @@ public class Enemy_murata : MonoBehaviour
         if (Bad_tim_sta >= Bad_tim_end)
         {
             Enemys[1] = Instantiate(Enemy[1], new Vector3(10f, -2.5f, 0), Quaternion.identity);
+            //値を0にする
+            Bad_tim_sta = 0;
         }
 
         //移動老害
@@ -50,10 +52,8 @@ public class Enemy_murata : MonoBehaviour
             //左に行って削除老害
             if (Enemys[0].transform.position.x <= -10)
             {
-                Debug.Log("削除");
+                //Debug.Log("削除");
                 Destroy(Enemys[0]);
-                //値を0にする
-                Bad_tim_sta = 0;
             }
         }
         
@@ -65,7 +65,7 @@ public class Enemy_murata : MonoBehaviour
             //左に行って削除不良
             if (Enemys[1].transform.position.x <= -10)
             {
-                Debug.Log("削除");
+                //Debug.Log("削除");
                 Destroy(Enemys[1]);
             }
         }
