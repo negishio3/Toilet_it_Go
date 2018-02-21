@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class TutorialSlide_Murata : MonoBehaviour {
+public class TutorialSlide_Murata : MonoBehaviour
+{
+    SceneFader_sanoki SF;
 
     public Image firsImage;//一枚目のスライド最初に表示される
     public Image secondImage;//切り替え用のスライド(スライドするときだけ表示される)
@@ -21,9 +23,17 @@ public class TutorialSlide_Murata : MonoBehaviour {
     int secondSpriteNum;//二枚目の表示するスプライトを管理する
 
     bool isSlide;//true：スライド中・false：スライド終了
+
+    // フリック↓
+    private Vector3 touchStartPos; // タッチ開始座標
+    private Vector3 touchEndPos; // タッチ終了座標
+    // フリック↑
+
+
     // Use this for initialization
     void Start()
     {
+        SF = FindObjectOfType<SceneFader_sanoki>();
         firsImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
         secondImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
         if (slideSizeIsScreenSize) { slideImageSize = new Vector2(Screen.width, Screen.height); }//画面サイズに合わせる
@@ -37,7 +47,7 @@ public class TutorialSlide_Murata : MonoBehaviour {
 
     void Update()
     {
-
+        Flick();
     }
     /// <summary>
     /// コルーチン呼び出し簡易メソッド
@@ -128,5 +138,77 @@ public class TutorialSlide_Murata : MonoBehaviour {
 
         //スライド終了に設定する
         isSlide = false;
+
+        Debug.Log(isSecondSlide);
     }
+
+    // フリック ↓
+
+    // タッチした位置、離した位置を取得
+    void Flick()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            touchStartPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            touchEndPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            GetDirection();
+        }
+    }
+
+    void GetDirection()
+    {
+        float directionX = touchEndPos.x - touchStartPos.x;
+        float directionY = touchEndPos.y - touchStartPos.y;
+        string Direction = "touch";
+
+        if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
+        {
+            if (30 < directionX)
+            {
+                //右向きにフリック
+                Direction = "right";
+                Debug.Log("右フリック");
+            }
+            else if (-30 > directionX)
+            {
+                //左向きにフリック
+                Direction = "left";
+                Debug.Log("左フリック");
+            }
+        }
+        else
+        {
+            Direction = "touch";
+            Debug.Log("タッチ");
+        }
+
+        switch (Direction)
+        {
+            case "right":
+                Slide(false);
+                break;
+
+            case "left":
+                Slide(true);
+                break;
+
+            case "touch":
+                switch (spriteNum)
+                {
+                    case 0:
+                        SF.StageSelect("sanoki_Game");
+                        break;
+                    default:
+                        Debug.LogError("選択したシーンがごじゃらん！！");
+                        break;
+                }
+                break;
+        }
+    }
+
+    // フリック ↑
 }
