@@ -15,9 +15,11 @@ public class Enemy_murata : MonoBehaviour
     public float Oldage_tim_end=1f;//生成時間老害
     public float Bad_tim_end = 1f;//生成時間不良
 
+    bool Out_of_Screen = false;
+
     void Start()
     {
-      
+       
     }
 
 
@@ -31,6 +33,7 @@ public class Enemy_murata : MonoBehaviour
         //生成老害
         if (Oldage_tim_sta >= Oldage_tim_end)
         {
+            
             Enemys[0] = Instantiate(Enemy[0], new Vector3(10f, -2.5f, 0), Quaternion.identity);
             //値を0にする
             Oldage_tim_sta = 0;
@@ -40,6 +43,8 @@ public class Enemy_murata : MonoBehaviour
         if (Bad_tim_sta >= Bad_tim_end)
         {
             Enemys[1] = Instantiate(Enemy[1], new Vector3(10f, -2.5f, 0), Quaternion.identity);
+            //値を0にする
+            Bad_tim_sta = 0;
         }
 
         //移動老害
@@ -52,8 +57,6 @@ public class Enemy_murata : MonoBehaviour
             {
                 Debug.Log("削除");
                 Destroy(Enemys[0]);
-                //値を0にする
-                Bad_tim_sta = 0;
             }
         }
         
