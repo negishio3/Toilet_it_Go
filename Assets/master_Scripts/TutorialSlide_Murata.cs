@@ -13,6 +13,7 @@ public class TutorialSlide_Murata : MonoBehaviour
 
     public Vector2 slideImageSize;//スライドのサイズ
     public bool slideSizeIsScreenSize;//スライドを画面サイズに合わせるのかどうか(trueなら画面サイズに合わせる。)
+    public bool SlideSizeIsThisSize;//配置してあるサイズのまま使う
 
     public Vector2 slidePosition;//スライドのポジション
     public bool slidePositionIsCenter;//スライドの位置を画面中央に合わせるのかどうか(trueなら自動で画面中央に移動する)
@@ -30,15 +31,17 @@ public class TutorialSlide_Murata : MonoBehaviour
     // フリック↑
 
     bool tap = true;
-
-
     // Use this for initialization
     void Start()
     {
         SF = FindObjectOfType<SceneFader_sanoki>();
         firsImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
         secondImage.sprite = slideImageSprite[0];//初期画像を一枚目に設定する
-        if (slideSizeIsScreenSize) { slideImageSize = new Vector2(Screen.width, Screen.height); }//画面サイズに合わせる
+
+        if (slideSizeIsScreenSize && !SlideSizeIsThisSize) { slideImageSize = new Vector2(Screen.width, Screen.height); }//画面サイズに合わせる
+        else if (!slideSizeIsScreenSize && SlideSizeIsThisSize) { slideImageSize = new Vector2(firsImage.rectTransform.sizeDelta.x, firsImage.rectTransform.sizeDelta.y); }
+        else if (slideSizeIsScreenSize && SlideSizeIsThisSize) { Debug.LogError("どっちかにして!!"); }
+
         if (slidePositionIsCenter) { slidePosition = Vector2.zero; }//移動位置を画面中央に設定
         firsImage.rectTransform.localPosition = slidePosition;//設定された位置に移動する
         secondImage.rectTransform.localPosition = slidePosition;//設定された位置に移動する
