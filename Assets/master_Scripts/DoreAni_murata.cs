@@ -21,6 +21,6 @@ public class DoreAni_murata : MonoBehaviour {
     }
     public void CloseDore()
     {
-        GetComponent<Animator>().SetBool("Close", true);
+        GetComponent<Animator>().SetBool("Clos", true);
     }
 }
