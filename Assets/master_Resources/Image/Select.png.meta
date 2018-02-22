@@ -1,11 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 876181c830f84a548a8f1b2583a711f2
-timeCreated: 1519277025
-=======
-guid: 0f9d03fed51f49941b6fda2314aa044d
-timeCreated: 1519274388
->>>>>>> origin/sanoki_0222
+guid: b26acf6654a97ec4ba968b2457fee7d1
+timeCreated: 1519261143
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

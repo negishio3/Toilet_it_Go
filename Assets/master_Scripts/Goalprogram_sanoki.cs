@@ -17,7 +17,7 @@ public class Goalprogram_sanoki : MonoBehaviour {
         if (other.tag == "Goal")
         {
          //   Debug.Log("当たった");
-            TrainMove.buttonFlg = false;
+            TrainMove.Pause();
             sf.StageSelect("Rank_Murata");
         }
     }
