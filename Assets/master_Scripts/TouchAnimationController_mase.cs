@@ -23,13 +23,13 @@ public class TouchAnimationController_mase : MonoBehaviour
         {
             animator.SetBool("walk", true);
             //animator.SetTrigger("walk 0");
-            Debug.Log("うごくちゃんだうー");
+            //Debug.Log("うごくちゃんだうー");
         }
         else if (Input.GetMouseButtonUp(0) || Input.touchCount < 0)
         {
             animator.SetBool("walk", false);
             //animator.SetBool("stand",true);
-            Debug.Log("とまるちゃんだお");
+            //Debug.Log("とまるちゃんだお");
         }
     }
 }
