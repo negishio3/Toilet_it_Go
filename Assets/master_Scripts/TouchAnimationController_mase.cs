@@ -28,6 +28,7 @@ public class TouchAnimationController_mase : MonoBehaviour
         else if (Input.GetMouseButtonUp(0) || Input.touchCount < 0)
         {
             animator.SetBool("walk", false);
+            //animator.SetBool("stand",true);
             Debug.Log("とまるちゃんだお");
         }
     }
