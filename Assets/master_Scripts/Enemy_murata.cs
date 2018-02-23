@@ -7,7 +7,7 @@ public class Enemy_murata : MonoBehaviour
 
     GameObject[] Enemys = new GameObject[2];//public老害、不良保存
     public GameObject[] Enemy;//老害、不良
-    float move = 0.05f;//移動スピード
+    public float move = 0.05f;//移動スピード
 
     public float Oldage_tim_sta = 0.0f;//時間老害
     public float Bad_Boy_tim_sta = 0.0f;//時間不良
@@ -32,7 +32,7 @@ public class Enemy_murata : MonoBehaviour
         if (Oldage_tim_sta >= Oldage_tim_end)
         {
 
-            Enemys[0] = Instantiate(Enemy[0], new Vector3(10f, -2.5f, 0), Quaternion.identity);
+            Enemys[0] = Instantiate(Enemy[0], new Vector3(10f, -2f, 0), Quaternion.identity);
             //値を0にする
             Oldage_tim_sta = 0;
         }
@@ -40,7 +40,7 @@ public class Enemy_murata : MonoBehaviour
         //生成不良
         if (Bad_Boy_tim_sta >= Bad_Boy_tim_end)
         {
-            Enemys[1] = Instantiate(Enemy[1], new Vector3(10f, -2.5f, 0), Quaternion.identity);
+            Enemys[1] = Instantiate(Enemy[1], new Vector3(10f, -2f, 0), Quaternion.identity);
             //値を0にする
             Bad_Boy_tim_sta = 0;
         }

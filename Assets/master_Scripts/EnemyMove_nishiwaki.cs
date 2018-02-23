@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyMove_nishiwaki : MonoBehaviour
 {
+    public float move;//移動スピード
+
     // Use this for initialization
     void Start()
     {
@@ -13,8 +15,12 @@ public class EnemyMove_nishiwaki : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        gameObject.transform.position -= new Vector3(move, 0, 0);
+
+        //左に行って削除老害
+        if (gameObject.transform.position.x <= -10)
         {
+            //Debug.Log("削除");
             Destroy(gameObject);
         }
     }
@@ -23,10 +29,5 @@ public class EnemyMove_nishiwaki : MonoBehaviour
     {
         Debug.Log("あたった");
         Destroy(gameObject);
-    }
-
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        //Debug.Log("コリジョン");
     }
 }
