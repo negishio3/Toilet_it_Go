@@ -12,20 +12,35 @@ public class Count_chika : MonoBehaviour {
 
     ///////////////////////////////////////////////////////////////////////
 
-    public TrainMove_sanoki Train_game;
-    public Image start;
-
+    public TrainMove_sanoki Train_game; //GameStart呼び出し
+    public Image start;           //スタート待機Image
+    public Text txt;              //スタート前のテキスト
+    bool startflg = true;           //開始フラグ
 
 	// Use this for initialization
 	void Start () {
-
         //count = 0;
         //countImg.gameObject.SetActive(false);
+
+        txt.text = "やべ…お腹痛くなってきた…";//テキスト入力
 	}
 	
 	// Update is called once per frame
 	void Update () {
         
+        if (startflg==true)
+        {
+            //待機Imageをアクティブに
+            start.gameObject.SetActive(true);
+               //タップで邪魔な待機Imageを削除してゲームスタート
+            if (Input.GetMouseButtonDown(0))
+            {
+                start.gameObject.SetActive(false);
+                GameObject.Destroy(start);
+                Train_game.GameStart();
+                startflg = false;
+            }           
+        }
     }
     public void OnClickButtonStart()
     {
