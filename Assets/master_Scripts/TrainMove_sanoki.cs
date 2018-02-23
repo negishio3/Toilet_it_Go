@@ -40,6 +40,7 @@ public class TrainMove_sanoki : MonoBehaviour {
 
     public int maxScrollNum;//生成する背景の最大値
     public int stageCount = 0;//生成された背景のカウンター
+    public int CountCounter;
 
     bool isCenter;
     bool PauseFlg = true;
@@ -123,8 +124,9 @@ public class TrainMove_sanoki : MonoBehaviour {
             GameStart();
         }
 
-        if (TrainImage[0].transform.position.x <= -TrainSizeX || TrainImage[1].transform.position.x <= -TrainSizeX)
+        if (TrainImage[0] == null || TrainImage[1] == null)
         {
+            //CountCounter++;
             if (stageCount == maxScrollNum - 1)
             {
                 TrainImageInstans(TrainState.Goal);
@@ -134,6 +136,10 @@ public class TrainMove_sanoki : MonoBehaviour {
                 TrainImageInstans(TrainState.Loop);
             }
             Debug.Log(stageCount);
+        }
+        else if (TrainImage[0].transform.position.x <= -TrainSizeX || TrainImage[1].transform.position.x <= -TrainSizeX)
+        {
+            TrainDestry();
         }
         if (BackImage[0].transform.position.x <= -BackImageSizeX || BackImage[1].transform.position.x <= -BackImageSizeX)
         {
@@ -178,49 +184,71 @@ public class TrainMove_sanoki : MonoBehaviour {
                         Quaternion.identity);
                 SetScrollPos(SetPosName.First, TrainImage[0].transform.position);//スクロール先の座標を設定
                 SetScrollPos(SetPosName.Second, TrainImage[1].transform.position);
+                CountCounter += 2;
+                stageCount++;
                 break;
             case TrainState.Loop: //ループ生成
-                if (TrainImage[0].transform.position.x <= -TrainSizeX)//画面外に出たら削除して生成し直す処理
+                //if (TrainImage[0].transform.position.x <= -TrainSizeX)//画面外に出たら削除して生成し直す処理
+                if(TrainImage[0]==null)
                 {
-                    Destroy(TrainImage[0]);
+                    //Destroy(TrainImage[0]);
                     TrainImage[0] = Instantiate(
                         TrainPrefab[ImageSelector],
                         TrainInstansPos,
                         Quaternion.identity);
+                    //SetScrollPos(SetPosName.First, TrainImage[0].transform.position);//スクロール先の座標を設定
                     TrainImage[0].transform.position = new Vector2(TrainImage[1].transform.position.x + TrainSizeX,0);//隙間の調整
                 }
-                if (TrainImage[1].transform.position.x <= -TrainSizeX)
+                //if (TrainImage[1].transform.position.x <= -TrainSizeX)
+                if (TrainImage[1] == null)
                 {
-                    Destroy(TrainImage[1]);
+                    //Destroy(TrainImage[1]);
                     TrainImage[1] = Instantiate(
                         TrainPrefab[ImageSelector],
                         TrainInstansPos,
                         Quaternion.identity);
+                    //SetScrollPos(SetPosName.Second, TrainImage[1].transform.position);
                     TrainImage[1].transform.position = new Vector2(TrainImage[0].transform.position.x + TrainSizeX, 0);
                 }
+                stageCount++;
                 break;
             case TrainState.Goal: //ゴール生成
-                if (TrainImage[0].transform.position.x <= -TrainSizeX)
+                //if (TrainImage[0].transform.position.x <= -TrainSizeX)
+                if (TrainImage[0] == null)
                 {
-                    Destroy(TrainImage[0]);
+                    //Destroy(TrainImage[0]);
                     TrainImage[0] = Instantiate(
                       TrainPrefab[TrainPrefab.Length-1],
                       TrainInstansPos,
                       Quaternion.identity);
                     TrainImage[0].transform.position = new Vector2(TrainImage[1].transform.position.x + TrainSizeX, 0);
                 }
-                if (TrainImage[1].transform.position.x <= -TrainSizeX)
+                //if (TrainImage[1].transform.position.x <= -TrainSizeX)
+                if (TrainImage[1] == null)
                 {
-                    Destroy(TrainImage[1]);
+                    //Destroy(TrainImage[1]);
                     TrainImage[1] = Instantiate(
                       TrainPrefab[TrainPrefab.Length-1],
                       TrainInstansPos,
                       Quaternion.identity);
                     TrainImage[1].transform.position = new Vector2(TrainImage[0].transform.position.x + TrainSizeX, 0);
                 }
+                stageCount++;
                 break;
         }
-        stageCount++;
+        //stageCount++;
+    }
+
+    void TrainDestry()
+    {
+       if( TrainImage[0].transform.position.x <= -TrainSizeX)
+        {
+            Destroy(TrainImage[0]);
+        }
+        if (TrainImage[1].transform.position.x <= -TrainSizeX)
+        {
+            Destroy(TrainImage[1]);
+        }
     }
 
     /// <summary>
@@ -343,14 +371,21 @@ public class TrainMove_sanoki : MonoBehaviour {
         {
             //ScrollPos_first = new Vector2(ScrollPos_first.x - scrollSpeed, TrainImage[0].transform.position.y);//スクロール先の位置を更新
             //ScrollPos_second = new Vector2(ScrollPos_second.x - scrollSpeed, TrainImage[1].transform.position.y);
-            SetScrollPos(SetPosName.First, TrainImage[0].transform.position);
-            SetScrollPos(SetPosName.Second, TrainImage[1].transform.position);
+            //SetScrollPos(SetPosName.First, TrainImage[0].transform.position);
+            //SetScrollPos(SetPosName.Second, TrainImage[1].transform.position);
             while (time <= 1.0f)
             {
+                //if (TrainImage[0].transform.position.x <= -TrainSizeX || TrainImage[1].transform.position.x <= -TrainSizeX) yield break;
                 time += Time.deltaTime / seconds;
-                TrainImage[0].transform.position = Vector2.Lerp(StartPos_first, ScrollPos_first, time);
-                TrainImage[1].transform.position = Vector2.Lerp(StartPos_second, ScrollPos_second, time);
+                //if (!TrainImage[0] == null || !TrainImage[0] == null)
+                //{
+                    TrainImage[0].transform.position = Vector2.Lerp(StartPos_first, ScrollPos_first, time);
+                    TrainImage[1].transform.position = Vector2.Lerp(StartPos_second, ScrollPos_second, time);
+                //}
+                //else
+                //{
 
+                //}
                 yield return null;
             }
             SetScrollPos(SetPosName.First, TrainImage[0].transform.position);
@@ -359,7 +394,7 @@ public class TrainMove_sanoki : MonoBehaviour {
         else
         {
             //ScrollPos_Character = new Vector2(ScrollPos_Character.x + scrollSpeed, UNKOman.transform.position.y);//スクロール先の位置を更新
-            SetScrollPos(SetPosName.Character, UNKOman.transform.position);
+            //SetScrollPos(SetPosName.Character, UNKOman.transform.position);
             while (time <= 1.0f)
             {
                 time += Time.deltaTime / seconds;
