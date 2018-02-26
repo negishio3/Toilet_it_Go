@@ -168,7 +168,7 @@ public class TrainMove_sanoki : MonoBehaviour {
     {
         MethodCounter++;
         System.Random r = new System.Random();//乱数ジェネレータ;
-        int ImageSelector = r.Next(TrainPrefab.Length);//最後のプレハブがゴールプレハブに当たるので最大値-１する;
+        int ImageSelector = r.Next(TrainPrefab.Length);//ランダムでプレハブを選択する
 
         switch (State)
         {
