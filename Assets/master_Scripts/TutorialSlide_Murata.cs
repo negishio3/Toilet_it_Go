@@ -223,5 +223,6 @@ public class TutorialSlide_Murata : MonoBehaviour
     public void buttonorTap()
     {
         tap = false;
+        
     }
 }
