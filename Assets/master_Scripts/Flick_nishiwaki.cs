@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Flick_nishiwaki : MonoBehaviour
 {
+    bool turikawa;
+
+    public bool Turikawa
+    {
+        get { return turikawa; }
+        set { turikawa = value; }
+    }
 
     private Vector3 touchStartPos; // タッチ開始座標
     private Vector3 touchEndPos; // タッチ終了座標
 
-    public GameObject gameObject;
+    //public GameObject gameObject;
 
     // Use this for initialization
     void Start()
@@ -58,26 +65,47 @@ public class Flick_nishiwaki : MonoBehaviour
                 Debug.Log("左フリック");
             }
         }
-
-        else
+        else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
         {
-            Direction = "touch";
-            Debug.Log("タッチ");
-        }
+            if (30 < directionY)
+            {
+                //上向きにフリック
+                Direction = "up";
+            }
+            else if (-30 > directionY)
+            {
+                //下向きのフリック
+                Direction = "down";
+            }
+            else
+            {
+                Direction = "touch";
+                Debug.Log("タッチ");
+            }
 
-        switch (Direction)
-        {
-            case "right":
-                gameObject.transform.position += new Vector3(2, 0, 0);
-                break;
+            switch (Direction)
+            {
+                case "right":
+                    Debug.Log("右フリック");//右フリックされた時の処理
+                    turikawa = true;
+                    break;
 
-            case "left":
-                gameObject.transform.position += new Vector3(-2, 0, 0);
-                break;
+                case "left":
+                    Debug.Log("左フリック");//左フリックされた時の処理
+                    break;
 
-            case "touch":
-                gameObject.transform.position = new Vector3(0, 0, 0);
-                break;
+                case "up":
+                    Debug.Log("上フリック");//上フリックされた時の処理
+                    break;
+
+                case "down":
+                    Debug.Log("下フリック");//下フリックされた時の処理
+                    break;
+
+                case "touch":
+                    Debug.Log("タッチ");//タッチした時の処理
+                    break;
+            }
         }
     }
 }

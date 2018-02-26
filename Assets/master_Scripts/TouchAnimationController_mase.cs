@@ -19,17 +19,20 @@ public class TouchAnimationController_mase : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
+        //if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            animator.SetBool("walk", true);
+                animator.SetBool("walk", true);
             //animator.SetTrigger("walk 0");
             //Debug.Log("うごくちゃんだうー");
         }
-        else if (Input.GetMouseButtonUp(0) || Input.touchCount < 0)
+        //else if (Input.GetMouseButtonUp(0) || Input.touchCount < 0)
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             animator.SetBool("walk", false);
             //animator.SetBool("stand",true);
             //Debug.Log("とまるちゃんだお");
         }
+        
     }
 }
