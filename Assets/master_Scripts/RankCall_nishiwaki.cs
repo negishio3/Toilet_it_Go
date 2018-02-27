@@ -15,10 +15,14 @@ public class RankCall_nishiwaki : MonoBehaviour
     //スケール拡大用
     public GameObject TriggerImg;   //トリガーにするドア
     public float TriggerPos;        //トリガーの場所
+
     public static bool ScaleUPFlg = false;//拡大のフラグ
+    public bool RandomSwitch = false; // ランダム出現から移動
     bool sizeStop = false;          // 停止ポイント
-    public float sclSP;           //拡大速度
-    Vector2 MaxScale;               //最大値、実行前のスケールに依存
+
+
+    public float sclSP;             //拡大速度
+    Vector2 MaxScale;               //最大値、実行前のスケールに依存させる
 
     RectTransform ScaleChange;      //大きくなるImage
 
@@ -45,10 +49,10 @@ public class RankCall_nishiwaki : MonoBehaviour
             ScaleChange.sizeDelta = new Vector2(0.0f, 0.0f);
             Debug.Log("Start" + ScaleChange.sizeDelta + "  Max" + MaxScale);
         }//トリガーが指定の位置を過ぎたら拡大開始
-        if (TriggerImg.transform.position.x >= TriggerPos)
+        if (TriggerImg.transform.localPosition.x >= TriggerPos)
         {
             //Debug.Log(TriggerImg.transform.position);
-            ScaleUPFlg = true;
+            RandomSwitch = true;
         }
         //元の大きさに戻ったら抜ける
         if (ScaleUPFlg == true && sizeStop==false)
