@@ -30,7 +30,7 @@ public class RankCall_nishiwaki : MonoBehaviour
     void Start()
     {
         //仮ランク
-        Score_nishiwaki.rank = "C";
+      //  Score_nishiwaki.rank = "C";
         //コンポーネントの取得とMaxScaleの保存
         ScaleChange = GetComponent<RectTransform>();
         MaxScale = ScaleChange.sizeDelta;
