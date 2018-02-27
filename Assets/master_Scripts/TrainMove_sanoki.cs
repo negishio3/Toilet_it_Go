@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class TrainMove_sanoki : MonoBehaviour {
 
-    public int MethodCounter;
-
     public TimeCount_murata TimeCount_m;//村田パイセンのスクリプトを取得
     public GameObject UNKOman;//キャラクター
     float UNKOman_Speed = 4;  //キャラクターの移動速度
@@ -105,6 +103,8 @@ public class TrainMove_sanoki : MonoBehaviour {
         BackImageInstans(BackImageState.FirstInstans);
         PoleInstans(BackImageState.FirstInstans);
 
+        SetScrollPos(SetPosName.Character, UNKOman.transform.position);
+
         StartCoroutine(BackImageMoving());
 
         GameStart();
@@ -156,7 +156,8 @@ public class TrainMove_sanoki : MonoBehaviour {
     /// </summary>
     public void GameStart()
     {
-        Pause();
+        //Pause();
+        PauseFlg = false;
         TimeCount_m.SetTime();
     }
 
@@ -166,7 +167,6 @@ public class TrainMove_sanoki : MonoBehaviour {
     /// <param name="ImageNum">番号によって生成方法を変える(整数)</param>
     void TrainImageInstans(TrainState State)
     {
-        MethodCounter++;
         System.Random r = new System.Random();//乱数ジェネレータ;
         int ImageSelector = r.Next(TrainPrefab.Length);//ランダムでプレハブを選択する
 
@@ -226,8 +226,6 @@ public class TrainMove_sanoki : MonoBehaviour {
                 stageCount++;
                 break;
         }
-        //Debug.Log("メソッド : " + MethodCounter+"回");
-        //Debug.Log("生成数 : " + stageCount+"個");
     }
 
     void TrainDestry()
@@ -376,10 +374,12 @@ public class TrainMove_sanoki : MonoBehaviour {
         }
         else
         {
+            //Debug.Log("動ける");
             SetScrollPos(SetPosName.Character, UNKOman.transform.position);
             while (time <= 1.0f)
             {
                 time += Time.deltaTime / seconds;
+
                 UNKOman.transform.position = Vector2.Lerp(StartPos_Character, ScrollPos_Character, time);
 
                 yield return null;
@@ -391,7 +391,8 @@ public class TrainMove_sanoki : MonoBehaviour {
 
     public void Pause()
     {
-        PauseFlg = !PauseFlg;
+        Debug.Log("呼ばれた");
+        PauseFlg = true;
     }
 
     /// <summary>

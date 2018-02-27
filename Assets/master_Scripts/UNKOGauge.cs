@@ -4,7 +4,22 @@ using UnityEngine;
 
 public class UNKOGauge : MonoBehaviour {
 
-    float UnkoGauge;//うんこゲージ
+    Animator animator;
+
+    public float UnkoGauge;//うんこゲージ
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        if (UnkoGauge >= 5)
+        {
+            animator.SetBool("unkos",true);
+        }
+    }
 
     /// <summary>
     /// うんこゲージを増やす
@@ -23,5 +38,7 @@ public class UNKOGauge : MonoBehaviour {
     {
         UnkoGauge -= GaugeDecrease;
     }
+
+
 
 }

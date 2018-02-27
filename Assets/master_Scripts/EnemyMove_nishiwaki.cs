@@ -27,7 +27,6 @@ public class EnemyMove_nishiwaki : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("あたった");
         Destroy(gameObject);
     }
 }
