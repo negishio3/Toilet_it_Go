@@ -72,11 +72,11 @@ public class Flick_nishiwaki : MonoBehaviour
                 //上向きにフリック
                 Direction = "up";
             }
-            else if (-30 > directionY)
-            {
-                //下向きのフリック
-                Direction = "down";
-            }
+            //else if (-30 > directionY)
+            //{
+            //    //下向きのフリック
+            //    Direction = "down";
+            //}
             else
             {
                 Direction = "touch";
@@ -98,9 +98,9 @@ public class Flick_nishiwaki : MonoBehaviour
                     Debug.Log("上フリック");//上フリックされた時の処理
                     break;
 
-                case "down":
-                    Debug.Log("下フリック");//下フリックされた時の処理
-                    break;
+                //case "down":
+                //    Debug.Log("下フリック");//下フリックされた時の処理
+                //    break;
 
                 case "touch":
                     Debug.Log("タッチ");//タッチした時の処理
