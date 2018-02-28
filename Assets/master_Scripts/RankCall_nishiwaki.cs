@@ -35,13 +35,16 @@ public class RankCall_nishiwaki : MonoBehaviour
         ScaleChange = GetComponent<RectTransform>();
         MaxScale = ScaleChange.sizeDelta;
         Debug.Log("Max" + MaxScale);
+
+        //ランクの取得
+        HyoukaImage(Score_nishiwaki.rank);
     }
 
     // Update is called once per frame
     void Update()
     {
         //ランクの取得
-        HyoukaImage(Score_nishiwaki.rank);
+        //HyoukaImage(Score_nishiwaki.rank);
 
         //フラグが立つ前にスケールを0にする
         if (ScaleUPFlg == false)
