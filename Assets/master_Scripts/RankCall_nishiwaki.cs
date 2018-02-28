@@ -60,7 +60,7 @@ public class RankCall_nishiwaki : MonoBehaviour
             if (MaxScale.x >= ScaleChange.sizeDelta.x)
             {
                 //Debug.Log("正常");
-                ScaleChange.sizeDelta += new Vector2(sclSP + Time.deltaTime, sclSP + Time.deltaTime);
+                ScaleChange.sizeDelta += new Vector2(sclSP * Time.deltaTime, sclSP * Time.deltaTime);
             }//拡大終了
             else if (ScaleChange.sizeDelta.x >= MaxScale.x)
             {
