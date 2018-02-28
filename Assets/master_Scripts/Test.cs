@@ -166,7 +166,6 @@ public class Test : MonoBehaviour {
                 if (isEnabledLongPress==true)
                 {
                     pressingSeconds = 0.0f;
-                    isEnabledLongPress = false;
                 }
                 break;
         }
