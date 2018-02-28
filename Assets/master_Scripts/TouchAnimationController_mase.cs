@@ -11,8 +11,6 @@ public class TouchAnimationController_mase : MonoBehaviour
     private Vector3 touchStartPos; // タッチ開始座標
     private Vector3 touchEndPos; // タッチ終了座標
 
-    bool walkanim;
-
     Rigidbody2D rigidbody2D;
 
     // Use this for initialization
@@ -27,19 +25,13 @@ public class TouchAnimationController_mase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             animator.SetBool("walk", true);
-            //animator.SetTrigger("walk 0");
-            //Debug.Log("うごくちゃんだうー");
         }
-        //else if (Input.GetMouseButtonUp(0) || Input.touchCount < 0)
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             animator.SetBool("walk", false);
-            //animator.SetBool("stand",true);
-            //Debug.Log("とまるちゃんだお");
         }
         Flick();
     }
@@ -58,40 +50,49 @@ public class TouchAnimationController_mase : MonoBehaviour
     }
     void GetDirection()
     {
+        //    x の差分
         float directionX = touchEndPos.x - touchStartPos.x;
+        //    y の差分
         float directionY = touchEndPos.y - touchStartPos.y;
         string Direction = "touch";
 
-        if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
+        //if (長押し条件 <= 1f){
+        if (Input.touchCount <= 1)
         {
-            if (30 < directionX)
+            if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
             {
-                //右向きにフリック
-                Direction = "right";
+                if (60 < directionX)
+                {
+                    //右向きにフリック
+                    Direction = "right";
+                }
+                //else if (-30 > directionX)
+                //{
+                //    //左向きにフリック
+                //    Direction = "left";
+                //}
             }
-            else if (-30 > directionX)
+            else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
             {
-                //左向きにフリック
-                Direction = "left";
+                if (60 < directionY)
+                {
+                    //上向きにフリック
+                    Direction = "up";
+                }
+                //else if (-30 > directionY)
+                //{
+                //    //下向きのフリック
+                //    Direction = "down";
+                //}
             }
-        }
-        else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
-        {
-            if (30 < directionY)
-            {
-                //上向きにフリック
-                Direction = "up";
-            }
-            //else if (-30 > directionY)
-            //{
-            //    //下向きのフリック
-            //    Direction = "down";
-            //}
         }
         else
         {
             Direction = "touch";
         }
+        // else{
+        // 長押しの処理}
+        //}
 
         switch (Direction)
         {
@@ -99,9 +100,9 @@ public class TouchAnimationController_mase : MonoBehaviour
                 Debug.Log("右フリック");//右フリックされた時の処理
                 break;
 
-            case "left":
-                Debug.Log("左フリック");//左フリックされた時の処理
-                break;
+            //case "left":
+            //    Debug.Log("左フリック");//左フリックされた時の処理
+            //    break;
 
             case "up":
                 Debug.Log("上フリック");//上フリックされた時の処理
@@ -115,12 +116,7 @@ public class TouchAnimationController_mase : MonoBehaviour
 
             case "touch":
                 Debug.Log("タッチ");//タッチした時の処理
-                animator.SetBool("walk", true);
-                walkanim = true;
-                if(walkanim == true)
-                {
-                    animator.SetBool("walk", false);
-                }
+                rigidbody2D.simulated = true;
                 break;
         }
     }
