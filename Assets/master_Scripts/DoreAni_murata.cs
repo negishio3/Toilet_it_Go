@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class DoreAni_murata : MonoBehaviour {
 
-    Animator anim;
+    Animator anim;//アニメーション扉
 
 	void Start () {
         anim = GetComponent<Animator>();
-        GetComponent<Animator>().SetBool("Open", true);
+        GetComponent<Animator>().SetBool("Open", true);//最初に扉開く
     }
 
-    public void OpenDore()
-    {
-        GetComponent<Animator>().SetBool("Open", true);
-    }
+    //扉閉まります
     public void CloseDore()
     {
-        GetComponent<Animator>().SetBool("Close", true);
+        GetComponent<Animator>().SetTrigger("Close");
     }
 }

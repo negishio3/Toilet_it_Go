@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Test_murata : MonoBehaviour
 {
-    TrainMove_sanoki trainMove_s;
+    TrainMove_sanoki trainMove_s;//佐野木スクリプト背景移動
 
-    public Animator animator;
-    public float speed;
+    public Animator animator;//キャラクターアニメーション
+    public float speed;//アニメーションスピード
 
     private Vector3 touchStartPos; // タッチ開始座標
     private Vector3 touchEndPos; // タッチ終了座標
@@ -28,10 +27,10 @@ public class Test_murata : MonoBehaviour
     void Start()
     {
         trainMove_s = FindObjectOfType<TrainMove_sanoki>();
-            animator = GetComponent<Animator>();
-            animator.speed = speed;
+        animator = GetComponent<Animator>();
+        animator.speed = speed;
 
-            rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
  
@@ -102,6 +101,7 @@ public class Test_murata : MonoBehaviour
             case "right":
                 GageCount ++;
                 Debug.Log("右フリック");//右フリックされた時の処理
+                animator.SetTrigger("unchp");
                 break;
 
             case "up":
@@ -157,7 +157,6 @@ public class Test_murata : MonoBehaviour
         }
         if (GageCount>=80)
         {
-            trainMove_s.Action();
             Debug.Log("激痛");
         }
 
@@ -166,6 +165,11 @@ public class Test_murata : MonoBehaviour
             trainMove_s.Pause();
             GageCount = 100;
             Debug.Log("限界");
+        }
+        if (GageCount<=90)
+        {
+            Debug.Log("背景動く");
+            trainMove_s.Action();
         }
     }
 
