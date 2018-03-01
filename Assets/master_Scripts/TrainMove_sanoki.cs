@@ -85,7 +85,8 @@ public class TrainMove_sanoki : MonoBehaviour
     {
         First,
         Second,
-        Character
+        Character,
+        Pause
     }
     void Start()
     {
@@ -158,7 +159,7 @@ public class TrainMove_sanoki : MonoBehaviour
     /// </summary>
     public void GameStart()
     {
-        Pause();
+        Action();
         TimeCount_m.SetTime();
     }
 
@@ -391,7 +392,13 @@ public class TrainMove_sanoki : MonoBehaviour
 
     public void Pause()
     {
-        PauseFlg = !PauseFlg;
+        Debug.Log("Pause()よばれた");
+        PauseFlg = true;
+    }
+
+    public void Action()
+    {
+        PauseFlg = false;
     }
 
     /// <summary>

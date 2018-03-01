@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Test_murata : MonoBehaviour
 {
+    TrainMove_sanoki trainMove_s;
 
     public Animator animator;
     public float speed;
@@ -26,6 +27,7 @@ public class Test_murata : MonoBehaviour
 
     void Start()
     {
+        trainMove_s = FindObjectOfType<TrainMove_sanoki>();
             animator = GetComponent<Animator>();
             animator.speed = speed;
 
@@ -155,11 +157,13 @@ public class Test_murata : MonoBehaviour
         }
         if (GageCount>=80)
         {
+            trainMove_s.Action();
             Debug.Log("激痛");
         }
 
         if (GageCount>=100)
         {
+            trainMove_s.Pause();
             GageCount = 100;
             Debug.Log("限界");
         }
