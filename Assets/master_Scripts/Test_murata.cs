@@ -17,12 +17,12 @@ public class Test_murata : MonoBehaviour
     public float longPressIntevalSeconds = 1.0f;//長押しの1秒の間で判断
     public float pressingSeconds = 0.0f;//押されている時間
 
-    private bool isEnabledLongPress = true;//長押し
-    private bool isPressing = false;//タップ
+    //private bool isEnabledLongPress = true;//長押し
+    //private bool isPressing = false;//タップ
 
-    public int GageCount = 100;//ゲージ
+    public float GageCount = 0;//ゲージ
 
-    public int Dame = 10;
+    public float Dame = 10;
 
     void Start()
     {
@@ -71,7 +71,7 @@ public class Test_murata : MonoBehaviour
 
         if (Input.touchCount <= 1)
         {
-            isPressing = true;
+           // isPressing = true;
             if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
             {
                 if (60 < directionX)
@@ -89,23 +89,23 @@ public class Test_murata : MonoBehaviour
                 }
             }
         }
-        else if(isPressing==true　&& pressingSeconds<=longPressIntevalSeconds)
+        else if(pressingSeconds<=longPressIntevalSeconds)
         {
             Direction = "touch";
-            isEnabledLongPress = true;
-            isPressing = false;
         }
         
 
         switch (Direction)
         {
             case "right":
+                GageCount ++;
                 Debug.Log("右フリック");//右フリックされた時の処理
                 break;
 
             case "up":
                 Debug.Log("上フリック");//上フリックされた時の処理
                 animator.SetTrigger("wait");
+                GageCount++;
                 rigidbody2D.simulated = false;
                 break;
 
@@ -121,14 +121,21 @@ public class Test_murata : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            isEnabledLongPress = true;
             pressingSeconds += Time.deltaTime;
-            if (pressingSeconds >= longPressIntevalSeconds && isEnabledLongPress==true)
+            if (pressingSeconds >= longPressIntevalSeconds)
             {
                 pressingSeconds = longPressIntevalSeconds;
                 Debug.Log("長押し");
-                isEnabledLongPress = false;
-                isPressing = false;
+                GageCount -=0.1f;
+                Debug.Log("-"+GageCount);
+                animator.SetBool("walk", false);
+                animator.SetBool("unko_s", true);
+                //ゲージ
+                if (GageCount <= 0)
+                {
+                    GageCount = 0f;
+                    Debug.Log("復活");
+                }
             }
         }
     }
@@ -136,23 +143,24 @@ public class Test_murata : MonoBehaviour
     //ダメージ
     void dameje()
     {
-        GageCount--;
+        GageCount++;
+        Debug.Log(GageCount);
         if (GageCount<=50)
         {
-            Debug.Log("少々");
+            Debug.Log("通常");
         }
-        if (GageCount<=30)
+        if (GageCount>=70)
         {
             Debug.Log("かなり");
         }
-        if (GageCount<=20)
+        if (GageCount>=80)
         {
             Debug.Log("激痛");
         }
 
-        if (GageCount<=0)
+        if (GageCount>=100)
         {
-            GageCount = 0;
+            GageCount = 100;
             Debug.Log("限界");
         }
     }
@@ -160,7 +168,7 @@ public class Test_murata : MonoBehaviour
     //衝突した時
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        GageCount -= Dame;
+        GageCount += Dame;
         Debug.Log("ダメージ");
         Debug.Log(GageCount);
     }
