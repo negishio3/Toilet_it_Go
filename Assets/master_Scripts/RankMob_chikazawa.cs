@@ -39,7 +39,7 @@ public class RankMob_chikazawa : MonoBehaviour {
         Col.color = color;//取得したImageに適応させる
         scl.sizeDelta += new Vector2(SclUpSpd +Time.deltaTime, SclUpSpd + Time.deltaTime);
 
-        if (Col.color.a >= 0.0f)
+        if (Col.color.a <= 0.0f)
         {
             Debug.Log("kieta!");
             Destroy(this.gameObject);

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomImage_chikazawa : MonoBehaviour {
-    //速さ
-    public float AxelMin;
-    public float AxelMax;
+    ////速さ
+    //public float AxelMin;
+    //public float AxelMax;
     //位置
     public float PosMin;
     public float PosMax;
@@ -14,7 +14,7 @@ public class RandomImage_chikazawa : MonoBehaviour {
     public float RotMax;
     float Rot_z;
 
-    public GameObject Getswitch;
+    public GameObject InstPoint;
     RankCall_nishiwaki Rswitch;
     bool s=true;
     bool isRunning;
@@ -27,7 +27,8 @@ public class RandomImage_chikazawa : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-	}
+        Rswitch = GetComponent<RankCall_nishiwaki>();
+    }
 
     // Update is called once per frame
     void Update() {
@@ -46,12 +47,12 @@ public class RandomImage_chikazawa : MonoBehaviour {
 
         for (int i = 0; i < barets; i++)
         {
-            transform.localPosition = new Vector2(Random.Range(PosMin, PosMax), 0);
+            InstPoint.transform.localPosition = new Vector2(Random.Range(PosMin, PosMax), 0);
             //transform.rotation = Rot_z;
             Debug.Log("deta");
             Instantiate(
             MOB,               //出すオブジェクト
-            transform.position,//座標指定
+            InstPoint.transform.position,//座標指定
             Quaternion.identity,//回転
             setPoint.transform);//親にするオブジェクト
 
