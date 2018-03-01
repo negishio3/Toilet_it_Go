@@ -27,7 +27,7 @@ public class UNKOGauge : MonoBehaviour {
     /// <param name="GaugeIncrease">増加量</param>
     public void GaugeUp(float GaugeIncrease)
     {
-        UnkoGauge += GaugeIncrease;
+        UnkoGauge += GaugeIncrease * Time.deltaTime;
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class UNKOGauge : MonoBehaviour {
     /// <param name="GaugeDecrease">減少量</param>
     public void GaugeDown(float GaugeDecrease)
     {
-        UnkoGauge -= GaugeDecrease;
+        UnkoGauge -= GaugeDecrease * Time.deltaTime;
     }
 
 

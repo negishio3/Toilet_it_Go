@@ -8,19 +8,15 @@ public class DoreAni_murata : MonoBehaviour {
 
 	void Start () {
         anim = GetComponent<Animator>();
-	}
-	
-	
-	void Update ()
+        GetComponent<Animator>().SetBool("Open", true);
+    }
+
+    public void OpenDore()
     {
         GetComponent<Animator>().SetBool("Open", true);
     }
-    public void OpenDore()
-    {
-        
-    }
     public void CloseDore()
     {
-        GetComponent<Animator>().SetBool("Clos", true);
+        GetComponent<Animator>().SetBool("Close", true);
     }
 }
