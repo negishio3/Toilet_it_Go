@@ -17,7 +17,15 @@ public class RankCall_nishiwaki : MonoBehaviour
     public float TriggerPos;        //トリガーの場所
 
     public bool ScaleUPFlg = false;//拡大のフラグ
-    public bool RandomSwitch = false; // ランダム出現から移動
+    public bool RandomSwitch; // ランダム出現から移動
+    //{ get; private set; }
+    //public bool Ranswi
+    //{
+    //    get { return this.RandomSwitch; }
+    //    private set { this.RandomSwitch = value; }
+    //}
+
+
     bool sizeStop = false;          // 停止ポイント
 
 
@@ -30,8 +38,9 @@ public class RankCall_nishiwaki : MonoBehaviour
     void Start()
     {
         ScaleUPFlg = false;
+        RandomSwitch = false;
         //仮ランク
-        //  Score_nishiwaki.rank = "C";
+        //Score_nishiwaki.rank = "C";
         //コンポーネントの取得とMaxScaleの保存
         ScaleChange = GetComponent<RectTransform>();
         MaxScale = ScaleChange.sizeDelta;
