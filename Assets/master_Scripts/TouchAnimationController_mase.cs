@@ -98,6 +98,7 @@ public class TouchAnimationController_mase : MonoBehaviour
         {
             case "right":
                 Debug.Log("右フリック");//右フリックされた時の処理
+                animator.SetTrigger("unchp");
                 break;
 
             //case "left":
