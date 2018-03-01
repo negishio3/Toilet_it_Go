@@ -38,6 +38,7 @@ public class Test_murata : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             animator.SetBool("walk", true);
+            dameje();
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
@@ -151,8 +152,16 @@ public class Test_murata : MonoBehaviour
 
         if (GageCount<=0)
         {
-            GageCount += 100;
-            Debug.Log("復活");
+            GageCount = 0;
+            Debug.Log("限界");
         }
+    }
+
+    //衝突した時
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        GageCount -= Dame;
+        Debug.Log("ダメージ");
+        Debug.Log(GageCount);
     }
 }
