@@ -14,41 +14,52 @@ public class RandomImage_chikazawa : MonoBehaviour {
     public float RotMax;
     float Rot_z;
 
+    public GameObject Getswitch;
     RankCall_nishiwaki Rswitch;
     bool s=true;
+    bool isRunning;
     public int barets;
 
     public GameObject setPoint;
     public GameObject MOB;
+
     //    RankMob_chikazawa RMob;
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
 	}
 
     // Update is called once per frame
     void Update() {
 
-        if (/*Rswitch.RandomSwitch*/s)
+        if (Rswitch.RandomSwitch == true)
         {
-            for (int i = 0; i < barets; i++)
-            {
-                transform.localPosition = new Vector2(Random.Range(PosMin, PosMax), 0);
-                //transform.rotation = Rot_z;
-                Instantiate(
-                    MOB,               //出すオブジェクト
-                    transform.position,//座標指定
-                    Quaternion.identity,//回転
-                    setPoint.transform);//親にするオブジェクト
-                getDummy();
-            }
-            s = false;
+            StartCoroutine(getDummy());
+
         }
     }
     public IEnumerator getDummy()
     {
-        yield return new WaitForSeconds(0.5f);//1秒止める
+        if (isRunning)
+            yield break;
+        isRunning = true;
 
+        for (int i = 0; i < barets; i++)
+        {
+            transform.localPosition = new Vector2(Random.Range(PosMin, PosMax), 0);
+            //transform.rotation = Rot_z;
+            Debug.Log("deta");
+            Instantiate(
+            MOB,               //出すオブジェクト
+            transform.position,//座標指定
+            Quaternion.identity,//回転
+            setPoint.transform);//親にするオブジェクト
+
+            yield return new WaitForSeconds(0.3f);//0.3秒止める
+
+        }
+        Rswitch.ScaleUPFlg = true;
+        Rswitch.RandomSwitch = false;
     }
 
 }
