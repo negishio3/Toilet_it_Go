@@ -131,7 +131,7 @@ public class Test_murata : MonoBehaviour
                 GageCount -=0.1f;
                 Debug.Log("-"+GageCount);
                 animator.SetBool("walk", false);
-                animator.SetBool("unko_s", true);
+                animator.SetBool("unko_l", false);
                 //ゲージ
                 if (GageCount <= 0)
                 {
@@ -165,6 +165,7 @@ public class Test_murata : MonoBehaviour
             trainMove_s.Pause();
             GageCount = 100;
             Debug.Log("限界");
+            animator.SetBool("unko_l", true);
         }
         if (GageCount<=90)
         {
