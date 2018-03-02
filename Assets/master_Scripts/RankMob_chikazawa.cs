@@ -37,6 +37,7 @@ public class RankMob_chikazawa : MonoBehaviour {
         var color = Col.color;//取得したimageのcolorを取得
         color.a = a;//カラーのアルファ値(透明度合)を徐々に減らす
         Col.color = color;//取得したImageに適応させる
+
         scl.sizeDelta += new Vector2(SclUpSpd +Time.deltaTime, SclUpSpd + Time.deltaTime);
 
         if (Col.color.a <= 0.0f)

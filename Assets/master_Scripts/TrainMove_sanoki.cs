@@ -109,7 +109,7 @@ public class TrainMove_sanoki : MonoBehaviour
 
         StartCoroutine(BackImageMoving());
 
-        GameStart();
+        //GameStart();
 
     }
 
