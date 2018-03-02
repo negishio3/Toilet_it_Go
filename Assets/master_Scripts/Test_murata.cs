@@ -246,10 +246,10 @@ public class Test_murata : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 GageCount++;
+                animator.SetBool("unko_s", true);
                 animator.SetBool("walk", false);
                 animator.SetBool("stand", false);
                 animator.SetBool("unko_m", false);
-                animator.SetBool("unko_s", true);
             }
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
@@ -266,8 +266,8 @@ public class Test_murata : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 GageCount++;
-                animator.SetBool("unko_s", false);
                 animator.SetBool("unko_m", true);
+                animator.SetBool("unko_s", false);
             }
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
@@ -284,8 +284,8 @@ public class Test_murata : MonoBehaviour
             Event = false;
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                animator.SetBool("unko_m", false);
                 animator.SetBool("unko_l", true);
+                animator.SetBool("unko_m", false);
             }
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
@@ -298,18 +298,18 @@ public class Test_murata : MonoBehaviour
         {
             Event = true;//スワイプをON
             trainMove_s.Action();
+           // animator.SetBool("unko_m", true);
             animator.SetBool("unko_l", false);
-            animator.SetBool("unko_m",true);
         }
-        if (GageCount<=80)
-        {
-            animator.SetBool("unko_m",false);
-            animator.SetBool("unko_s",true);
-        }
-        if (GageCount <= 50)
-        {
-            animator.SetBool("unko_s", false);
-            animator.SetBool("stand",true);
-        }
+        //if (GageCount<=80)
+        //{
+        //    animator.SetBool("unko_s", true);
+        //    animator.SetBool("unko_m",false);
+        //}
+        //if (GageCount <= 50)
+        //{
+        //    animator.SetBool("stand", true);
+        //    animator.SetBool("unko_s", false);
+        //}
     }
 }
