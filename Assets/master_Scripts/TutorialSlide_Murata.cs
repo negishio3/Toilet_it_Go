@@ -8,6 +8,10 @@ public class TutorialSlide_Murata : MonoBehaviour
 {
     SceneFader_sanoki SF;
 
+    public string Direction;
+
+    public DoorAnimation_sanoki DoorAni;
+
     public Image firsImage;//一枚目のスライド最初に表示される
     public Image secondImage;//切り替え用のスライド(スライドするときだけ表示される)
 
@@ -171,7 +175,7 @@ public class TutorialSlide_Murata : MonoBehaviour
     {
         float directionX = touchEndPos.x - touchStartPos.x;
         float directionY = touchEndPos.y - touchStartPos.y;
-        string Direction = "touch";
+        Direction = "touch";
 
         if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
         {
@@ -197,11 +201,13 @@ public class TutorialSlide_Murata : MonoBehaviour
         switch (Direction)
         {
             case "right":
-                Slide(false);
+                DoorAni.Door_Open("Close_and_Open_Right");
+                //Slide(false);
                 break;
 
             case "left":
-                Slide(true);
+                DoorAni.Door_Open("Close_and_Open_Left");
+                //Slide(true);
                 break;
 
             case "touch":
