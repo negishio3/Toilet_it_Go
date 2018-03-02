@@ -18,7 +18,7 @@ public class EnemyMove_nishiwaki : MonoBehaviour
         gameObject.transform.position -= new Vector3(move, 0, 0);
 
         //左に行って削除老害
-        if (gameObject.transform.position.x <= -10)
+        if (gameObject.transform.position.x <= -15)
         {
             //Debug.Log("削除");
             Destroy(gameObject);
