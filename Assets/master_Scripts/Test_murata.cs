@@ -21,37 +21,20 @@ public class Test_murata : MonoBehaviour
 
     public float GageCount = 0;//ゲージ
 
-    public float Dame = 10;
+    public float Dame = 10;//ダメージ
 
     void Start()
     {
         trainMove_s = FindObjectOfType<TrainMove_sanoki>();
         animator = GetComponent<Animator>();
         animator.speed = speed;
-
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
  
     void Update()
     {
-        ////基盤
-        //if (Input.GetKeyDown(KeyCode.Mouse0))
-        //{
-        //    animator.SetBool("walk", true);
-        //    dameje();
-        //}
-        //if (Input.GetKeyUp(KeyCode.Mouse0))
-        //{
-        //    animator.SetBool("walk", false);
-        //    pressingSeconds = 0.0f;
-        //}
-
-        so();
-        //フリック
-       // Flick();
-        //長押し
-        longtoch();
+        so();//操作
     }
 
     //フリック
@@ -69,10 +52,10 @@ public class Test_murata : MonoBehaviour
         }
     }
 
-    //アクションイベント
+    //アクションイベント（つり革、殴り）
     void GetDirection()
     {
-        if (Event == true)
+        if (Event == true)//フリックしてもいいか？
         {
             //    x の差分
             float directionX = touchEndPos.x - touchStartPos.x;
@@ -109,112 +92,40 @@ public class Test_murata : MonoBehaviour
             {
                 case "right":
                     GageCount++;
-                    Debug.Log("右フリック");//右フリックされた時の処理
+                    if (GageCount>=99)
+                    {
+                        GageCount = 99;
+
+                    }
+                    trainMove_s.Pause();
                     animator.SetTrigger("unchp");
                     break;
 
                 case "up":
-                    Debug.Log("上フリック");//上フリックされた時の処理
-                    animator.SetTrigger("wait");
                     GageCount++;
+                    if (GageCount >= 99)
+                    {
+                        GageCount = 99;
+                    }
+                    trainMove_s.Pause();
+                    animator.SetTrigger("wait");
                     rigidbody2D.simulated = false;
                     break;
 
                 case "touch":
-                    Debug.Log("タッチ");//タッチした時の処理
                     rigidbody2D.simulated = true;
                     break;
             }
         }
     }
 
-    //長押し
-    void longtoch()
-    {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            pressingSeconds += Time.deltaTime;
-            if (pressingSeconds >= longPressIntevalSeconds)
-            {
-                pressingSeconds = longPressIntevalSeconds;
-                Debug.Log("長押し");
-                GageCount -=0.1f;
-                Debug.Log("-"+GageCount);
-            }
-        }
-    }
-
-    //ダメージ
-    void dameje()
-    {
-        GageCount++;
-        Debug.Log(GageCount);
-        if (GageCount<=50)
-        {
-            Debug.Log("通常");
-        }
-        if (GageCount>=70)
-        {
-            Debug.Log("かなり");
-        }
-        if (GageCount>=80)
-        {
-            Debug.Log("激痛");
-        }
-
-        if (GageCount>=100)
-        {
-            trainMove_s.Pause();
-            GageCount = 100;
-            Debug.Log("限界");
-            animator.SetBool("unko_l", true);
-        }
-        if (GageCount<=90)
-        {
-            Debug.Log("背景動く");
-            trainMove_s.Action();
-        }
-    }
-
     //衝突した時
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        GageCount += Dame;
-        Debug.Log("ダメージ");
-        Debug.Log(GageCount);
+        GageCount += Dame;//ゲージに10加算
     }
 
-    //操作一覧アニメ―ション
-    public void sousa()
-    {
-
-        //長い
-        animator.SetBool("unko_l", true);
-        animator.SetBool("unko_l",false);
-
-        //中
-        animator.SetBool("unko_m", true);
-        animator.SetBool("unko_m", false);
-
-        //小
-        animator.SetBool("unko_s", true);
-        animator.SetBool("unko_s", false);
-
-        //普通
-        animator.SetBool("wait", true);
-        animator.SetBool("wait", false);
-
-        //スタート
-        animator.SetBool("stand", true);
-        animator.SetBool("stand", false);
-
-        //殴る
-        animator.SetTrigger("unchp");
-
-        //つり革
-        animator.SetTrigger("wait");
-    }
-
+    //ゲージと操作関連
     public void so()
     {
         //普通に歩く
@@ -224,72 +135,197 @@ public class Test_murata : MonoBehaviour
             animator.SetBool("unko_m",false);
             animator.SetBool("unko_s", false);
             Flick();
+
+            //押す
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                trainMove_s.Action();
                 GageCount++;
                 animator.SetBool("unko_s",false);
                 animator.SetBool("walk", true);
                 animator.SetBool("stand", true);
             }
+
+            //放す
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
+                trainMove_s.Action();
                 animator.SetBool("walk", false);
                 animator.SetBool("stand",false);
                 pressingSeconds = 0.0f;
             }
+
+            //長押し
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                pressingSeconds += Time.deltaTime;
+                if (pressingSeconds >= longPressIntevalSeconds)
+                {
+                    trainMove_s.Pause();
+                    pressingSeconds = longPressIntevalSeconds;
+                    GageCount -= 0.1f;
+                    if (GageCount <= 0)
+                    {
+                        GageCount = 0.0f;
+                    }
+                }
+            }
         }
+
         //小
-        if (GageCount>50)
+        if (GageCount>=50)
         {
             animator.SetBool("unko_l", false);
             Flick();
+
+            //押す
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                trainMove_s.Action();
                 GageCount++;
+                animator.SetBool("unko_s", true);
                 animator.SetBool("walk", false);
                 animator.SetBool("stand", false);
                 animator.SetBool("unko_m", false);
-                animator.SetBool("unko_s", true);
             }
+
+            //放す
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
+                trainMove_s.Action();
                 animator.SetBool("unko_s", false);
                 pressingSeconds = 0.0f;
+            }
+
+            //長押し
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                pressingSeconds += Time.deltaTime;
+                if (pressingSeconds>=longPressIntevalSeconds)
+                {
+                    trainMove_s.Pause();
+                    pressingSeconds = longPressIntevalSeconds;
+                    GageCount -= 0.1f;
+                    if (GageCount < 50)
+                    {
+                        animator.SetBool("stand", true);
+                        animator.SetBool("unko_s", false);
+                    }
+                    if (GageCount <= 0)
+                    {
+                        GageCount = 0.0f;
+                    }
+                }
             }
         }
 
         //中
-        if (GageCount > 80)
+        if (GageCount >= 80)
         {
             animator.SetBool("unko_l", false);
             Flick();
+
+            //押す
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                trainMove_s.Action();
                 GageCount++;
-                animator.SetBool("unko_s", false);
                 animator.SetBool("unko_m", true);
+                animator.SetBool("unko_s", false);
             }
+
+            //放す
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
+                trainMove_s.Action();
                 animator.SetBool("unko_m", false);
                 pressingSeconds = 0.0f;
+            }
+
+            //長押し
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                pressingSeconds += Time.deltaTime;
+                if (pressingSeconds >= longPressIntevalSeconds)
+                {
+                    trainMove_s.Pause();
+                    pressingSeconds = longPressIntevalSeconds;
+                    GageCount -= 0.1f;
+                    if (GageCount < 80)
+                    {
+                        animator.SetBool("unko_s", true);
+                        animator.SetBool("unko_m", false);
+                    }
+                    if (GageCount <= 0)
+                    {
+                        GageCount = 0.0f;
+                    }
+                }
             }
         }
 
-        //長い
+        //第3形態（動けない）
+        //ゲージが100で動けない
         if (GageCount>=100)
         {
-            GageCount = 100f;
-            trainMove_s.Pause();
-            Event = false;
+            GageCount = 100f;//ゲージを100以上あげさせない
+            trainMove_s.Pause();//背景が止まる
+            Event = false;//つり革、殴るができない
+
+            //押す
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                animator.SetBool("unko_m", false);
-                animator.SetBool("unko_l", true);
+                animator.SetBool("unko_l", true);//キャラクターモーション第3形態へ
+                animator.SetBool("unko_m", false);//第2形態は終了
             }
+
+            //放す
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                pressingSeconds = 0.0f;
+                pressingSeconds = 0.0f;//長押しの値リセット
+            }
+
+            //長押し
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                pressingSeconds += Time.deltaTime;//長押しの時判定
+                if (pressingSeconds >= longPressIntevalSeconds)
+                {
+                    pressingSeconds = longPressIntevalSeconds;//同じの間の処理
+                    GageCount -= 0.1f;//ゲージ減少
+
+                    //第2形態までの長押し
+                    if (GageCount < 90&&GageCount>=80)
+                    {
+                        animator.SetBool("unko_m", true);
+                        animator.SetBool("unko_l", false);
+                        pressingSeconds = 0.0f;
+                    }
+
+                    //第1形態までの長押し
+                    if (GageCount < 80&&GageCount>=50)
+                    {
+                        animator.SetBool("unko_s", true);
+                        animator.SetBool("unko_m", false);
+                        pressingSeconds = 0.0f;
+                    }
+
+                    //普通までの長押し
+                    if (GageCount < 50&&GageCount>=0)
+                    {
+                        animator.SetBool("stand", true);
+                        animator.SetBool("walk", true);
+                        animator.SetBool("unko_s", false);
+                        pressingSeconds = 0.0f;
+                    }
+
+                    //ゲージ減少0以下にしない
+                    if (GageCount <= 0)
+                    {
+                        GageCount = 0.0f;
+                        pressingSeconds = 0.0f;
+                    }
+                }
             }
         }
 
@@ -297,19 +333,7 @@ public class Test_murata : MonoBehaviour
         if (GageCount<=90)
         {
             Event = true;//スワイプをON
-            trainMove_s.Action();
-            animator.SetBool("unko_l", false);
-            animator.SetBool("unko_m",true);
-        }
-        if (GageCount<=80)
-        {
-            animator.SetBool("unko_m",false);
-            animator.SetBool("unko_s",true);
-        }
-        if (GageCount <= 50)
-        {
-            animator.SetBool("unko_s", false);
-            animator.SetBool("stand",true);
+            animator.SetBool("unko_l", false);//第3形態戻す
         }
     }
 }
