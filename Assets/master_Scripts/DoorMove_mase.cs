@@ -21,5 +21,15 @@ public class DoorMove_mase : MonoBehaviour
         Vector2 Gpos = Goal.transform.position;
         float dis = Vector2.Distance(Ppos, Gpos);
         Debug.Log("Distance : " + dis);
+
+        if (dis <= 4.5f)
+        {
+            Door();
+        }
 	}
+
+    void Door()
+    {
+        animator.SetTrigger("goal");
+    }
 }
