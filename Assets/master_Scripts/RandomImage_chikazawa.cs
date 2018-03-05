@@ -33,11 +33,11 @@ public class RandomImage_chikazawa : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (Rswitch.RandomSwitch == true)
-        {
-            StartCoroutine(getDummy());
+        //if (Rswitch.RandomSwitch == true)
+        //{
+        //    StartCoroutine(getDummy());
 
-        }
+        //}
     }
     public IEnumerator getDummy()
     {
@@ -60,7 +60,7 @@ public class RandomImage_chikazawa : MonoBehaviour {
 
         }
         Rswitch.ScaleUPFlg = true;
-        Rswitch.RandomSwitch = false;
+        //Rswitch.RandomSwitch = false;
     }
 
 }

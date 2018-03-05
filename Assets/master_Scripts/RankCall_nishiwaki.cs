@@ -17,7 +17,7 @@ public class RankCall_nishiwaki : MonoBehaviour
     public float TriggerPos;        //トリガーの場所
 
     public bool ScaleUPFlg = false;//拡大のフラグ
-    public bool RandomSwitch; // ランダム出現から移動
+    //public bool RandomSwitch; // ランダム出現から移動
     //{ get; private set; }
     //public bool Ranswi
     //{
@@ -38,7 +38,7 @@ public class RankCall_nishiwaki : MonoBehaviour
     void Start()
     {
         ScaleUPFlg = false;
-        RandomSwitch = false;
+        //RandomSwitch = false;
         //仮ランク
         //Score_nishiwaki.rank = "C";
         //コンポーネントの取得とMaxScaleの保存
@@ -64,8 +64,9 @@ public class RankCall_nishiwaki : MonoBehaviour
         }//トリガーが指定の位置を過ぎたら拡大開始
         if (TriggerImg.transform.localPosition.x >= TriggerPos)
         {
+            ScaleUPFlg = true;
             //Debug.Log(TriggerImg.transform.position);
-            RandomSwitch = true;
+            //RandomSwitch = true;
         }
         //元の大きさに戻ったら抜ける
         if (ScaleUPFlg == true && sizeStop==false)

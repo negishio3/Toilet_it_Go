@@ -29,7 +29,8 @@ public class Count_chika : MonoBehaviour {
     bool SfadeComp = false;              
 
     //文字送り用変数
-    public string[] scenarios = new string[1];//入力行数
+    public string[] scenarios = new string[5];//入力行数//全角10文字で改行
+    int SerifPattern;
 
     [SerializeField]
     [Range(0.001f, 0.3f)]
@@ -50,6 +51,7 @@ public class Count_chika : MonoBehaviour {
     void Start () {
         //count = 0;
         //countImg.gameObject.SetActive(false);
+        SerifPattern = Random.Range(0, 5);//セリフパターンからランダムに選択する
 
     }
 
@@ -148,7 +150,7 @@ public class Count_chika : MonoBehaviour {
     void SetNextLine()
     {
         Debug.Log("文字取得");
-        currentText = scenarios[0];
+        currentText = scenarios[SerifPattern];
         //        Stxt.text = "あ・・・お腹痛い" ;
 
         // 想定表示時間と現在の時刻をキャッシュ

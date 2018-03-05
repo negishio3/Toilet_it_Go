@@ -23,14 +23,14 @@ public class StartWaitAlqa_chikazawa : MonoBehaviour {
         {
             alqa += FadeSpd;// * Time.deltaTime;
         }
-        if (alqa >= 100.0f)
+        if (alqa >= 120.0f)
         {
-            alqa = 100.0f;
+            alqa = 120.0f;
             stop = true;
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            alqa = 100.0f;
+            alqa = 120.0f;
         }
     }
 }
