@@ -294,19 +294,6 @@ public class TitlePurogram_sanoki : MonoBehaviour {
         }
     }
 
-
-    /// <summary>
-    /// これが呼ばれることによって動く
-    /// </summary>
-    public void TrainMoving()
-    {
-        if (!PauseFlg && !isScroll)
-        {
-            isScroll = true;
-            StartCoroutine(TrainScroll());
-        }
-    }
-
     public IEnumerator TrainScroll()
     {
         float seconds = 0.05f;
