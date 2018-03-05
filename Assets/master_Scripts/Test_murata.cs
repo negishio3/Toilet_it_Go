@@ -16,6 +16,8 @@ public class Test_murata : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
 
+    public Yankee_nishiwaki yankee;
+
     public float longPressIntevalSeconds = 1.0f;//長押しの1秒の間で判断
     public float pressingSeconds = 0.0f;//押されている時間
 
@@ -99,6 +101,7 @@ public class Test_murata : MonoBehaviour
                     }
                     trainMove_s.Pause();
                     animator.SetTrigger("unchp");
+                    Yankee_nishiwaki.Hit = true;
                     break;
 
                 case "up":
