@@ -4,32 +4,40 @@ using UnityEngine;
 
 public class DoorMove_mase : MonoBehaviour
 {
-    Animator animator;
-    public GameObject Player;
-    public GameObject Goal;
+    public GameObject Door;
+    public float ClauseSpeed;
+    Vector2 StartPos;
+    Vector2 EndPos;
+
 
     // Use this for initialization
     void Start ()
     {
-        animator = GetComponent<Animator>();
+        StartPos = Door.transform.position;
+        EndPos = 
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Vector2 Ppos = Player.transform.position;
-        Vector2 Gpos = Goal.transform.position;
-        float dis = Vector2.Distance(Ppos, Gpos);
-        Debug.Log("Distance : " + dis);
 
-        if (dis <= 4.5f)
-        {
-            Door();
-        }
 	}
 
-    void Door()
+    public void move()
     {
-        animator.SetTrigger("goal");
+        StartCoroutine(Close(ClauseSpeed));
     }
+
+    IEnumerator Close(float seconds)
+    {
+        float time = 0;
+        while (time < 1.0f)
+        {
+            time += Time.deltaTime / seconds;
+            Door.transform.position = Vector2.Lerp(StartPos,EndPos, time);
+            yield return null;
+            Debug.Log("コルーチン");
+        }
+    }
+
 }
