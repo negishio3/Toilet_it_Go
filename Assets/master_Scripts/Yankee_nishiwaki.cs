@@ -9,20 +9,19 @@ public class Yankee_nishiwaki : MonoBehaviour {
     public GameObject yankee; // 不良
     public GameObject player; // プレイヤー
 
-    float dis;
+    public float dis;
 
     float move = 0.02f;
 
     //public float move;
     bool Punch;
-    bool PunchMove;
+    bool PunchMove = true;
     public static bool Hit;
 
     // Use this for initialization
     void Start ()
     {
         Punch = true;
-        PunchMove = true;
         Hit = false;
         StartCoroutine(Walk());
         StartCoroutine(PunkDes());
@@ -35,23 +34,26 @@ public class Yankee_nishiwaki : MonoBehaviour {
         Vector2 Ppos = player.transform.position;
         dis = Vector2.Distance(Ypos, Ppos);
 
-        if (Punch)
-        {
-            if (dis <= 4.5)
-            {
-                PunkPunch();
-            }
-        }
+        //if (Punch)
+        //{
+        //    if (dis <= 4.5)
+        //    {
+        //        PunkPunch();
+        //    }
+        //}
 
-        if(gameObject.transform.position.x <= -12)
+        Debug.Log(PunchMove);
+
+        if (gameObject.transform.position.x <= -12)
         {
             Destroy(gameObject);
         }
     }
     void PunkPunch()
     {
+        move = 0.0f;
+
         animator.SetTrigger("Punk_Punch");
-        Punch = false;
     }
 
     private IEnumerator Walk()
@@ -60,19 +62,11 @@ public class Yankee_nishiwaki : MonoBehaviour {
         {
             gameObject.transform.position -= new Vector3(move, 0, 0);
 
-            if (Punch)
+            if (dis <= 4.5)
             {
-                if (dis <= 4.5)
+                if (PunchMove)
                 {
                     PunkPunch();
-                }
-            }
-
-            if (PunchMove)
-            {
-                if (dis <= 4.5)
-                {
-                    move = 0.0f;
 
                     yield return new WaitForSeconds(1.1f);
 
