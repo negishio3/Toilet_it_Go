@@ -23,7 +23,7 @@ public class TrainMove_sanoki : MonoBehaviour
     public GameObject GoalTrainPrefab;
     public GameObject BackImagePrefab;//背景のプレハブ
     public GameObject PolePrefab;//電柱のプレハブ
-    new SpriteRenderer renderer; //ゲームシーン上でのサイズを取得する用
+    SpriteRenderer renderer; //ゲームシーン上でのサイズを取得する用
 
     //画像サイズを保存する
     float TrainSizeX;//電車のサイズを保存する
@@ -89,6 +89,7 @@ public class TrainMove_sanoki : MonoBehaviour
     }
     void Start()
     {
+
         //サイズの取得---------------------------------------------------------------------------------------
         renderer = TrainPrefab[0].GetComponent<SpriteRenderer>();//BackImagePrefab[0]のSpriteRendererを取得
         TrainSizeX = renderer.bounds.size.x;//生成したときの画像サイズを取得
@@ -121,11 +122,6 @@ public class TrainMove_sanoki : MonoBehaviour
         if (hit.collider)
         {
             isCenter = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameStart();
         }
 
         if (TrainImage[0] == null || TrainImage[1] == null)

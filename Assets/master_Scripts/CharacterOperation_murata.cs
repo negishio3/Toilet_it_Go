@@ -134,7 +134,7 @@ public class CharacterOperation_murata : MonoBehaviour {
         //タップダウン
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            trainMove_s.Action();//背景動く
+            //trainMove_s.Action();//背景動く
             GageCount++;//ゲージに１加算
             
             if (GageCount<50)
@@ -158,7 +158,7 @@ public class CharacterOperation_murata : MonoBehaviour {
         //タップアップ
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            trainMove_s.Action();//背景動く
+            //trainMove_s.Action();//背景動く
             pressingSeconds = 0.0f;//長押しの時間をリセット
             if (GageCount<50)
             {
