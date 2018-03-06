@@ -14,7 +14,7 @@ public class DoorMove_mase : MonoBehaviour
     void Start ()
     {
         StartPos = Door.transform.position;
-        EndPos = 
+        EndPos = new Vector2(9.62f,-0.48f);
 	}
 	
 	// Update is called once per frame
