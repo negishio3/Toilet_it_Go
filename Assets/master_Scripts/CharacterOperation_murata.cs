@@ -21,7 +21,9 @@ public class CharacterOperation_murata : MonoBehaviour {
 
     public float GageCount = 0;//ゲージ
 
-    public float Dame = 10;//ダメージ
+    public float GageDame = 2;//回復
+
+    public float Dame = 10;//ダメージ当たったら
     string Anis = "";
 
     void Start ()
@@ -184,7 +186,7 @@ public class CharacterOperation_murata : MonoBehaviour {
             {
                 trainMove_s.Pause();//背景の移動停止
                 pressingSeconds = longPressIntevalSeconds;//値を同じへ
-                GageCount -= 0.1f;//ゲージに1減算
+                GageCount -= GageDame;//ゲージに1減算
                 if (GageCount < 50)
                 {
                     Anis = "Normal";//通常運転

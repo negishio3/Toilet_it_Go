@@ -26,8 +26,8 @@ public class DoorAnimation_sanoki : MonoBehaviour {
 
     void Start () {
 
-        for (int i = 0; i < Door.Length; i++) {
-            Door[i].rectTransform.sizeDelta.x                                  
+        //for (int i = 0; i < Door.Length; i++) {
+            //Door[i].rectTransform.sizeDelta.x                                  
                 
 
         slide = FindObjectOfType<TutorialSlide_Murata>();
