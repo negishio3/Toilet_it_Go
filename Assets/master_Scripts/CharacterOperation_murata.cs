@@ -291,12 +291,14 @@ public class CharacterOperation_murata : MonoBehaviour {
                     animator.SetBool("unko_l", false);
                     pressingSeconds = 0.0f;
                 }
+                else
                 if (GageCount < 80 && GageCount >= 50)
                 {
                     animator.SetBool("unko_s", true);
                     animator.SetBool("unko_m", false);
                     pressingSeconds = 0.0f;
                 }
+                else
                 if (GageCount < 50 && GageCount >= 0)
                 {
                     animator.SetBool("stand", true);
