@@ -25,14 +25,19 @@ public class DoorAnimation_sanoki : MonoBehaviour {
     }
 
     void Start () {
+
+        for (int i = 0; i < Door.Length; i++) {
+            Door[i].rectTransform.sizeDelta.x                                  
+                
+
         slide = FindObjectOfType<TutorialSlide_Murata>();
         StartPos_right = Door[(int)door.Right].transform.localPosition;
         StartPos_left = Door[(int)door.Left].transform.localPosition;
         EndPos_right = new Vector2(
-            Door[(int)door.Right].transform.localPosition.x + Door[(int)door.Right].rectTransform.sizeDelta.x, 
+            (Door[(int)door.Right].transform.localPosition.x + Door[(int)door.Right].rectTransform.sizeDelta.x)* Door[(int)door.Right].rectTransform.localScale.x, 
             Door[(int)door.Right].transform.localPosition.y);
         EndPos_left = new Vector2(
-            Door[(int)door.Left].transform.localPosition.x - Door[(int)door.Left].rectTransform.sizeDelta.x,
+            (Door[(int)door.Left].transform.localPosition.x - Door[(int)door.Left].rectTransform.sizeDelta.x)* Door[(int)door.Left].rectTransform.localScale.x,
             Door[(int)door.Left].transform.localPosition.y);
         Door_Open("Open");
     }
