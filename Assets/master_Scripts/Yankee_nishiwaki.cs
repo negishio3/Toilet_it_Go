@@ -9,19 +9,19 @@ public class Yankee_nishiwaki : MonoBehaviour {
     public GameObject yankee; // 不良
     public GameObject player; // プレイヤー
 
-    public float dis;
+    float dis;
 
     float move = 0.02f;
 
-    //public float move;
     bool Punch;
-    bool PunchMove = true;
+    bool PunchMove;
     public static bool Hit;
 
     // Use this for initialization
     void Start ()
     {
         Punch = true;
+        PunchMove = false;
         Hit = false;
         StartCoroutine(Walk());
         StartCoroutine(PunkDes());
@@ -34,26 +34,20 @@ public class Yankee_nishiwaki : MonoBehaviour {
         Vector2 Ppos = player.transform.position;
         dis = Vector2.Distance(Ypos, Ppos);
 
-        //if (Punch)
-        //{
-        //    if (dis <= 4.5)
-        //    {
-        //        PunkPunch();
-        //    }
-        //}
+        Debug.Log(dis);
 
-        Debug.Log(PunchMove);
+        if (Punch)
+        {
+            if (dis <= 3)
+            {
+                PunchMove = true;
+            }
+        }
 
         if (gameObject.transform.position.x <= -12)
         {
             Destroy(gameObject);
         }
-    }
-    void PunkPunch()
-    {
-        move = 0.0f;
-
-        animator.SetTrigger("Punk_Punch");
     }
 
     private IEnumerator Walk()
@@ -62,22 +56,34 @@ public class Yankee_nishiwaki : MonoBehaviour {
         {
             gameObject.transform.position -= new Vector3(move, 0, 0);
 
-            if (dis <= 4.5)
+            if (PunchMove)
             {
-                if (PunchMove)
-                {
-                    PunkPunch();
+                //PunkPunch();
 
-                    yield return new WaitForSeconds(1.1f);
+                move = 0.0f;
 
-                    move = 0.02f;
+                animator.SetTrigger("Punk_Punch");
 
-                    PunchMove = false;
-                }
+                Punch = false;
+                PunchMove = false;
+
+                yield return new WaitForSeconds(1.1f);
+
+                move = 0.02f;
             }
             yield return null;
         }
     }
+    //private void PunkPunch()
+    //{
+    //    move = 0.0f;
+
+    //    animator.SetTrigger("Punk_Punch");
+
+    //    Punch = false;
+    //    PunchMove = false;
+    //}
+
 
     private IEnumerator PunkDes()
     {
@@ -85,10 +91,10 @@ public class Yankee_nishiwaki : MonoBehaviour {
         {
             if (Hit)
             {
-                if (dis <= 5)
+                if (dis <= 15)
                 {
-                    yield return new WaitForSeconds(0.5f);
-
+                    //yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                     Destroy(gameObject);
 
                     Debug.Log("やられる");
