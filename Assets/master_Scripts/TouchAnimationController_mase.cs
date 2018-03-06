@@ -16,10 +16,12 @@ public class TouchAnimationController_mase : MonoBehaviour
 
 
     Yankee_nishiwaki yankee;
+    AutoPlay_sanoki auto;
 
     // Use this for initialization
     void Start()
     {
+        auto = FindObjectOfType<AutoPlay_sanoki>();
         animator = GetComponent<Animator>();
         animator.speed = speed;
 

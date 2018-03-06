@@ -9,7 +9,8 @@ public class AutoPlay_sanoki : MonoBehaviour {
     TitlePurogram_sanoki TitlePro;
 
     public GameObject UNKOman;
-    bool isPlay;
+
+    public bool isPlay;
 
     bool TapFlg;
 
@@ -24,8 +25,7 @@ public class AutoPlay_sanoki : MonoBehaviour {
     {
         TitlePro = FindObjectOfType<TitlePurogram_sanoki>();
         touchMase = FindObjectOfType<TouchAnimationController_mase>();
-        GimmickRay = new Ray2D(UNKOman.transform.position, UNKOman.transform.right);
-        CancelRay = new Ray2D(UNKOman.transform.position, -UNKOman.transform.right);
+        GimmickRay = new Ray2D(new Vector2(UNKOman.transform.position.x - 3, UNKOman.transform.position.y) , UNKOman.transform.right);
     }
 
     void Update()
@@ -45,21 +45,12 @@ public class AutoPlay_sanoki : MonoBehaviour {
         {
             isPlay = false;
             if(!isPlay){
+                isPlay = true;
                 Invoke("Move", TapSpeed);
             }
-            if(hit.collider)
-            {
-                switch (hit.collider.gameObject.name)
-                {
-                    case "rougai":
-                        touchMase.Wait();
-                        break;
-                }
-            }
-
-           
         }
         Debug.DrawRay(GimmickRay.origin, GimmickRay.direction * Distans, Color.red);
+        Debug.DrawRay(CancelRay.origin, CancelRay.direction * Distans, Color.blue);
     }
 
     void Move()

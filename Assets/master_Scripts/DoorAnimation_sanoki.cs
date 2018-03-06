@@ -7,6 +7,8 @@ public class DoorAnimation_sanoki : MonoBehaviour {
 
     TutorialSlide_Murata slide;
 
+    public RectTransform canvas;
+
     public Image[] Door;
 
     public float OpenSpeed;
@@ -17,7 +19,7 @@ public class DoorAnimation_sanoki : MonoBehaviour {
     Vector2 EndPos_left;
 
     bool isOpen;
-
+    
     enum door
     {
         Right,
@@ -26,11 +28,18 @@ public class DoorAnimation_sanoki : MonoBehaviour {
 
     void Start () {
 
-        //for (int i = 0; i < Door.Length; i++) {
-            //Door[i].rectTransform.sizeDelta.x                                  
-                
-
         slide = FindObjectOfType<TutorialSlide_Murata>();
+
+        Vector2 ImageSize = new Vector2(Door[0].sprite.bounds.size.x,Door[0].sprite.bounds.size.y);
+
+        for (int i = 0; i < Door.Length; i++)
+        {
+            Door[i].rectTransform.sizeDelta = new Vector2((ImageSize.x * canvas.sizeDelta.y )/ ImageSize.y, canvas.sizeDelta.y); 
+        }
+
+        Door[(int)door.Right].transform.localPosition = new Vector2(Door[(int)door.Right].rectTransform.sizeDelta.x , 0);
+        Door[(int)door.Left].transform.localPosition = new Vector2(-Door[(int)door.Right].rectTransform.sizeDelta.x , 0);
+
         StartPos_right = Door[(int)door.Right].transform.localPosition;
         StartPos_left = Door[(int)door.Left].transform.localPosition;
         EndPos_right = new Vector2(
