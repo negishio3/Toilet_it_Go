@@ -13,6 +13,9 @@ public class TouchAnimationController_mase : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
 
+
+    Yankee_nishiwaki yankee;
+
     // Use this for initialization
     void Start()
     {
