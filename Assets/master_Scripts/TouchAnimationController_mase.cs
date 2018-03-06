@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TouchAnimationController_mase : MonoBehaviour
 {
+    public bool isTitle;
 
     public Animator animator;
     public float speed;
@@ -25,15 +26,18 @@ public class TouchAnimationController_mase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (!isTitle)
         {
-            animator.SetBool("walk", true);
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                animator.SetBool("walk", true);
+            }
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                animator.SetBool("walk", false);
+            }
+            Flick();
         }
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            animator.SetBool("walk", false);
-        }
-        Flick();
     }
     void Flick()
     {
@@ -120,5 +124,14 @@ public class TouchAnimationController_mase : MonoBehaviour
                 rigidbody2D.simulated = true;
                 break;
         }
+    }
+    public void Wait()
+    {
+        RigidbodyOn();
+        animator.SetTrigger("wait");
+    }
+    public void RigidbodyOn()
+    {
+        rigidbody2D.simulated = false;
     }
 }

@@ -136,6 +136,18 @@ public class TitlePurogram_sanoki : MonoBehaviour {
     }
 
     /// <summary>
+    /// これが呼ばれることによって動く
+    /// </summary>
+    public void TrainMoving()
+    {
+        if (!PauseFlg && !isScroll)
+        {
+            isScroll = true;
+            StartCoroutine(TrainScroll());
+        }
+    }
+
+    /// <summary>
     /// ステージの生成方法の選択
     /// </summary>
     /// <param name="ImageNum">番号によって生成方法を変える(整数)</param>

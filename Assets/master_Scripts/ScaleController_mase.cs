@@ -8,23 +8,13 @@ public class ScaleController_mase : MonoBehaviour
     public GameObject Image;//選択画像
     bool isClick;
 
-	// Use this for initialization
-	void Start ()
-    {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
-
     public void Ontap()
     {
-        if (isClick) return;
-        isClick = true;
-        StartCoroutine(ButtonClick());
+        if (!isClick)
+        {
+            isClick = true;
+            StartCoroutine(ButtonClick());
+        }
     }
 
     public IEnumerator ButtonClick()
@@ -49,6 +39,7 @@ public class ScaleController_mase : MonoBehaviour
             yield return null;
         }
         isClick = false;
+
     }
 }
 
