@@ -52,14 +52,8 @@ public class Count_chika : MonoBehaviour {
         //count = 0;
         //countImg.gameObject.SetActive(false);
         SerifPattern = Random.Range(0, 5);//セリフパターンからランダムに選択する
-
+        Train_game.Pause();
     }
-
-    void flgCahnge()
-    {
-        TTS_Wait = !TTS_Wait;
-    }
-
     // Update is called once per frame
     void Update () {
         if (fadeflg.FadeGame)//SceneFaderからフラグ情報を受け取る
@@ -81,7 +75,7 @@ public class Count_chika : MonoBehaviour {
                 {
                     SetNextLine();
                     textset = false;     //取得後速やかにフラグを切る(何度も呼ぶといつまでもタイマーが動かない
-                    Debug.Log("取得完了");
+                    //Debug.Log("取得完了");
                 }
 
                 // /*文字の表示が完了してるならクリック時に次の行を表示する
@@ -121,7 +115,7 @@ public class Count_chika : MonoBehaviour {
                 // 文字表示の更新
                 if (TextCount != lastUpdateCharacter)
                 {
-                    Debug.Log("文字入力");
+                    //Debug.Log("文字入力");
                     Stxt.text = currentText.Substring(0, TextCount);
                     lastUpdateCharacter = TextCount;
                 }
@@ -149,7 +143,7 @@ public class Count_chika : MonoBehaviour {
     //型呼び出し
     void SetNextLine()
     {
-        Debug.Log("文字取得");
+        //Debug.Log("文字取得");
         currentText = scenarios[SerifPattern];
         //        Stxt.text = "あ・・・お腹痛い" ;
 

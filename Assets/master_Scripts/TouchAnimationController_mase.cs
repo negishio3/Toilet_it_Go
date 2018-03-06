@@ -6,6 +6,7 @@ public class TouchAnimationController_mase : MonoBehaviour
 {
     public bool isTitle;
 
+    TrainMove_sanoki trainmove;
     public Animator animator;
     public float speed;
 
@@ -44,15 +45,18 @@ public class TouchAnimationController_mase : MonoBehaviour
     }
     void Flick()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (!trainmove.PauseFlg)
         {
-            touchStartPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-        }
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                touchStartPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            }
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            touchEndPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-            GetDirection();
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                touchEndPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+                GetDirection();
+            }
         }
     }
     void GetDirection()
