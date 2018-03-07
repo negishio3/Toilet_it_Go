@@ -216,6 +216,9 @@ public class TutorialSlide_Murata : MonoBehaviour
                     case 0:
                         SF.StageSelect("sanoki_Game");
                         break;
+                    case 1:
+                        SF.StageSelect("sanoki_Game_ver2");
+                        break;
                     default:
                         Debug.LogError("選択したシーンがごじゃらん！！");
                         break;

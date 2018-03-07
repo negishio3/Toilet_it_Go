@@ -23,26 +23,6 @@ public class AutoPlay_sanoki : MonoBehaviour {
         StartCoroutine(PlayerMove());
     }
 
-    void Update()
-    {
-        //RaycastHit2D hit = Physics2D.Raycast(GimmickRay.origin,GimmickRay.direction,Distans,mask);
-
-        //if (hit.collider)
-        //{
-        //    isPlay = true;
-        //    switch (hit.collider.gameObject.name)
-        //    {
-        //        case "rougai":
-        //            touchMase.Wait();
-        //            break;
-        //    }
-        //}
-        //else
-        //{
-            
-        //}
-        //Debug.DrawRay(GimmickRay.origin, GimmickRay.direction * Distans, Color.red);
-    }
     private IEnumerator PlayerMove()
     {
         if (!isPlay)
@@ -54,19 +34,18 @@ public class AutoPlay_sanoki : MonoBehaviour {
         yield return StartCoroutine(PlayerMove());
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (!isPlay)
-        {
-            isPlay = true;
-            if (other.tag == "rougai")
-            {
-
-                Debug.Log("老害");
-                touchMase.Wait();
-            }
-        }
-    }
+    //void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (!isPlay)
+    //    {
+    //        isPlay = true;
+    //        if (other.tag == "rougai")
+    //        {
+    //            Debug.Log("老害");
+    //            touchMase.Wait();
+    //        }
+    //    }
+    //}
     void OnTriggerExit2D(Collider2D Col)
     {
         isPlay = false;

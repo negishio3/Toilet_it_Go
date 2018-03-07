@@ -11,6 +11,8 @@ public class DoorAnimation_sanoki : MonoBehaviour {
 
     public Image[] Door;
 
+    public bool isRankScene;
+
     public float OpenSpeed;
 
     Vector2 StartPos_right;
@@ -106,16 +108,19 @@ public class DoorAnimation_sanoki : MonoBehaviour {
             Door[(int)door.Right].transform.localPosition = Vector2.Lerp(EndPos_right, StartPos_right, time);
             yield return null;
         }
-        switch (slide.Direction) {
-            case "left":
-                slide.Slide(true);
-                break;
-            case "right":
-                slide.Slide(false);
-                break;
-            default:
-                Debug.LogError("右左どっちにスライドすればええねん");
-                break;
+        if(!isRankScene) {
+            switch (slide.Direction)
+            {
+                case "left":
+                    slide.Slide(true);
+                    break;
+                case "right":
+                    slide.Slide(false);
+                    break;
+                default:
+                    Debug.LogError("右左どっちにスライドすればええねん");
+                    break;
+            }
         }
         if (andOpen)
         {

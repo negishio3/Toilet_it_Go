@@ -29,7 +29,7 @@ public class TitlePurogram_sanoki : MonoBehaviour {
     GameObject[] BackImage = new GameObject[2];//背景
     GameObject[] Pole = new GameObject[2];//電柱
 
-    bool PauseFlg = true;
+    public bool PauseFlg = true;
     bool isScroll;
 
     Vector2 StartPos_first;
