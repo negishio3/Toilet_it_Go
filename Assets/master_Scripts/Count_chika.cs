@@ -60,7 +60,7 @@ public class Count_chika : MonoBehaviour {
         if (fadeflg.FadeGame)//SceneFaderからフラグ情報を受け取る
         {
             startflg = true;
-            Debug.Log("kakunin");
+            //Debug.Log("kakunin");
         }
         if (startflg)
         {
