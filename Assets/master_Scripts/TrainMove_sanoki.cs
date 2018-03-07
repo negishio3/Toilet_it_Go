@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TrainMove_sanoki : MonoBehaviour
 {
+    DoorMove_mase doorMase;
 
     public int MethodCounter;
 
@@ -90,6 +91,7 @@ public class TrainMove_sanoki : MonoBehaviour
     void Start()
     {
 
+        doorMase = FindObjectOfType<DoorMove_mase>();
         //サイズの取得---------------------------------------------------------------------------------------
         renderer = TrainPrefab[0].GetComponent<SpriteRenderer>();//BackImagePrefab[0]のSpriteRendererを取得
         TrainSizeX = renderer.bounds.size.x;//生成したときの画像サイズを取得
@@ -122,6 +124,7 @@ public class TrainMove_sanoki : MonoBehaviour
         if (hit.collider)
         {
             isCenter = true;
+            //doorMase.SetPos();
         }
 
         if (TrainImage[0] == null || TrainImage[1] == null)

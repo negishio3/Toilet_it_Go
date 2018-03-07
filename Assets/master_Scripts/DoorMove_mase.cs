@@ -4,42 +4,49 @@ using UnityEngine;
 
 public class DoorMove_mase : MonoBehaviour
 {
-    public GameObject Door;
-    public GameObject endpos;
-    public float ClauseSpeed;
-    Vector2 StartPos;
-    Vector2 EndPos;
+    //public GameObject Door;
+    //public GameObject endpos;
+    //public float ClauseSpeed;
+    //Vector2 StartPos;
+    //Vector2 EndPos;
+    Animator animator;
 
 
-
-    // Use this for initialization
-    void Start ()
+    void Start()
     {
-        StartPos = Door.transform.position;
-        EndPos = endpos.transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-
-	}
-
-    public void move()
-    {
-        StartCoroutine(Close(ClauseSpeed));
+        animator = GetComponent<Animator>();
     }
 
-    IEnumerator Close(float seconds)
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        float time = 0;
-        while (time < 1.0f)
+        if (other.tag == "Player")
         {
-            time += Time.deltaTime / seconds;
-            Door.transform.position = Vector2.Lerp(StartPos,EndPos, time);
-            yield return null;
-            Debug.Log("コルーチン");
+            //StartCoroutine(Close(ClauseSpeed));
+            animator.SetTrigger("goal");
+
+            Debug.Log("ヒット");
         }
     }
+
+    //public void on()
+    //{
+    //    StartCoroutine(Close(ClauseSpeed));
+    //}
+    //IEnumerator Close(float seconds)
+    //{
+    //    float time = 0;
+    //    while (time < 1.0f)
+    //    {
+    //        time += Time.deltaTime / seconds;
+    //        Door.transform.position = Vector2.Lerp(StartPos,EndPos, time);
+    //        yield return null;
+    //        Debug.Log("コルーチン");
+    //    }
+    //}
+    //public void SetPos()
+    //{
+    //    StartPos = Door.transform.position;
+    //    EndPos = endpos.transform.position;
+    //}
 
 }

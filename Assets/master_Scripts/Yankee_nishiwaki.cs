@@ -34,7 +34,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
         Vector2 Ppos = player.transform.position;
         dis = Vector2.Distance(Ypos, Ppos);
 
-        Debug.Log(dis);
+        //Debug.Log(dis);
 
         if (Punch)
         {

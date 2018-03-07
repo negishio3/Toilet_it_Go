@@ -10,7 +10,7 @@ public class EnemyMove_nishiwaki : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Barrier.SetActive(false);
+        //Barrier.SetActive(false);
     }
 
     // Update is called once per frame
