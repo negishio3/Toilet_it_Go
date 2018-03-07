@@ -188,28 +188,27 @@ public class CharacterOperation_murata : MonoBehaviour {
         }
         if(Input.GetKeyUp(KeyCode.Mouse0)&&tes==true)
         {
-            Debug.Log(tes);
             pressingSeconds = 0.0f;//長押しの時間をリセット
-            if (GageCount < Mode1_GJ)
+            if (GageCount <= Mode1_GJ)
             {
                 GageCount = 0;
                 Anis = "Normal_up";//通常運転
             }
-            if (GageCount > Mode1_GJ)
+            if (GageCount >= Mode1_GJ&&GageCount<=Mode2_GJ)
             {
-                GageCount = 20;
+                GageCount =Mode1_GJ;
                 Anis = "Mode1_up";//第1段階
             }
-            if (GageCount > Mode2_GJ)
+            if (GageCount >= Mode2_GJ&&GageCount<=Mode3_GJ-10)
             {
-                GageCount = 30;
+                GageCount = Mode2_GJ;
                 Anis = "Mode2_up";//第2段階
             }
-            if (GageCount > Mode3_GJ)
+            if (GageCount>=Mode3_GJ-10)
             {
-                GageCount = 40;
+                GageCount = Mode3_GJ-10f;
                 trainMove_s.Pause();
-                Anis = "Mode3_up";//第3段階
+                Anis = "Mode2_up";//第3段階
             }
         }
 
@@ -241,7 +240,7 @@ public class CharacterOperation_murata : MonoBehaviour {
                 }
                 if (GageCount >= Mode3_GJ - 10)
                 {
-                    Anis = "Mode3";
+                    Anis = "Mode2";
                 }
                 if (GageCount < Mode3_GJ - 10)
                 {
@@ -323,6 +322,7 @@ public class CharacterOperation_murata : MonoBehaviour {
                 break;
             case "Mode2"://第2段階長押し処理
                 animator.SetBool("unko_m", true);
+                animator.SetBool("unko_l", false);
                 break;
             case "Mode3"://第3段階長押し処理
                 animator.SetBool("unko_l", true);
