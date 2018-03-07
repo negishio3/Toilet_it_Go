@@ -9,8 +9,8 @@ public class CharacterOperation_murata : MonoBehaviour {
     public Animator animator;//キャラクターアニメーション
     public float speed=0.3f;//アニメーションスピード
 
-    private Vector3 touchStartPos;//タッチ開始座標
-    private Vector3 touchEndPos;//タッチ終了座標
+    private Vector3[] touchStartPos;//タッチ開始座標
+    private Vector3[] touchEndPos;//タッチ終了座標
 
     private bool Event = true;//キャラクターアクション処理
 
@@ -49,82 +49,90 @@ public class CharacterOperation_murata : MonoBehaviour {
     //フリック
     void Flick()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        for (int i = 0; i < Input.touchCount; i++)
         {
-            touchStartPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-        }
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                //touchStartPos[i] = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+                touchStartPos[i] = Input.touches[i].position;
+            }
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            touchEndPos= new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-            GatDirection();
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                //touchEndPos[i] = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+                touchEndPos[i] = Input.touches[i].position;
+                GatDirection();
+            }
         }
     }
 
     //フリック内処理
     void GatDirection()
     {
-        if (Event == true)//フリックしてもいいか？
+        for (int i = 0; i < Input.touchCount; i++)
         {
-            //    x の差分
-            float directionX = touchEndPos.x - touchStartPos.x;
-            //    y の差分
-            float directionY = touchEndPos.y - touchStartPos.y;
-            string Direction = "touch";
-
-            if (Input.touchCount <= 1)
+            if (Event == true)//フリックしてもいいか？
             {
-                if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
+                //    x の差分
+                float directionX = touchEndPos[i].x - touchStartPos[i].x;
+                //    y の差分
+                float directionY = touchEndPos[i].y - touchStartPos[i].y;
+                string Direction = "touch";
+
+                if (Input.touchCount <= 1)
                 {
-                    if (60 < directionX)
+                    if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
                     {
-                        //右向きにフリック
-                        Direction = "right";
+                        if (60 < directionX)
+                        {
+                            //右向きにフリック
+                            Direction = "right";
+                        }
+                    }
+                    else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
+                    {
+                        if (60 < directionY)
+                        {
+                            //上向きにフリック
+                            Direction = "up";
+                        }
                     }
                 }
-                else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
+                else if (pressingSeconds <= longPressIntevalSeconds)
                 {
-                    if (60 < directionY)
-                    {
-                        //上向きにフリック
-                        Direction = "up";
-                    }
+                    Direction = "touch";
                 }
-            }
-            else if (pressingSeconds <= longPressIntevalSeconds)
-            {
-                Direction = "touch";
-            }
 
 
-            switch (Direction)
-            {
-                case "right":
-                    GageCount++;
-                    if (GageCount >= Mode3_GJ-1)
-                    {
-                        GageCount = Mode3_GJ-1;
-                    }
-                    trainMove_s.Pause();
-                    animator.SetTrigger("unchp");//殴るアニメーション
-                    Yankee_nishiwaki.Hit = true;
-                   // Instantiate(Kenatu);
-                    break;
+                switch (Direction)
+                {
+                    case "right":
+                        GageCount++;
+                        if (GageCount >= Mode3_GJ - 1)
+                        {
+                            GageCount = Mode3_GJ - 1;
+                        }
+                        trainMove_s.Pause();
+                        animator.SetTrigger("unchp");//殴るアニメーション
+                        Yankee_nishiwaki.Hit = true;
+                        // Instantiate(Kenatu);
+                        break;
 
-                case "up":
-                    GageCount++;
-                    if (GageCount >= Mode3_GJ-1)
-                    {
-                        GageCount = Mode3_GJ-1;
-                    }
-                    trainMove_s.Pause();
-                    animator.SetTrigger("wait");//つり革アニメーション
-                    pl_rigidbody2D.simulated = false;
-                    break;
+                    case "up":
+                        GageCount++;
+                        if (GageCount >= Mode3_GJ - 1)
+                        {
+                            GageCount = Mode3_GJ - 1;
+                        }
+                        trainMove_s.Pause();
+                        animator.SetTrigger("wait");//つり革アニメーション
+                        pl_rigidbody2D.simulated = false;
+                        break;
 
-                case "touch":
-                    pl_rigidbody2D.simulated = true;
-                    break;
+                    case "touch":
+                        pl_rigidbody2D.simulated = true;
+                        break;
+                }
             }
         }
     }
