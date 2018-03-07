@@ -8,6 +8,9 @@ public class TrainMove_sanoki : MonoBehaviour
 
     public int MethodCounter;
 
+    public Yankee_nishiwaki yankee;
+    bool yankeepunch = false;
+
     public TimeCount_murata TimeCount_m;//村田パイセンのスクリプトを取得
     public GameObject UNKOman;//キャラクター
     float UNKOman_Speed = 4;  //キャラクターの移動速度
@@ -334,6 +337,7 @@ public class TrainMove_sanoki : MonoBehaviour
 
             Pole[0].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[0].transform.position.y, 0);
             Pole[1].transform.position -= new Vector3(Time.deltaTime * Pole_scrollSpeed, Pole[1].transform.position.y, 0);
+
             yield return null;
         }
     }
@@ -344,10 +348,13 @@ public class TrainMove_sanoki : MonoBehaviour
     /// </summary>
     public void TrainMoving()
     {
-        if (!PauseFlg && !isScroll)
+        if (yankeepunch == false)
         {
-            isScroll = true;
-            StartCoroutine(TrainScroll());
+            if (!PauseFlg && !isScroll)
+            {
+                isScroll = true;
+                StartCoroutine(TrainScroll());
+            }
         }
     }
 
@@ -416,6 +423,11 @@ public class TrainMove_sanoki : MonoBehaviour
                 ScrollPos_Character = new Vector2(StartPos.x + scrollSpeed, StartPos.y);
                 break;
         }
+    }
 
+    public bool Yankeepunch
+    {
+        get { return yankeepunch; }
+        set { yankeepunch = value; }
     }
 }
