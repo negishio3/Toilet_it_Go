@@ -30,6 +30,7 @@ public class CharacterOperation_murata : MonoBehaviour {
     public float Mode2_GJ = 80f;//値以上第2段階
     public float Mode3_GJ = 100f;//値以上第3段階
 
+    private bool tes=false;
    // public GameObject Kenatu;
 
     void Start ()
@@ -141,6 +142,7 @@ public class CharacterOperation_murata : MonoBehaviour {
         //タップダウン
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            tes = false;
             trainMove_s.Action();//背景動く
             GageCount++;//ゲージに１加算
             
@@ -163,9 +165,8 @@ public class CharacterOperation_murata : MonoBehaviour {
             }
         }
         //タップアップ
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0)&&tes==false)
         {
-            //trainMove_s.Action();//背景動く
             pressingSeconds = 0.0f;//長押しの時間をリセット
             if (GageCount< Mode1_GJ)
             {
@@ -185,12 +186,40 @@ public class CharacterOperation_murata : MonoBehaviour {
                 Anis = "Mode3_up";//第3段階
             }
         }
+        if(Input.GetKeyUp(KeyCode.Mouse0)&&tes==true)
+        {
+            Debug.Log(tes);
+            pressingSeconds = 0.0f;//長押しの時間をリセット
+            if (GageCount < Mode1_GJ)
+            {
+                GageCount = 0;
+                Anis = "Normal_up";//通常運転
+            }
+            if (GageCount > Mode1_GJ)
+            {
+                GageCount = 20;
+                Anis = "Mode1_up";//第1段階
+            }
+            if (GageCount > Mode2_GJ)
+            {
+                GageCount = 30;
+                Anis = "Mode2_up";//第2段階
+            }
+            if (GageCount > Mode3_GJ)
+            {
+                GageCount = 40;
+                trainMove_s.Pause();
+                Anis = "Mode3_up";//第3段階
+            }
+        }
+
         //長押し（ロングタップ）
         if (Input.GetKey(KeyCode.Mouse0))
         {
             pressingSeconds += Time.deltaTime;//押している時間
             if (pressingSeconds>=longPressIntevalSeconds)//一定以上超えた
             {
+                tes = true;
                 trainMove_s.Pause();//背景の移動停止
                 pressingSeconds = longPressIntevalSeconds;//値を同じへ
                 GageCount -= GageDame;//ゲージに1減算
@@ -234,6 +263,8 @@ public class CharacterOperation_murata : MonoBehaviour {
                 animator.SetBool("unko_l", false);
                 animator.SetBool("unko_m", false);
                 animator.SetBool("unko_s", false);
+                animator.SetBool("m_walk", false);
+                animator.SetBool("s_walk", false);
                 break;
             case "Mode1_dw"://第1段階アニメーション
                 animator.SetBool("unko_s", true);
@@ -241,11 +272,13 @@ public class CharacterOperation_murata : MonoBehaviour {
                 animator.SetBool("walk", false);
                 animator.SetBool("stand", false);
                 animator.SetBool("unko_m", false);
+                animator.SetBool("m_walk", false);
                 break;
             case "Mode2_dw"://第2段階アニメーション
                 animator.SetBool("unko_m", true);
                 animator.SetBool("m_walk", true);
                 animator.SetBool("unko_s", false);
+                animator.SetBool("s_walk", false);
                 break;
             case "Mode3_dw"://第3段階アニメーション
                 GageCount = Mode3_GJ;
@@ -259,12 +292,14 @@ public class CharacterOperation_murata : MonoBehaviour {
                 animator.SetBool("walk", false);
                 animator.SetBool("stand", false);
                 animator.SetBool("unko_s", false);
+                animator.SetBool("s_walk", false);
                 break;
             case "Mode1_up"://第1段階アニメーション
                 animator.SetBool("unko_s", false);
                 animator.SetBool("s_walk", false);
                 animator.SetBool("unko_l", false);
                 animator.SetBool("unko_m", false);
+                animator.SetBool("m_walk", false);
                 break;
             case "Mode2_up"://第2段階アニメーション
                 animator.SetBool("unko_m", false);
@@ -275,19 +310,23 @@ public class CharacterOperation_murata : MonoBehaviour {
                 break;
 
             case "Normal"://通常運転長押し処理
-                    animator.SetBool("stand", true);
-                    animator.SetBool("unko_s", false);
+                animator.SetBool("stand", true);
+                animator.SetBool("unko_s", false);
+                animator.SetBool("m_walk", false);
+                animator.SetBool("s_walk", false);
                 break;
             case "Mode1"://第1段階長押し処理
-                    animator.SetBool("unko_s", true);
-                    animator.SetBool("unko_m", false);
+                animator.SetBool("unko_s", true);
+                animator.SetBool("unko_m", false);
+                animator.SetBool("m_walk", false);
+                animator.SetBool("s_walk", false);
                 break;
             case "Mode2"://第2段階長押し処理
-                    animator.SetBool("unko_m", true);
+                animator.SetBool("unko_m", true);
                 break;
             case "Mode3"://第3段階長押し処理
-                    animator.SetBool("unko_l", true);
-                    trainMove_s.Pause();
+                animator.SetBool("unko_l", true);
+                trainMove_s.Pause();
                 break;
         }
     }
