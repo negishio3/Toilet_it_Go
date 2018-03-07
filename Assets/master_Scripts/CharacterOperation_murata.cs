@@ -235,22 +235,18 @@ public class CharacterOperation_murata : MonoBehaviour
                 animator.SetBool("unko_l", false);
                 animator.SetBool("unko_m", false);
                 animator.SetBool("unko_s", false);
-                animator.SetBool("m_walk", false);
-                animator.SetBool("s_walk", false);
                 break;
             case "Mode1_dw"://第1段階アニメーション
                 animator.SetBool("unko_s", true);
-                animator.SetBool("s_walk", true);
+                animator.SetBool("unko_s_walk", true);
                 animator.SetBool("walk", false);
                 animator.SetBool("stand", false);
                 animator.SetBool("unko_m", false);
-                animator.SetBool("m_walk", false);
                 break;
             case "Mode2_dw"://第2段階アニメーション
                 animator.SetBool("unko_m", true);
-                animator.SetBool("m_walk", true);
+                animator.SetBool("unko_m_walk", true);
                 animator.SetBool("unko_s", false);
-                animator.SetBool("s_walk", false);
                 break;
             case "Mode3_dw"://第3段階アニメーション
                 GageCount = Mode3_GJ;
@@ -264,18 +260,16 @@ public class CharacterOperation_murata : MonoBehaviour
                 animator.SetBool("walk", false);
                 animator.SetBool("stand", false);
                 animator.SetBool("unko_s", false);
-                animator.SetBool("s_walk", false);
                 break;
             case "Mode1_up"://第1段階アニメーション
                 animator.SetBool("unko_s", false);
-                animator.SetBool("s_walk", false);
+                animator.SetBool("unko_s_walk", false);
                 animator.SetBool("unko_l", false);
                 animator.SetBool("unko_m", false);
-                animator.SetBool("m_walk", false);
                 break;
             case "Mode2_up"://第2段階アニメーション
                 animator.SetBool("unko_m", false);
-                animator.SetBool("m_walk", false);
+                animator.SetBool("unko_m_walk", false);
                 break;
             case "Mode3_up"://第3段階アニメーション
                 animator.SetBool("unko_l", true);
@@ -284,14 +278,10 @@ public class CharacterOperation_murata : MonoBehaviour
             case "Normal"://通常運転長押し処理
                 animator.SetBool("stand", true);
                 animator.SetBool("unko_s", false);
-                animator.SetBool("m_walk", false);
-                animator.SetBool("s_walk", false);
                 break;
             case "Mode1"://第1段階長押し処理
                 animator.SetBool("unko_s", true);
                 animator.SetBool("unko_m", false);
-                animator.SetBool("m_walk", false);
-                animator.SetBool("s_walk", false);
                 break;
             case "Mode2"://第2段階長押し処理
                 animator.SetBool("unko_m", true);
@@ -303,3 +293,4 @@ public class CharacterOperation_murata : MonoBehaviour
         }
     }
 }
+
