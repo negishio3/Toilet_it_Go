@@ -19,10 +19,11 @@ public class Count_chika : MonoBehaviour {
     public Image start;           //スタート待機Image
     public Image TTS;
     public Text Stxt;            //スタート前のテキスト
+
     float TTS_alqa = 0.0f;
 
     bool startFade = false;        //
-    bool startflg = false;         //開始フラグ
+    public bool startflg = false;         //開始フラグ
     bool startOK = false;          //全準備完了
     bool TTS_Wait = true;          //TaptoStart点滅
     bool textset = false;          //テキスト取得
@@ -57,7 +58,10 @@ public class Count_chika : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (fadeflg.FadeGame)//SceneFaderからフラグ情報を受け取る
+        {
             startflg = true;
+            Debug.Log("kakunin");
+        }
         if (startflg)
         {
             // 待機Imageをアクティブに

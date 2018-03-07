@@ -97,6 +97,7 @@ public class SceneFader_sanoki : MonoBehaviour
                     if (SceneManager.GetActiveScene().name == "sanoki_Game" && fadeColor.a <= 0.0f)
                     {
                         FadeGame = true;
+                        Debug.Log("kakunin");
                     }
                     yield return null;
                 }

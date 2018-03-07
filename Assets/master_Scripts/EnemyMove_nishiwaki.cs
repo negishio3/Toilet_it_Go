@@ -6,18 +6,27 @@ public class EnemyMove_nishiwaki : MonoBehaviour
 {
     public float move;//移動スピード
     public GameObject Barrier;//バリアオブジェクト
-
+    [SerializeField]
+    TrainMove_sanoki trainmove;
+    Animator anima;
     // Use this for initialization
     void Start()
     {
         Barrier.SetActive(false);
+        trainmove = FindObjectOfType<TrainMove_sanoki>();
+        anima = GetComponent<Animator>();
+        anima.SetBool("start_rougai", false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.position -= new Vector3(move, 0, 0);
-
+        if (!trainmove.PauseFlg)
+        {
+            gameObject.transform.position -= new Vector3(move, 0, 0);
+            anima.SetBool("start_rougai", true);
+        }
         //左に行って削除老害
         if (gameObject.transform.position.x <= -15)
         {
