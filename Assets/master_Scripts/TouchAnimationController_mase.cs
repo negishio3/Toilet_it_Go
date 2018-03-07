@@ -136,8 +136,8 @@ public class TouchAnimationController_mase : MonoBehaviour
     }
     public void Wait()
     {
-        RigidbodyOn();
         animator.SetTrigger("wait");
+        RigidbodyOn();
     }
     public void RigidbodyOn()
     {

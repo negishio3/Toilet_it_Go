@@ -29,9 +29,6 @@ public class TitlePurogram_sanoki : MonoBehaviour {
     GameObject[] BackImage = new GameObject[2];//背景
     GameObject[] Pole = new GameObject[2];//電柱
 
-    public int maxScrollNum;//生成する背景の最大値
-    public int stageCount = 0;//生成された背景のカウンター
-
     bool PauseFlg = true;
     bool isScroll;
 
@@ -97,30 +94,16 @@ public class TitlePurogram_sanoki : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (TrainImage[0].transform.position.x <= -TrainSizeX || TrainImage[1].transform.position.x <= -TrainSizeX)//プレハブが画面外に出たら
         {
-            GameStart();
+                TrainImageInstans(TrainState.Loop);        //次のプレハブを生成する
         }
 
-        if (TrainImage[0] == null || TrainImage[1] == null)
-        {
-            if (stageCount == maxScrollNum - 1)
-            {
-                TrainImageInstans(TrainState.Goal);
-            }
-            else
-            {
-                TrainImageInstans(TrainState.Loop);
-            }
-        }
-        else if (TrainImage[0].transform.position.x <= -TrainSizeX || TrainImage[1].transform.position.x <= -TrainSizeX)
-        {
-            TrainDestry();
-        }
         if (BackImage[0].transform.position.x <= -BackImageSizeX || BackImage[1].transform.position.x <= -BackImageSizeX)
         {
             BackImageInstans(BackImageState.Loop);
         }
+
         if (Pole[0].transform.position.x <= -PoleSizeX || Pole[1].transform.position.x <= -PoleSizeX)
         {
             PoleInstans(BackImageState.Loop);
@@ -170,41 +153,29 @@ public class TitlePurogram_sanoki : MonoBehaviour {
                         Quaternion.identity);
                 SetScrollPos(SetPosName.First, TrainImage[0].transform.position);//スクロール先の座標を設定
                 SetScrollPos(SetPosName.Second, TrainImage[1].transform.position);
-                stageCount += 2;
                 break;
             case TrainState.Loop: //ループ生成
-                if (TrainImage[0] == null)
+                if (TrainImage[0].transform.position.x <= -TrainSizeX)
                 {
+                    Destroy(TrainImage[0]);
+                    SetScrollPos(SetPosName.First, TrainInstansPos);
                     TrainImage[0] = Instantiate(
                         TrainPrefab[ImageSelector],
                         TrainInstansPos,
                         Quaternion.identity);
                     TrainImage[0].transform.position = new Vector2(TrainImage[1].transform.position.x + TrainSizeX, 0);//隙間の調整
                 }
-                if (TrainImage[1] == null)
+                if (TrainImage[1].transform.position.x <= -TrainSizeX)
                 {
+                    Destroy(TrainImage[1]);
+                    SetScrollPos(SetPosName.Second, TrainInstansPos);
                     TrainImage[1] = Instantiate(
                         TrainPrefab[ImageSelector],
                         TrainInstansPos,
                         Quaternion.identity);
                     TrainImage[1].transform.position = new Vector2(TrainImage[0].transform.position.x + TrainSizeX, 0);
                 }
-                stageCount++;
                 break;
-        }
-    }
-
-    void TrainDestry()
-    {
-        if (TrainImage[0].transform.position.x <= -TrainSizeX)
-        {
-            Destroy(TrainImage[0]);
-            SetScrollPos(SetPosName.First, TrainInstansPos);
-        }
-        if (TrainImage[1].transform.position.x <= -TrainSizeX)
-        {
-            Destroy(TrainImage[1]);
-            SetScrollPos(SetPosName.Second, TrainInstansPos);
         }
     }
 
