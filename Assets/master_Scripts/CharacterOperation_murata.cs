@@ -26,6 +26,9 @@ public class CharacterOperation_murata : MonoBehaviour {
     public float Dame = 10;//ダメージ当たったら
     string Anis = "";
 
+
+    public GameObject Kenatu;
+
     void Start ()
     {
         trainMove_s = FindObjectOfType<TrainMove_sanoki>();
@@ -101,6 +104,8 @@ public class CharacterOperation_murata : MonoBehaviour {
                     }
                     trainMove_s.Pause();
                     animator.SetTrigger("unchp");//殴るアニメーション
+                    Yankee_nishiwaki.Hit = true;
+                    Instantiate(Kenatu);
                     break;
 
                 case "up":
