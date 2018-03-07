@@ -208,7 +208,7 @@ public class CharacterOperation_murata : MonoBehaviour {
             {
                 GageCount = Mode3_GJ-10f;
                 trainMove_s.Pause();
-                Anis = "Mode3_up";//第3段階
+                Anis = "Mode2_up";//第3段階
             }
         }
 
@@ -240,7 +240,7 @@ public class CharacterOperation_murata : MonoBehaviour {
                 }
                 if (GageCount >= Mode3_GJ - 10)
                 {
-                    Anis = "Mode3";
+                    Anis = "Mode2";
                 }
                 if (GageCount < Mode3_GJ - 10)
                 {
@@ -322,6 +322,7 @@ public class CharacterOperation_murata : MonoBehaviour {
                 break;
             case "Mode2"://第2段階長押し処理
                 animator.SetBool("unko_m", true);
+                animator.SetBool("unko_l", false);
                 break;
             case "Mode3"://第3段階長押し処理
                 animator.SetBool("unko_l", true);
