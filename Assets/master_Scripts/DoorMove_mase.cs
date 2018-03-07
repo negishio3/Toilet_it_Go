@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorMove_mase : MonoBehaviour
 {
     public GameObject Door;
+    public GameObject endpos;
     public float ClauseSpeed;
     Vector2 StartPos;
     Vector2 EndPos;
@@ -15,7 +16,7 @@ public class DoorMove_mase : MonoBehaviour
     void Start ()
     {
         StartPos = Door.transform.position;
-        EndPos = new Vector2(11.365f, -0.74f);
+        EndPos = endpos.transform.position;
 	}
 	
 	// Update is called once per frame

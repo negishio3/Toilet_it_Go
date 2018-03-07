@@ -5,11 +5,12 @@ using UnityEngine;
 public class EnemyMove_nishiwaki : MonoBehaviour
 {
     public float move;//移動スピード
+    public GameObject Barrier;//バリアオブジェクト
 
     // Use this for initialization
     void Start()
     {
-
+        Barrier.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,6 +28,6 @@ public class EnemyMove_nishiwaki : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        Barrier.SetActive(true);
     }
 }
