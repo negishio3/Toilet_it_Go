@@ -47,7 +47,7 @@ public class TrainMove_sanoki : MonoBehaviour
     public int CountCounter;
 
     bool isCenter;
-    bool PauseFlg = true;
+    public bool PauseFlg = true;
     bool isScroll;
 
     Vector2 StartPos_first;
