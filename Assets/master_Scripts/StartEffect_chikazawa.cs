@@ -10,6 +10,8 @@ public class StartEffect_chikazawa : MonoBehaviour {
     bool flg = false;                       //ボタンを押した時のフラグ
     float spd = 0.05f;                      //拡大速度
     float alqa = 1;                         //α値
+    public SE_murata SE_bu;//SE
+
 
     // Use this for initialization
     void Start () {
@@ -43,6 +45,7 @@ public class StartEffect_chikazawa : MonoBehaviour {
 
     public void BUTTON_DOWN()//イベントトリガーで設定する
     {
+        SE_bu.SE_Play(0);//SE
         start_button.gameObject.SetActive(true);
 
         for (int i = 0; i < 2; i++)
