@@ -9,8 +9,8 @@ public class CharacterOperation_murata : MonoBehaviour {
     public Animator animator;//キャラクターアニメーション
     public float speed=0.3f;//アニメーションスピード
 
-    private Vector3[] touchStartPos;//タッチ開始座標
-    private Vector3[] touchEndPos;//タッチ終了座標
+    private Vector3 touchStartPos;//タッチ開始座標
+    private Vector3 touchEndPos;//タッチ終了座標
 
     private bool Event = true;//キャラクターアクション処理
 
@@ -30,7 +30,7 @@ public class CharacterOperation_murata : MonoBehaviour {
     public float Mode2_GJ = 80f;//値以上第2段階
     public float Mode3_GJ = 100f;//値以上第3段階
 
-    private bool tes=false;
+    private bool Touch=false;
    // public GameObject Kenatu;
 
     void Start ()
@@ -49,34 +49,27 @@ public class CharacterOperation_murata : MonoBehaviour {
     //フリック
     void Flick()
     {
-        for (int i = 0; i < Input.touchCount; i++)
-        {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                //touchStartPos[i] = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-                touchStartPos[i] = Input.touches[i].position;
+                touchStartPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             }
 
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                //touchEndPos[i] = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-                touchEndPos[i] = Input.touches[i].position;
+                touchEndPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
                 GatDirection();
             }
-        }
     }
 
     //フリック内処理
     void GatDirection()
     {
-        for (int i = 0; i < Input.touchCount; i++)
-        {
             if (Event == true)//フリックしてもいいか？
             {
                 //    x の差分
-                float directionX = touchEndPos[i].x - touchStartPos[i].x;
+                float directionX = touchEndPos.x - touchStartPos.x;
                 //    y の差分
-                float directionY = touchEndPos[i].y - touchStartPos[i].y;
+                float directionY = touchEndPos.y - touchStartPos.y;
                 string Direction = "touch";
 
                 if (Input.touchCount <= 1)
@@ -134,7 +127,6 @@ public class CharacterOperation_murata : MonoBehaviour {
                         break;
                 }
             }
-        }
     }
 
     //衝突した時
@@ -150,7 +142,7 @@ public class CharacterOperation_murata : MonoBehaviour {
         //タップダウン
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            tes = false;
+            Touch = false;
             trainMove_s.Action();//背景動く
             GageCount++;//ゲージに１加算
             
@@ -173,7 +165,7 @@ public class CharacterOperation_murata : MonoBehaviour {
             }
         }
         //タップアップ
-        if (Input.GetKeyUp(KeyCode.Mouse0)&&tes==false)
+        if (Input.GetKeyUp(KeyCode.Mouse0)&& Touch == false)
         {
             pressingSeconds = 0.0f;//長押しの時間をリセット
             if (GageCount< Mode1_GJ)
@@ -194,7 +186,8 @@ public class CharacterOperation_murata : MonoBehaviour {
                 Anis = "Mode3_up";//第3段階
             }
         }
-        if(Input.GetKeyUp(KeyCode.Mouse0)&&tes==true)
+        //長押しで話したら初期の値へ
+        if(Input.GetKeyUp(KeyCode.Mouse0)&& Touch == true)
         {
             pressingSeconds = 0.0f;//長押しの時間をリセット
             if (GageCount <= Mode1_GJ)
@@ -226,7 +219,7 @@ public class CharacterOperation_murata : MonoBehaviour {
             pressingSeconds += Time.deltaTime;//押している時間
             if (pressingSeconds>=longPressIntevalSeconds)//一定以上超えた
             {
-                tes = true;
+                Touch = true;
                 trainMove_s.Pause();//背景の移動停止
                 pressingSeconds = longPressIntevalSeconds;//値を同じへ
                 GageCount -= GageDame;//ゲージに1減算
@@ -318,6 +311,7 @@ public class CharacterOperation_murata : MonoBehaviour {
 
             case "Normal"://通常運転長押し処理
                 animator.SetBool("stand", true);
+                animator.SetBool("walk", false);
                 animator.SetBool("unko_s", false);
                 animator.SetBool("m_walk", false);
                 animator.SetBool("s_walk", false);
@@ -331,6 +325,8 @@ public class CharacterOperation_murata : MonoBehaviour {
             case "Mode2"://第2段階長押し処理
                 animator.SetBool("unko_m", true);
                 animator.SetBool("unko_l", false);
+                animator.SetBool("m_walk", false);
+                animator.SetBool("s_walk", false);
                 break;
             case "Mode3"://第3段階長押し処理
                 animator.SetBool("unko_l", true);
