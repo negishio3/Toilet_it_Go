@@ -19,7 +19,17 @@ public class SE_murata : MonoBehaviour
         SE1,
 
         //[2]
-        SE2
+        SE2,
+
+        //[3]
+        SE3,
+
+        //[4]
+        SE4,
+
+        //[5]
+        SE5
+
     }
     void Awake()
     {

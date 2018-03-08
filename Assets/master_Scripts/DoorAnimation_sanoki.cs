@@ -21,7 +21,7 @@ public class DoorAnimation_sanoki : MonoBehaviour {
     Vector2 EndPos_left;
 
     bool isOpen;
-    
+
     enum door
     {
         Right,

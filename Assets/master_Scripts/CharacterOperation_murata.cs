@@ -31,7 +31,9 @@ public class CharacterOperation_murata : MonoBehaviour {
     public float Mode3_GJ = 100f;//値以上第3段階
 
     private bool Touch=false;
-   // public GameObject Kenatu;
+    // public GameObject Kenatu;
+
+    public SE_murata SE_Pl;//
 
     void Start ()
     {
@@ -142,10 +144,10 @@ public class CharacterOperation_murata : MonoBehaviour {
         //タップダウン
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            SE_Pl.SE_Play(0);//SE
             Touch = false;
             trainMove_s.Action();//背景動く
             GageCount++;//ゲージに１加算
-            
             if (GageCount< Mode1_GJ)
             {
                 Anis = "Normal_dw";//通常運転
