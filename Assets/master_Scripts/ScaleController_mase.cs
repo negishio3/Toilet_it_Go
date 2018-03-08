@@ -8,6 +8,8 @@ public class ScaleController_mase : MonoBehaviour
     public GameObject Image;//選択画像
     bool isClick;
 
+    public SE_murata SE_vl;//SE
+
     public void Ontap()
     {
         if (!isClick)
@@ -19,6 +21,7 @@ public class ScaleController_mase : MonoBehaviour
 
     public IEnumerator ButtonClick()
     {
+        SE_vl.SE_Play(0);//SE
         Vector2 startSize = new Vector2(Image.transform.localScale.x, Image.transform.localScale.y);
         Vector2 endSize = new Vector2(Image.transform.localScale.x * 1.5f, Image.transform.localScale.y * 1.5f);
 
