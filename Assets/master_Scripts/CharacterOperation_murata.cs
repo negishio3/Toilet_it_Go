@@ -33,7 +33,9 @@ public class CharacterOperation_murata : MonoBehaviour {
     private bool Touch=false;
     // public GameObject Kenatu;
 
-    public SE_murata SE_Pl;//
+    public SE_murata SE_Pl;//SE
+
+    public GameObject Mod;//モード
 
     void Start ()
     {
@@ -135,6 +137,7 @@ public class CharacterOperation_murata : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GageCount += Dame;//ゲージに10加算
+        SE_Pl.SE_Play(2);//SE
     }
 
     //ゲージと操作関連
@@ -257,6 +260,17 @@ public class CharacterOperation_murata : MonoBehaviour {
                 }
             }
         }
+        if (GageCount>=Mode2_GJ&&GageCount<=Mode3_GJ)
+        {
+            Mod.SetActive(true);
+        }
+        if (GageCount <= Mode2_GJ)
+        {
+            Mod.SetActive(false);
+        }
+
+
+
         switch (Anis)
         {
             case "Normal_dw"://通常アニメーション

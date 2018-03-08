@@ -10,6 +10,7 @@ public class DoorMove_mase : MonoBehaviour
     //Vector2 StartPos;
     //Vector2 EndPos;
     Animator animator;
+    public SE_murata SE_GO;//SE
 
 
     void Start()
@@ -23,7 +24,7 @@ public class DoorMove_mase : MonoBehaviour
         {
             //StartCoroutine(Close(ClauseSpeed));
             animator.SetTrigger("goal");
-
+            SE_GO.SE_Play(3);
             Debug.Log("ヒット");
         }
     }

@@ -20,6 +20,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
     public static bool Hit; // プレイヤーのパンチ判定
     bool Die; // 不良にパンチが当たったか
 
+    public SE_murata SE_pa;//パンチ
     // Use this for initialization
     void Start ()
     {
@@ -105,6 +106,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
             {
                 if (dis <= 5)
                 {
+                    SE_pa.SE_Play(1);//SE
                     yield return new WaitForSeconds(0.5f);
 
                     animator.SetTrigger("Punk_Die");
