@@ -24,8 +24,8 @@ public class DoorMove_mase : MonoBehaviour
         {
             //StartCoroutine(Close(ClauseSpeed));
             animator.SetTrigger("goal");
-            SE_GO.SetActive(true);//se
             Debug.Log("ヒット");
+            SE_GO.SetActive(true);//se
         }
     }
 
