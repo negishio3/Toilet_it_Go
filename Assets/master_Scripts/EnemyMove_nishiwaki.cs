@@ -46,10 +46,14 @@ public class EnemyMove_nishiwaki : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        Barrier.SetActive(true);
+        if (other.tag == "Player")
+        {
+            Barrier.SetActive(true);
+        }
     }
+
     IEnumerator ba_Walk()
     {
         SE_Rou.SE_Play(0);
