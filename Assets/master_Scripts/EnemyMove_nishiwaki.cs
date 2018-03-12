@@ -18,6 +18,7 @@ public class EnemyMove_nishiwaki : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        StartCoroutine(ba_Walk());
         Barrier.SetActive(false);
         //  trainmove = FindObjectOfType<TrainMove_sanoki>();
         check = FindObjectOfType<Count_chika>();
@@ -32,7 +33,7 @@ public class EnemyMove_nishiwaki : MonoBehaviour
         if (!check.Swait)
         {
             gameObject.transform.position -= new Vector3(move, 0, 0);
-            SE_Rou.SE_Play(0);
+            //SE_Rou.SE_Play(0);
             anima.SetBool("start_rougai", true);
 
         }
@@ -48,5 +49,11 @@ public class EnemyMove_nishiwaki : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         Barrier.SetActive(true);
+    }
+    IEnumerator ba_Walk()
+    {
+        SE_Rou.SE_Play(0);
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(ba_Walk());
     }
 }
