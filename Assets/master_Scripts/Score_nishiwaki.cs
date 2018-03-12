@@ -78,13 +78,13 @@ public class Score_nishiwaki : MonoBehaviour {
         {
             //Debug.Log("これはエラーよ！！おかしいわ！！");
         }
-        else if (score < 30)
+        else if (score < 70)
         {
            // Debug.Log("S");
             newScore_str = "S";
             rank = "S";
         }
-        else if (score < 40)
+        else if (score < 60)
         {
            // Debug.Log("A");
             newScore_str = "A";

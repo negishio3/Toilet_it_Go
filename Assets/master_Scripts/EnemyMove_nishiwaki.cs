@@ -13,11 +13,14 @@ public class EnemyMove_nishiwaki : MonoBehaviour
 
     Animator anima;
 
+    Count_chika check;
+
     // Use this for initialization
     void Start()
     {
         Barrier.SetActive(false);
-        trainmove = FindObjectOfType<TrainMove_sanoki>();
+        //  trainmove = FindObjectOfType<TrainMove_sanoki>();
+        check = FindObjectOfType<Count_chika>();
         anima = GetComponent<Animator>();
         anima.SetBool("start_rougai", false);
     }
@@ -26,7 +29,7 @@ public class EnemyMove_nishiwaki : MonoBehaviour
     void Update()
     {
 
-        if (!trainmove.PauseFlg)
+        if (!check.Swait)
         {
             gameObject.transform.position -= new Vector3(move, 0, 0);
             SE_Rou.SE_Play(0);

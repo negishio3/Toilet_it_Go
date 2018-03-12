@@ -112,7 +112,7 @@ public class CharacterOperation_murata : MonoBehaviour {
                         {
                             GageCount = Mode3_GJ - 1;
                         }
-                        trainMove_s.Pause();
+                       trainMove_s.Pause();
                         animator.SetTrigger("unchp");//殴るアニメーション
                         Yankee_nishiwaki.Hit = true;
                         // Instantiate(Kenatu);
