@@ -45,7 +45,7 @@ public class TrainMove_sanoki : MonoBehaviour
     GameObject[] Pole = new GameObject[2];
 
 
-
+    public bool GoalFlg;
     public int maxScrollNum;//生成する背景の最大値
     public int stageCount = 0;//生成された背景のカウンター
     public int CountCounter;
@@ -351,14 +351,11 @@ public class TrainMove_sanoki : MonoBehaviour
     /// </summary>
     public void TrainMoving()
     {
-        if (yankeepunch == false)
+        if (!PauseFlg && !isScroll&&!yankeepunch&&!GoalFlg)
         {
-            if (!PauseFlg && !isScroll)
-            {
-                isScroll = true;
-                StartCoroutine(TrainScroll());
-            }
-        }
+            isScroll = true;
+            StartCoroutine(TrainScroll());
+        }   
     }
 
     public IEnumerator TrainScroll()
