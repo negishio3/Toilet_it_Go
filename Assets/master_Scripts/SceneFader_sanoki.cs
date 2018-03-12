@@ -94,7 +94,7 @@ public class SceneFader_sanoki : MonoBehaviour
                     t += Time.deltaTime / seconds;
                     fadeColor.a = Mathf.Lerp(1.0f, 0.0f, t);
                     //ゲームシーンの時だけ明転後スタート待機のフラグを切り替える
-                    if (SceneManager.GetActiveScene().name == "sanoki_Game" && fadeColor.a <= 0.0f)
+                    if (SceneManager.GetActiveScene().name == "sanoki_Game" && fadeColor.a <= 0.0f|| SceneManager.GetActiveScene().name == "sanoki_Game_ver2" && fadeColor.a <= 0.0f)
                     {
                         FadeGame = true;
                         //Debug.Log("kakunin");
