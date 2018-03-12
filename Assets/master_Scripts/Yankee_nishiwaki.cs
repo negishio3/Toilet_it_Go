@@ -10,6 +10,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
     GameObject player; // プレイヤー
 
     TrainMove_sanoki trainMove;
+    Count_chika check;
 
     float dis; // 不良とプレイヤーの距離
 
@@ -26,6 +27,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
     {
         StartCoroutine(yankee_Walk());
         trainMove = FindObjectOfType<TrainMove_sanoki>();
+        check = FindObjectOfType<Count_chika>();
         Punch = true;
         //PunchMove = false;
         Hit = false;
@@ -77,6 +79,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
     {
         while (gameObject.transform.position.x >= -15)
         {
+            if(!check.Swait)
             gameObject.transform.position -= new Vector3(move, 0, 0); // 不良移動
 
             if (PunchMove)
