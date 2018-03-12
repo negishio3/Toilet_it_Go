@@ -24,6 +24,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        StartCoroutine(yankee_Walk());
         trainMove = FindObjectOfType<TrainMove_sanoki>();
         Punch = true;
         //PunchMove = false;
@@ -84,6 +85,8 @@ public class Yankee_nishiwaki : MonoBehaviour {
 
                 animator.SetTrigger("Punk_Punch"); // アニメーション「パンチ」
 
+                SE_pa.SE_Play(2);//SE殴る
+
                 Punch = false;
 
                 yield return new WaitForSeconds(1.1f);
@@ -106,7 +109,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
             {
                 if (dis <= 5)
                 {
-                    SE_pa.SE_Play(1);//SE
+                    SE_pa.SE_Play(1);//SE殴られた
                     yield return new WaitForSeconds(0.5f);
 
                     animator.SetTrigger("Punk_Die");
@@ -126,5 +129,12 @@ public class Yankee_nishiwaki : MonoBehaviour {
     public bool punchMove
     {
         get { return PunchMove; }
+    }
+
+    IEnumerator yankee_Walk()
+    {
+        SE_pa.SE_Play(0);
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(yankee_Walk());
     }
 }

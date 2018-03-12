@@ -6,6 +6,7 @@ public class EnemyMove_nishiwaki : MonoBehaviour
 {
     public float move;//移動スピード
     public GameObject Barrier;//バリアオブジェクト
+    public SE_murata SE_Rou;//SE
 
     [SerializeField]
     TrainMove_sanoki trainmove;
@@ -28,7 +29,9 @@ public class EnemyMove_nishiwaki : MonoBehaviour
         if (!trainmove.PauseFlg)
         {
             gameObject.transform.position -= new Vector3(move, 0, 0);
+            SE_Rou.SE_Play(0);
             anima.SetBool("start_rougai", true);
+
         }
 
         //左に行って削除老害
