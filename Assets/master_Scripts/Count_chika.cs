@@ -27,7 +27,8 @@ public class Count_chika : MonoBehaviour {
     bool startOK = false;          //全準備完了
     bool TTS_Wait = true;          //TaptoStart点滅
     bool textset = false;          //テキスト取得
-    bool SfadeComp = false;              
+    bool SfadeComp = false;
+    public bool Swait = true;              
 
     //文字送り用変数
     public string[] scenarios = new string[5];//入力行数//全角10文字で改行
@@ -54,6 +55,7 @@ public class Count_chika : MonoBehaviour {
         //countImg.gameObject.SetActive(false);
         SerifPattern = Random.Range(0, 5);//セリフパターンからランダムに選択する
         Train_game.Pause();
+        Swait = true;
     }
     // Update is called once per frame
     void Update () {
@@ -137,6 +139,7 @@ public class Count_chika : MonoBehaviour {
                         //立っている確認用のフラグをオフにする(エラー回避)
                         fadeflg.FadeGame = false;
                         startflg = false;
+                        Swait = false;
                     }
                 }
             }
