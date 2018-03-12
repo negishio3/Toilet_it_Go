@@ -21,6 +21,8 @@ public class Yankee_nishiwaki : MonoBehaviour {
     public static bool Hit; // プレイヤーのパンチ判定
     bool Die; // 不良にパンチが当たったか
 
+    bool die = false;
+
     public SE_murata SE_pa;//パンチ
     // Use this for initialization
     void Start ()
@@ -58,7 +60,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        else if(gameObject.transform.position.x >= 14)
+       else if(gameObject.transform.position.x >= 14 &&die==true)
         {
             Destroy(gameObject);
         }
@@ -69,6 +71,7 @@ public class Yankee_nishiwaki : MonoBehaviour {
             if(gameObject.transform.position.x <= 15)
             {
                 gameObject.transform.position += new Vector3(0.2f, 0, 0);
+                die = true;
             }
         }
 

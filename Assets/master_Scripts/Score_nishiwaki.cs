@@ -78,7 +78,7 @@ public class Score_nishiwaki : MonoBehaviour {
         {
             //Debug.Log("これはエラーよ！！おかしいわ！！");
         }
-        else if (score < 70)
+        else if (score < 50)
         {
            // Debug.Log("S");
             newScore_str = "S";
@@ -90,7 +90,7 @@ public class Score_nishiwaki : MonoBehaviour {
             newScore_str = "A";
             rank = "A";
         }
-        else if (score < 50)
+        else if (score < 70)
         {
             //Debug.Log("B");
             newScore_str = "B";
