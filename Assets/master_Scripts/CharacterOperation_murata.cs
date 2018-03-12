@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterOperation_murata : MonoBehaviour {
 
     TrainMove_sanoki trainMove_s;//佐野木スクリプト背景移動
+    Count_chika StartCheck;      //スタートイメージの表示確認
 
     public Animator animator;//キャラクターアニメーション
     public float speed=0.3f;//アニメーションスピード
@@ -40,6 +41,7 @@ public class CharacterOperation_murata : MonoBehaviour {
     void Start ()
     {
         trainMove_s = FindObjectOfType<TrainMove_sanoki>();
+        StartCheck = FindObjectOfType<Count_chika>();
         animator = GetComponent<Animator>();
         animator.speed = speed;
         pl_rigidbody2D = GetComponent<Rigidbody2D>();
@@ -47,6 +49,7 @@ public class CharacterOperation_murata : MonoBehaviour {
 
 	void Update ()
     {
+        if(!StartCheck.Swait)//スタートイメージが表示済みかを確認
         GetController();//操作
     }
 
