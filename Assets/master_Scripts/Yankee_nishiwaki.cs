@@ -141,11 +141,12 @@ public class Yankee_nishiwaki : MonoBehaviour {
 
     IEnumerator yankee_Walk()
     {
-        if (!check.Swait)
-        {
-            animator.SetBool("Punk_walk", true);
-            SE_pa.SE_Play(0);
-        }
+        //if (!check.Swait)
+        //{
+        //    animator.SetBool("Punk_walk", true);
+        //    SE_pa.SE_Play(0);
+        //}
+        SE_pa.SE_Play(0);
         yield return new WaitForSeconds(0.5f);
         if(!check.Swait)
         yield return StartCoroutine(yankee_Walk());
