@@ -79,25 +79,27 @@ public class Yankee_nishiwaki : MonoBehaviour {
     {
         while (gameObject.transform.position.x >= -15)
         {
-            if(!check.Swait)
-            gameObject.transform.position -= new Vector3(move, 0, 0); // 不良移動
-
-            if (PunchMove)
+            if (!check.Swait)
             {
-                move = 0.0f; // 動きを止める
+                gameObject.transform.position -= new Vector3(move, 0, 0); // 不良移動
 
-                animator.SetTrigger("Punk_Punch"); // アニメーション「パンチ」
+                if (PunchMove)
+                {
+                    move = 0.0f; // 動きを止める
 
-                SE_pa.SE_Play(2);//SE殴る
+                    animator.SetTrigger("Punk_Punch"); // アニメーション「パンチ」
 
-                Punch = false;
+                    SE_pa.SE_Play(2);//SE殴る
 
-                yield return new WaitForSeconds(1.1f);
+                    Punch = false;
 
-                PunchMove = false;
-                trainMove.Yankeepunch = false;
+                    yield return new WaitForSeconds(1.1f);
 
-                move = 0.02f; // また歩き始める
+                    PunchMove = false;
+                    trainMove.Yankeepunch = false;
+
+                    move = 0.02f; // また歩き始める
+                }
             }
 
             yield return null;
@@ -136,7 +138,11 @@ public class Yankee_nishiwaki : MonoBehaviour {
 
     IEnumerator yankee_Walk()
     {
-        SE_pa.SE_Play(0);
+        if (!check.Swait)
+        {
+            animator.SetBool("Punk_walk", true);
+            SE_pa.SE_Play(0);
+        }
         yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(yankee_Walk());
     }
